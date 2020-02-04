@@ -1,0 +1,17 @@
+body {
+	background-color: #333333;
+}
+header {
+	color: #ffffff;
+	margin: 0px auto;
+	text-align: center;
+	display: block;
+}
+#game-canvas {
+	position: absolute;
+	top: 120px;
+	left: calc(50% - 600px);
+	display: block;
+	z-index: 1000;
+	background-color: #000000;
+}
