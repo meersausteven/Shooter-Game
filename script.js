@@ -215,6 +215,57 @@ class enemyB extends enemyBase {
 
 
 /*
+// NEW CODE
+
+// declare variables that are needed globally
+
+var playerXP = 0, playerScore = 0;
+var playerDamage = 1, playerSpeed = 1, playerShots = 1;
+var playerHealth = 10;
+var playerUpgrades = [], playerShots = []
+var playerShotLevel = 0, playerSpeedLevel = 0, playerDamageLevel = 0, playerHealthLevel = 0, playerShotType = 0;
+
+var gameWave = 0;
+var enemies = [];
+
+function startGame() {
+	player = new PlayerObject(playerHealth, playerDamage, playerSpeed, playerShots);
+	gameArea.start();
+}
+
+var gameArea = {
+	canvas : document.createElement("canvas"),
+	start : function() {
+		this.canvas.width = 1200;
+		this.canvas.height = 600;
+		this.context = this.canvas.getContent("2d");
+		document.body.insertBefore(this.canvas, document.body.childNodes[0]);
+		this.interval = setInterval(updateGameArea, 20);
+		},
+	clear : function() {
+		this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+	}	
+}
+
+class PlayerObject(health, damage, speed, shots) {
+	this.width = 50;
+	this.height = 50;
+	this.speedX = 0;
+	this.speedY = 0;   
+	this.angle = 0;
+	this.x = gameArea.canvas.width / 2;
+	this.y = gameArea.canvas.height / 2;
+	this.acceleration = 0;
+	this.friction = 0;
+	
+	update() {
+		ctx = gameArea.context;
+		ctx.rotate(this.angle);
+		ctx.drawImage('images/playerShip.png', this.x, this.y);
+		ctx.restore();
+	}
+}
+
 // FOLLOWING CODE IS TAKE FROM w3schools.com's CANVAS GAME TUTORIAL
 // i will use the code to learn how to use canvas for games
 
