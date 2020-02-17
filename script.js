@@ -220,16 +220,17 @@ class enemyB extends enemyBase {
 // declare variables that are needed globally
 
 var playerXP = 0, playerScore = 0;
-var playerDamage = 1, playerSpeed = 1, playerShots = 1;
+var playerSpeed = 1, playerShotDamage = 1, playerShotType = 1, playerShotSpeed = 1;
 var playerHealth = 10;
 var playerUpgrades = [], playerShots = []
-var playerShotLevel = 0, playerSpeedLevel = 0, playerDamageLevel = 0, playerHealthLevel = 0, playerShotType = 0;
+var playerSpeedLevel = 0, playerDamageLevel = 0, playerHealthLevel = 0, playerShotType = 0, playShotStyle = 0;
 
 var gameWave = 0;
-var enemies = [];
+var enemies = [], enemyShots[];
+var mousePos;
 
 function startGame() {
-	player = new PlayerObject(playerHealth, playerDamage, playerSpeed, playerShots);
+	player = new PlayerObject(playerHealth, playerSpeed);
 	gameArea.start();
 }
 
@@ -238,13 +239,28 @@ var gameArea = {
 	start : function() {
 		this.canvas.width = 1200;
 		this.canvas.height = 600;
-		this.context = this.canvas.getContent("2d");
+		this.context = this.canvas.getContext("2d");
 		document.body.insertBefore(this.canvas, document.body.childNodes[0]);
+		this.frameNo = 0;
 		this.interval = setInterval(updateGameArea, 20);
-		},
+		window.addEventListener('keydown', function (e) {
+			e.preventDefault();
+			myGameArea.keys = (myGameArea.keys || []);
+			myGameArea.keys[e.keyCode] = (e.type == "keydown");
+		})
+		window.addEventListener('keyup', function (e) {
+			myGameArea.keys[e.keyCode] = (e.type == "keydown");
+		})
+		this.canvas.addEventListener('mousemove', function (e) {
+       			mousePos = getMousePos(this.canvas, e);
+		}
+	},
+	stop : function() {
+		clearInterval(this.interval);
+	},    
 	clear : function() {
 		this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-	}	
+	}
 }
 
 class PlayerObject(health, damage, speed, shots) {
@@ -253,17 +269,43 @@ class PlayerObject(health, damage, speed, shots) {
 	this.speedX = 0;
 	this.speedY = 0;   
 	this.angle = 0;
+	this.moveAngle = Math.asin( (mousePos.y - this.y) , Math.sqrt( Math.pow(mousePos.x - this.x, 2) + Math.pow(mousePos.y - this.y, 2) );
 	this.x = gameArea.canvas.width / 2;
 	this.y = gameArea.canvas.height / 2;
 	this.acceleration = 0;
 	this.friction = 0;
+	this.accelerationSpeed = 0;
 	
-	update() {
+	this.update = function() {
 		ctx = gameArea.context;
 		ctx.rotate(this.angle);
 		ctx.drawImage('images/playerShip.png', this.x, this.y);
 		ctx.restore();
 	}
+	
+	this.update = function() {
+		ctx = myGameArea.context;
+		ctx.save();
+		ctx.translate(this.x, this.y);
+		ctx.rotate(this.angle);
+		ctx.fillStyle = color;
+		ctx.fillRect(this.width / -2, this.height / -2, this.width, this.height);
+		ctx.restore();
+	}
+	
+	this.newPos = function() {
+		this.angle += this.moveAngle * Math.PI / 180;
+		this.x += this.speed * Math.sin(this.angle);
+		this.y -= this.speed * Math.cos(this.angle);
+	}
+}
+
+function getMousePos(canvas, event) {
+	var rect = canvas.getBoundingClientRect();
+	return {
+		x: event.clientX - rect.left,
+		y: event.clientY - rect.top
+	};
 }
 
 // FOLLOWING CODE IS TAKE FROM w3schools.com's CANVAS GAME TUTORIAL
@@ -292,6 +334,9 @@ var myGameArea = {
         this.context = this.canvas.getContext("2d");
         document.body.insertBefore(this.canvas, document.body.childNodes[0]);
         this.frameNo = 0;
+	this.rect = this.canvas.getBoundingClientRect();
+	this.mouseX = event.clientX - this.rect.left;
+	this.mouseY = event.clientY - this.rect.top;
         this.interval = setInterval(updateGameArea, 20);
         },
     clear : function() {
