@@ -439,6 +439,7 @@ function accelerate(n) {
 
 // ###
 // move canvas object with keyboard inputs across canvas
+// altered: rotates in mouse direction and draws a line between mouse and object
 // ###
 
 var myGamePiece;
@@ -448,15 +449,17 @@ function startGame() {
     myGameArea.start();
 }
 
+var mouse = {x:0,y:0};
+var angle = 0;
 var myGameArea = {
     canvas : document.createElement("canvas"),
     start : function() {
-        this.canvas.width = 480;
-        this.canvas.height = 270;
+        this.canvas.width = 800;
+        this.canvas.height = 600;
         this.context = this.canvas.getContext("2d");
         document.body.insertBefore(this.canvas, document.body.childNodes[0]);
         this.frameNo = 0;
-        this.interval = setInterval(updateGameArea, 20);
+        this.interval = setInterval(updateGameArea, 5);
         window.addEventListener('keydown', function (e) {
             e.preventDefault();
             myGameArea.keys = (myGameArea.keys || []);
@@ -464,6 +467,13 @@ var myGameArea = {
         })
         window.addEventListener('keyup', function (e) {
             myGameArea.keys[e.keyCode] = (e.type == "keydown");
+        })
+        this.canvas.addEventListener('mousemove', function (e) {
+      		var rect = myGameArea.canvas.getBoundingClientRect();
+            mouse.x = e.clientX - rect.left;
+            mouse.y = e.clientY - rect.top;
+            angle = Math.atan2(mouse.y - myGamePiece.y, mouse.x - myGamePiece.x);
+            document.getElementById("lol").innerHTML = "x: " + mouse.x + "<br>y: " + mouse.y + "<br>Angle: " + angle * 180 / Math.PI;
         })
     },
     stop : function() {
@@ -475,39 +485,38 @@ var myGameArea = {
 }
 
 function component(width, height, color, x, y, type) {
-
     this.type = type;
     this.width = width;
     this.height = height;
     this.speed = 0;
-    this.angle = 0;
-    this.moveAngle = 0;
     this.x = x;
     this.y = y;    
     this.update = function() {
         ctx = myGameArea.context;
+        myGameArea.clear();
+        ctx.strokeStyle="#ddd";
+        ctx.beginPath();
+        myGameArea.context.moveTo(myGamePiece.x, myGamePiece.y);
+        myGameArea.context.lineTo(mouse.x, mouse.y);
+        myGameArea.context.stroke();
         ctx.save();
         ctx.translate(this.x, this.y);
-        ctx.rotate(this.angle);
+        ctx.rotate(angle);
         ctx.fillStyle = color;
         ctx.fillRect(this.width / -2, this.height / -2, this.width, this.height);
-        ctx.restore();    
+        ctx.restore();
     }
     this.newPos = function() {
-        this.angle += this.moveAngle * Math.PI / 180;
-        this.x += this.speed * Math.sin(this.angle);
-        this.y -= this.speed * Math.cos(this.angle);
+        this.x += this.speed * Math.sin(angle + (0.5 * Math.PI));
+        this.y -= this.speed * Math.cos(angle + (0.5 * Math.PI));
     }
 }
 
 function updateGameArea() {
     myGameArea.clear();
-    myGamePiece.moveAngle = 0;
     myGamePiece.speed = 0;
-    if (myGameArea.keys && myGameArea.keys[37]) {myGamePiece.moveAngle = -1; }
-    if (myGameArea.keys && myGameArea.keys[39]) {myGamePiece.moveAngle = 1; }
-    if (myGameArea.keys && myGameArea.keys[38]) {myGamePiece.speed= 1; }
-    if (myGameArea.keys && myGameArea.keys[40]) {myGamePiece.speed= -1; }
+    if (myGameArea.keys && myGameArea.keys[87]) {myGamePiece.speed= 1; }
+    if (myGameArea.keys && myGameArea.keys[83]) {myGamePiece.speed= -1; }
     myGamePiece.newPos();
     myGamePiece.update();
 }
