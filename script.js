@@ -1,8 +1,8 @@
-/*
-// NEW CODE
 
+// NEW CODE
 // declare variables that are needed globally
 
+/*
 var playerXP = 0, playerScore = 0;
 var playerSpeed = 1, playerShotDamage = 1, playerShotType = 1, playerShotSpeed = 1;
 var playerHealth = 10;
@@ -227,98 +227,152 @@ function accelerate(n) {
 // for now, this will be the basis i will work with
 // ###
 
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<style>
+body {
+	background-color: #000;
+    color: #fff;
+}
+canvas {
+	margin: 20px auto 0px;
+    display: block;
+    border: 3px inset #999;
+    background-color: #ffffff;
+}
+</style>
+</head>
+<body onload="startGame()">
+<script>
 var myGamePiece;
 
 function startGame() {
-    myGamePiece = new component(30, 30, "red", 225, 225);
+    myGamePiece = new component(30, 30, "#b22", 400, 300);
     myGameArea.start();
 }
 
-var mouse = {x:0,y:0};
+var mouse = {x: 400, y: 300};
 var angle = 0;
 var myGameArea = {
-	canvas : document.createElement("canvas"),
-	start : function() {
-		this.canvas.width = 1200;
-		this.canvas.height = 600;
-		this.context = this.canvas.getContext("2d");
-		document.body.insertBefore(this.canvas, document.body.childNodes[0]);
-		this.frameNo = 0;
-		this.interval = setInterval(updateGameArea, 5);
-		
-		window.addEventListener('keydown', function (e) {
-			e.preventDefault();
-			myGameArea.keys = (myGameArea.keys || []);
-			myGameArea.keys[e.keyCode] = (e.type == "keydown");
-		});
-		
-		window.addEventListener('keyup', function (e) {
-			myGameArea.keys[e.keyCode] = (e.type == "keydown");
-		});
-		
-		this.canvas.addEventListener('mousemove', function (e) {
-			var rect = myGameArea.canvas.getBoundingClientRect();
-			// subtract canvas width and height from mouse position to get mouse position inside canvas
-			mouse.x = e.clientX - rect.left;
-			mouse.y = e.clientY - rect.top;
-			// angle in radians = ATan2( endY - startY, endX - startX)
-			angle = Math.atan2(mouse.y - myGamePiece.y, mouse.x - myGamePiece.x);
-			document.getElementById("lol").innerHTML = "x: " + mouse.x + "<br>y: " + mouse.y + "<br>Angle: " + angle * 180 / Math.PI;
-		});
-	},
-	stop : function() {
-		clearInterval(this.interval);
-	},    
-	clear : function() {
-		this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-	}
+    canvas : document.createElement("canvas"),
+    start : function() {
+        this.canvas.width = 800;
+        this.canvas.height = 600;
+        this.context = this.canvas.getContext("2d");
+        document.body.insertBefore(this.canvas, document.body.childNodes[0]);
+        this.frameNo = 0;
+        this.interval = setInterval(updateGameArea, 5);
+        window.addEventListener('keydown', function (e) {
+            e.preventDefault();
+            myGameArea.keys = (myGameArea.keys || []);
+            myGameArea.keys[e.keyCode] = (e.type == "keydown");
+        })
+        window.addEventListener('keyup', function (e) {
+            myGameArea.keys[e.keyCode] = (e.type == "keydown");
+        })
+        this.canvas.addEventListener('mousemove', function (e) {
+      		var rect = myGameArea.canvas.getBoundingClientRect();
+            mouse.x = e.clientX - rect.left;
+            mouse.y = e.clientY - rect.top;
+        })
+    },
+    stop : function() {
+        clearInterval(this.interval);
+    },    
+    clear : function() {
+        this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    }
 }
 
 function component(width, height, color, x, y, type) {
-	this.type = type;
-	this.width = width;
-	this.height = height;
-	this.speed = 0;
-	this.x = x;
-	this.y = y;    
-	this.update = function() {
+    this.type = type;
+    this.width = width;
+    this.height = height;
+    this.speedX = 0;
+    this.speedY = 0;
+    this.friction = -0.05;
+    this.acceleration = 0;
+    this.x = x;
+    this.y = y;    
+    this.update = function() {
+        distance = Math.sqrt( Math.pow( mouse.x - this.x, 2 ) + Math.pow( mouse.y - this.y, 2 ) );
+       	angle = Math.atan2(mouse.y - this.y, mouse.x - this.x);
+        
+        document.getElementById("test").innerHTML =
+        	"Mouse: " + mouse.x + " | " + mouse.y +
+      		"<br>Player: " + myGamePiece.x + " | " + myGamePiece.y +
+        	"<br>Angle: " + angle * 180 / Math.PI + "<br>Distance: " + distance +
+            "<br>X-Speed: " + myGamePiece.speedX + "<br>Y-Speed: " + myGamePiece.speedY +
+            "<br>Acceleration: " + myGamePiece.acceleration
+        ;
+            
         ctx = myGameArea.context;
-	
-	// draw line between mouse and object/player
         myGameArea.clear();
-        ctx.strokeStyle="#ddd";
-        ctx.beginPath();
-        myGameArea.context.moveTo(myGamePiece.x, myGamePiece.y);
-        myGameArea.context.lineTo(mouse.x, mouse.y);
-        myGameArea.context.stroke();
-	
         ctx.save();
         ctx.translate(this.x, this.y);
         ctx.rotate(angle);
         ctx.fillStyle = color;
         ctx.fillRect(this.width / -2, this.height / -2, this.width, this.height);
         ctx.restore();
-	}
-	
-	this.newPos = function() {
-		this.x += this.speed * Math.sin(angle + (0.5 * Math.PI));
-		this.y -= this.speed * Math.cos(angle + (0.5 * Math.PI));
-	}
+        
+        ctx.strokeStyle="#abf";
+        ctx.beginPath();
+        ctx.arc( mouse.x, mouse.y, distance, 0, 2 * Math.PI);
+        ctx.stroke();
+        ctx.strokeStyle="#ddd";
+       
+        ctx.beginPath();
+        ctx.moveTo(myGamePiece.x, myGamePiece.y);
+        ctx.lineTo(mouse.x, mouse.y);
+        ctx.stroke();
+    }
+    this.newPos = function() {
+        this.x += this.speedX;
+        this.y -= this.speedY;
+    }
 }
 
 function updateGameArea() {
-	myGameArea.clear();
-	myGamePiece.speed = 0;
-	
-	// W key
-	if (myGameArea.keys && myGameArea.keys[87]) {
-		myGamePiece.speed= 1;
-	}
-	
-	// S key
-	if (myGameArea.keys && myGameArea.keys[83]) {
-		myGamePiece.speed= -1;
-	}
-	myGamePiece.newPos();
-	myGamePiece.update();
+    myGameArea.clear();
+    myGamePiece.speedX = 0;
+    myGamePiece.speedY = 0;
+    
+    if (myGameArea.keys && myGameArea.keys[87]) {
+    	if (distance > 10) {
+          	myGamePiece.speedX += 1 * Math.sin(angle + (0.5 * Math.PI));
+          	myGamePiece.speedY += 1 * Math.cos(angle + (0.5 * Math.PI));
+		}
+    }
+    
+    if (myGameArea.keys && myGameArea.keys[83]) {
+    	myGamePiece.speedX += -1 * Math.sin(angle + (0.5 * Math.PI));
+        myGamePiece.speedY += -1 * Math.cos(angle + (0.5 * Math.PI));
+    }
+    
+    if (myGameArea.keys && myGameArea.keys[65]) {
+		if (distance > 10) {
+			angle += Math.acos(1 - Math.pow(1 / distance,2) / 2);
+			myGamePiece.speedX += 1 * Math.sin(angle + (2 * Math.PI));
+			myGamePiece.speedY += 1 * Math.cos(angle + (2 * Math.PI));
+        }
+    }
+    
+    if (myGameArea.keys && myGameArea.keys[68]) {
+        if (distance > 10) {
+            angle -= Math.acos(1 - Math.pow(1 / distance,2) / 2);
+            myGamePiece.speedX += -1 * Math.sin(angle + (2 * Math.PI));
+            myGamePiece.speedY += -1 * Math.cos(angle + (2 * Math.PI));
+        }
+    }
+    
+    myGamePiece.newPos();
+    myGamePiece.update();
 }
+</script>
+
+<p id="test"></p>
+
+</body>
+</html>
