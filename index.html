@@ -40,7 +40,7 @@ canvas {
 var myGamePiece;
 
 function startGame() {
-    myGamePiece = new component(30, 30, "#b22", 400, 300);
+    myGamePiece = new component(30, 30, "images/playerShip", 400, 300);
     myGameArea.start();
 }
 
@@ -55,18 +55,19 @@ var myGameArea = {
         document.body.insertBefore(this.canvas, document.body.childNodes[0]);
         this.frameNo = 0;
         this.interval = setInterval(updateGameArea, 5);
+	    
         window.addEventListener('keydown', function (e) {
-            e.preventDefault();
-            myGameArea.keys = (myGameArea.keys || []);
-            myGameArea.keys[e.keyCode] = (e.type == "keydown");
+		e.preventDefault();
+		myGameArea.keys = (myGameArea.keys || []);
+		myGameArea.keys[e.keyCode] = (e.type == "keydown");
         })
         window.addEventListener('keyup', function (e) {
-            myGameArea.keys[e.keyCode] = (e.type == "keydown");
+		myGameArea.keys[e.keyCode] = (e.type == "keydown");
         })
         this.canvas.addEventListener('mousemove', function (e) {
-      		var rect = myGameArea.canvas.getBoundingClientRect();
-            mouse.x = e.clientX - rect.left;
-            mouse.y = e.clientY - rect.top;
+		var rect = myGameArea.canvas.getBoundingClientRect();
+		mouse.x = e.clientX - rect.left;
+		mouse.y = e.clientY - rect.top;
         })
     },
     stop : function() {
@@ -77,7 +78,7 @@ var myGameArea = {
     }
 }
 
-function component(width, height, color, x, y, type) {
+function component(width, height, image, x, y, type) {
 	this.type = type;
 	this.width = width;
 	this.height = height;
@@ -104,8 +105,7 @@ function component(width, height, color, x, y, type) {
 		ctx.save();
 		ctx.translate(this.x, this.y);
 		ctx.rotate(angle);
-		ctx.fillStyle = color;
-		ctx.fillRect(this.width / -2, this.height / -2, this.width, this.height);
+		ctx.drawImage(image, this.x, this.y);
 		ctx.restore();
 
 		ctx.strokeStyle="#abf";
