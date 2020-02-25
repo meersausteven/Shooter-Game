@@ -133,14 +133,14 @@ function updateGameArea() {
 	
 	myGamePiece.accelerationX *= myGamePiece.friction;
 	myGamePiece.accelerationY *= myGamePiece.friction;
-	/*
-	if ( (myGamePiece.accelerationX < 0.1) && (myGamePiece.accelerationX > -0.1) ) {
+	
+	if ( (myGamePiece.accelerationX < 0.01) && (myGamePiece.accelerationX > -0.01) ) {
 		myGamePiece.accelerationX = 0;
 	}
-	if ( (myGamePiece.accelerationY < 0.1) && (myGamePiece.accelerationY > -0.1) ) {
+	if ( (myGamePiece.accelerationY < 0.01) && (myGamePiece.accelerationY > -0.01) ) {
 		myGamePiece.accelerationX = 0;
 	}
-	*/
+	
 	if (myGameArea.keys && myGameArea.keys[87]) {
 		if (distance > 10) {
 			myGamePiece.speedX += 1 * Math.sin(angle + (0.5 * Math.PI));
