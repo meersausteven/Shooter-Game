@@ -42,7 +42,7 @@ var myGamePiece;
 var imageSrc = document.getElementById("player");
 
 function startGame() {
-    myGamePiece = new component(30, 30, imageSrc, 400, 300);
+    myGamePiece = new component(30, 30, "#d96", 400, 300);
     myGameArea.start();
 }
 
@@ -80,7 +80,7 @@ var myGameArea = {
     }
 }
 
-function component(width, height, image, x, y, type) {
+function component(width, height, color, x, y, type) {
 	this.type = type;
 	this.width = width;
 	this.height = height;
@@ -107,8 +107,8 @@ function component(width, height, image, x, y, type) {
 		ctx.save();
 		ctx.translate(this.x, this.y);
 		ctx.rotate(angle);
-		
-		ctx.drawImage(imageSrc, this.x, this.y);
+		ctx.fillStyle = color;
+		ctx.fillRect(this.width / -2, this.height / -2, this.width, this.height);
 		ctx.restore();
 
 		ctx.strokeStyle="#abf";
