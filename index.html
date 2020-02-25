@@ -25,13 +25,13 @@
 <style>
 body {
 	background-color: #000;
-    color: #fff;
+	color: #fff;
 }
 canvas {
-	margin: 20px auto 0px;
-    display: block;
-    border: 3px inset #999;
-    background-color: #ffffff;
+	margin: 80px auto 0px;
+	display: block;
+	border: 3px inset #999;
+	background-color: #ffffff;
 }
 </style>
 </head>
@@ -49,7 +49,7 @@ var angle = 0;
 var myGameArea = {
     canvas : document.createElement("canvas"),
     start : function() {
-        this.canvas.width = 800;
+        this.canvas.width = 1200;
         this.canvas.height = 600;
         this.context = this.canvas.getContext("2d");
         document.body.insertBefore(this.canvas, document.body.childNodes[0]);
