@@ -36,11 +36,13 @@ canvas {
 </style>
 </head>
 <body onload="startGame()">
+	<img id="player" src="image/playerShip" style="display:none;">
 <script>
 var myGamePiece;
+var imageSrc = document.getElementById("player");
 
 function startGame() {
-    myGamePiece = new component(30, 30, "images/playerShip", 400, 300);
+    myGamePiece = new component(30, 30, imageSrc, 400, 300);
     myGameArea.start();
 }
 
@@ -105,7 +107,8 @@ function component(width, height, image, x, y, type) {
 		ctx.save();
 		ctx.translate(this.x, this.y);
 		ctx.rotate(angle);
-		ctx.drawImage(image, this.x, this.y);
+		
+		ctx.drawImage(imageSrc, this.x, this.y);
 		ctx.restore();
 
 		ctx.strokeStyle="#abf";
