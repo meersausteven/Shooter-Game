@@ -105,8 +105,8 @@ function component(width, height, color, x, y, type) {
 		ctx = myGameArea.context;
 		myGameArea.clear();
 		ctx.save();
-		ctx.rotate(angle);
 		ctx.drawImage(document.getElementById("player"), this.x, this.y);
+		ctx.rotate(angle);
 		/*
 		ctx.translate(this.x, this.y);
 		ctx.fillStyle = color;
