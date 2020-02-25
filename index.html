@@ -114,6 +114,7 @@ function component(width, height, color, x, y, type) {
 		ctx.fillRect(this.width / -2, this.height / -2, this.width, this.height);
 		*/
 		ctx.restore();
+		ctx.translate(this.x, this.y);
 
 		ctx.strokeStyle="#abf";
 		ctx.beginPath();
