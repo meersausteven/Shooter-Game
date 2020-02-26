@@ -156,6 +156,11 @@ function Player(width, height, color, x, y, type) {
 		ctx.moveTo(myGamePiece.x, myGamePiece.y);
 		ctx.lineTo(mouse.x, mouse.y);
 		ctx.stroke();
+		
+		for (shot of playerShots) {
+			shot.newPos();
+			shot.draw();
+		}
 	}
 	
 	this.newPos = function() {
