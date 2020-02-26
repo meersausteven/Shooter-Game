@@ -47,7 +47,7 @@ var myGamePiece;
 var imageSrc = document.getElementById("player");
 
 function startGame() {
-    myGamePiece = new player(30, 30, "#b22", 400, 300);
+    myGamePiece = new Player(30, 30, "#b22", 400, 300);
     myGameArea.start();
 }
 
@@ -90,17 +90,16 @@ var myGameArea = {
     }
 }
 
-class Shot(angle) {
-	constructor() {
-		this.speedX = 0;
-		this.speedY = 0;
-		this.angle = angle;
-		this.x = myGamePiece.x;
-		this.y = myGamePiece.y;
-		this.width = 5;
-		this.height = 5;
-	}
-	draw() {
+function Shot(angle) {
+	this.speedX = 0;
+	this.speedY = 0;
+	this.angle = angle;
+	this.x = myGamePiece.x;
+	this.y = myGamePiece.y;
+	this.width = 5;
+	this.height = 5;
+	
+	this.draw = function() {
 		ctx = myGameArea.context;
 		ctx.save();
 		ctx.translate(this.x, this.y);
@@ -109,13 +108,14 @@ class Shot(angle) {
 		ctx.rotate(angle);
 		ctx.restore();
 	}
-	newPos() {
+	
+	this.newPos = function() {
 		this.x += 1 * Math.sin(angle + (0.5 * Math.PI));
 		this.y += 1 * Math.cos(angle + (0.5 * Math.PI));
 	}
 }
 
-function player(width, height, color, x, y, type) {
+function Player(width, height, color, x, y, type) {
 	this.type = type;
 	this.width = width;
 	this.height = height;
@@ -126,6 +126,7 @@ function player(width, height, color, x, y, type) {
 	this.accelerationY = 0;
 	this.x = x;
 	this.y = y;    
+	
 	this.update = function() {
 		distance = Math.sqrt( Math.pow( mouse.x - this.x, 2 ) + Math.pow( mouse.y - this.y, 2 ) );
 		angle = Math.atan2(mouse.y - this.y, mouse.x - this.x);
