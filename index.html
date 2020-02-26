@@ -34,10 +34,14 @@ canvas {
 	border: 3px inset #999;
 	background-color: #ffffff;
 }
+#test {
+	margin-left: 120px;
+}		
 </style>
 </head>
 <body onload="startGame()">
 	<img id="player" src="/images/playerShip.png" style="display: none;">
+	<p id="test"></p>
 <script>
 var myGamePiece;
 var imageSrc = document.getElementById("player");
@@ -193,8 +197,5 @@ function updateGameArea() {
 	myGamePiece.update();
 }
 </script>
-
-<p id="test"></p>
-
 </body>
 </html>
