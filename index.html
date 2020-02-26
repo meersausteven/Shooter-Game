@@ -47,7 +47,7 @@ var myGamePiece;
 var imageSrc = document.getElementById("player");
 
 function startGame() {
-    myGamePiece = new component(30, 30, "#b22", 400, 300);
+    myGamePiece = new player(30, 30, "#b22", 400, 300);
     myGameArea.start();
 }
 
@@ -85,7 +85,7 @@ var myGameArea = {
     }
 }
 
-function component(width, height, color, x, y, type) {
+function player(width, height, color, x, y, type) {
 	this.type = type;
 	this.width = width;
 	this.height = height;
