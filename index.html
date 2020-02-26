@@ -111,7 +111,7 @@ function Shot(angle) {
 	
 	this.newPos = function() {
 		this.x += -1 * Math.sin(angle + (0.5 * Math.PI));
-		this.y += -1 * Math.cos(angle + (0.5 * Math.PI));
+		this.y += 1 * Math.cos(angle + (0.5 * Math.PI));
 	}
 }
 
