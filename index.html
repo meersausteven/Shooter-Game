@@ -129,8 +129,10 @@ function component(width, height, color, x, y, type) {
 	}
 	
 	this.newPos = function() {
+		var stable = distance;
 		this.x += this.speedX + this.accelerationX;
 		this.y -= this.speedY + this.accelerationY;
+		distance = stable;
 	}
 }
 
@@ -169,27 +171,23 @@ function updateGameArea() {
 
 	if (myGameArea.keys && myGameArea.keys[65]) {
 		if (distance > 10) {
-			var stable = distance;
 			angle += Math.acos(1 - Math.pow(1 / distance,2) / 2);
 			myGamePiece.speedX += 1 * Math.sin(angle + (2 * Math.PI));
 			myGamePiece.speedY += 1 * Math.cos(angle + (2 * Math.PI));
 			
 			myGamePiece.accelerationX += 0.03 * Math.sin(angle + (2 * Math.PI));
 			myGamePiece.accelerationY += 0.03 * Math.cos(angle + (2 * Math.PI));
-			distance = stable;
 		}
 	}
 
 	if (myGameArea.keys && myGameArea.keys[68]) {
 		if (distance > 10) {
-			var stable = distance;
 			angle -= Math.acos(1 - Math.pow(1 / distance,2) / 2);
 			myGamePiece.speedX += -1 * Math.sin(angle + (2 * Math.PI));
 			myGamePiece.speedY += -1 * Math.cos(angle + (2 * Math.PI));
 			
 			myGamePiece.accelerationX += -0.03 * Math.sin(angle + (2 * Math.PI));
 			myGamePiece.accelerationY += -0.03 * Math.cos(angle + (2 * Math.PI));
-			distance = stable;
 		}
 	}
 
