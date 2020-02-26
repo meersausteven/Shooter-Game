@@ -190,8 +190,8 @@ function updateGameArea() {
 	
 	if (myGameArea.keys && myGameArea.keys[87]) {
 		if (distance > 10) {
-			myGamePiece.speedX += 1 * Math.sin(angle + (0.5 * Math.PI));
-			myGamePiece.speedY += 1 * Math.cos(angle + (0.5 * Math.PI));
+			myGamePiece.speedX += -1 * Math.sin(angle + (0.5 * Math.PI));
+			myGamePiece.speedY += -1 * Math.cos(angle + (0.5 * Math.PI));
 			
 			myGamePiece.accelerationX += 0.03 * Math.sin(angle + (0.5 * Math.PI));
 			myGamePiece.accelerationY += 0.03 * Math.cos(angle + (0.5 * Math.PI));
