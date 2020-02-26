@@ -176,10 +176,9 @@ function updateGameArea() {
 			angle += Math.acos(1 - Math.pow(1 / distance,2) / 2);
 			myGamePiece.speedX += 1 * Math.sin(angle + (2 * Math.PI));
 			myGamePiece.speedY += 1 * Math.cos(angle + (2 * Math.PI));
-			/*
-			myGamePiece.accelerationX += 0.03 * Math.sin(angle + (2 * Math.PI));
-			myGamePiece.accelerationY += 0.03 * Math.cos(angle + (2 * Math.PI));
-			*/
+			
+			myGamePiece.accelerationX += 0.001 * Math.sin(angle + (2 * Math.PI));
+			myGamePiece.accelerationY += 0.001 * Math.cos(angle + (2 * Math.PI));
 		}
 	}
 
@@ -188,10 +187,9 @@ function updateGameArea() {
 			angle -= Math.acos(1 - Math.pow(1 / distance,2) / 2);
 			myGamePiece.speedX += -1 * Math.sin(angle + (2 * Math.PI));
 			myGamePiece.speedY += -1 * Math.cos(angle + (2 * Math.PI));
-			/*
-			myGamePiece.accelerationX += -0.03 * Math.sin(angle + (2 * Math.PI));
-			myGamePiece.accelerationY += -0.03 * Math.cos(angle + (2 * Math.PI));
-			*/
+			
+			myGamePiece.accelerationX += -0.001 * Math.sin(angle + (2 * Math.PI));
+			myGamePiece.accelerationY += -0.001 * Math.cos(angle + (2 * Math.PI));
 		}
 	}
 
