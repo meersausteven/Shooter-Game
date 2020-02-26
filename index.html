@@ -129,10 +129,8 @@ function component(width, height, color, x, y, type) {
 	}
 	
 	this.newPos = function() {
-		var stable = distance;
 		this.x += this.speedX + this.accelerationX;
 		this.y -= this.speedY + this.accelerationY;
-		distance = stable;
 	}
 }
 
