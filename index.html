@@ -117,10 +117,7 @@ function Shot(angle, shotId) {
 		
 		if ( (this.x < -20) || (this.x > myGameArea.width + 20)
 		    || (this.y < - 20) || (this.y > myGameArea.height + 20) ) {
-			playerShots.splice(this.shotId, 1)
-			playerShots.filter(function ( _, shot ) {
-				return shot in playerShots
-			});
+			playerShots.splice(this.shotId, 1, null);
 		}
 	}
 }
@@ -170,10 +167,8 @@ function Player(width, height, color, x, y, type) {
 		ctx.stroke();
 		
 		for (shot of playerShots) {
-			if (shot != null) {
-				shot.newPos();
-				shot.draw();
-			}
+			shot.newPos();
+			shot.draw();
 		}
 	}
 	
