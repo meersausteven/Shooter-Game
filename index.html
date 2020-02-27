@@ -53,7 +53,7 @@ function startGame() {
 
 var mouse = {x: 400, y: 300};
 var angle = 0;
-var playerShots = [];
+var playerShots = {};
 
 var myGameArea = {
     canvas : document.createElement("canvas"),
@@ -117,7 +117,7 @@ function Shot(angle, shotId) {
 		
 		if ( (this.x < -20) || (this.x > myGameArea.canvas.width + 20)
 		    || (this.y < - 20) || (this.y > myGameArea.canvas.height + 20) ) {
-			playerShots.splice(this.shotId, 1, null);
+			delete playerShots.this.shotId;
 		}
 	}
 }
@@ -180,7 +180,7 @@ function Player(width, height, color, x, y, type) {
 	}
 	
 	this.shoot = function() {
-		playerShots["shot" + shotId] = new Shot(angle, "shot" + shotId);
+		playerShots{"shot" + shotId: new Shot(angle, "shot" + shotId)};
 		shotId++;
 	}
 }
