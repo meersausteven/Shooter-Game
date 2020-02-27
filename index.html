@@ -172,7 +172,8 @@ class Player {
 			ctx.lineTo(mouse.x, mouse.y);
 			ctx.stroke();
 
-			for (var shot of playerShots) {
+			for (var shot in playerShots) {
+				shot = playerShots[shot];
 				if (shot != null) {
 					shot.newPos();
 					shot.draw();
