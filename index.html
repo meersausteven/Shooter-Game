@@ -52,43 +52,46 @@ function startGame() {
 }
 
 var mouse = {x: 400, y: 300};
+var distance;
 var angle = 0;
 var playerShots = {};
 
 var myGameArea = {
-    canvas : document.createElement("canvas"),
-    start : function() {
-        this.canvas.width = 1200;
-        this.canvas.height = 700;
-        this.context = this.canvas.getContext("2d");
-        document.body.insertBefore(this.canvas, document.body.childNodes[0]);
-        this.frameNo = 0;
-        this.interval = setInterval(updateGameArea, 5);
-	    
-        window.addEventListener('keydown', function (e) {
-		e.preventDefault();
-		myGameArea.keys = (myGameArea.keys || []);
-		myGameArea.keys[e.keyCode] = (e.type == "keydown");
-        })
-        window.addEventListener('keyup', function (e) {
-		myGameArea.keys[e.keyCode] = (e.type == "keydown");
-        })
-        this.canvas.addEventListener('mousemove', function (e) {
-		var rect = myGameArea.canvas.getBoundingClientRect();
-		mouse.x = e.clientX - rect.left;
-		mouse.y = e.clientY - rect.top;
-        })
-	this.canvas.addEventListener('mousedown', function (e) {
-		myGamePiece.shoot();
-		console.log(playerShots);
-        })
-    },
-    stop : function() {
-        clearInterval(this.interval);
-    },    
-    clear : function() {
-        this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    }
+	canvas : document.createElement("canvas"),
+	start : function() {
+		this.canvas.width = 1200;
+		this.canvas.height = 700;
+		this.context = this.canvas.getContext("2d");
+		document.body.insertBefore(this.canvas, document.body.childNodes[0]);
+		this.frameNo = 0;
+		this.interval = setInterval(updateGameArea, 5);
+
+		window.addEventListener('keydown', function (e) {
+			e.preventDefault();
+			myGameArea.keys = (myGameArea.keys || []);
+			myGameArea.keys[e.keyCode] = (e.type == "keydown");
+		})
+		window.addEventListener('keyup', function (e) {
+			myGameArea.keys[e.keyCode] = (e.type == "keydown");
+		})
+		this.canvas.addEventListener('mousemove', function (e) {
+			var rect = myGameArea.canvas.getBoundingClientRect();
+			mouse.x = e.clientX - rect.left;
+			mouse.y = e.clientY - rect.top;
+		})
+		this.canvas.addEventListener('mousedown', function (e) {
+			myGamePiece.shoot();
+			console.log(playerShots);
+		})
+	},
+	
+	stop : function() {
+		clearInterval(this.interval);
+	},
+	
+	clear : function() {
+		this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+	}
 }
 
 class Shot {
