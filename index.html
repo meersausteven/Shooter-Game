@@ -54,9 +54,6 @@ function startGame() {
 var mouse = {x: 400, y: 300};
 var angle = 0;
 var playerShots = [];
-	
-	
-setInterval(console.log(playerShots), 1000);
 
 var myGameArea = {
     canvas : document.createElement("canvas"),
@@ -82,7 +79,9 @@ var myGameArea = {
 		mouse.y = e.clientY - rect.top;
         })
 	this.canvas.addEventListener('mousedown', function (e) {
-		myGamePiece.shoot();
+		myGamePiece.shoot();	
+	
+		console.log(playerShots);
         })
     },
     stop : function() {
