@@ -118,6 +118,9 @@ function Shot(angle, shotId) {
 		if ( (this.x < -20) || (this.x > myGameArea.canvas.width + 20)
 		    || (this.y < - 20) || (this.y > myGameArea.canvas.height + 20) ) {
 			playerShots.splice(this.shotId, 1, null);
+			playerShots.filter(function(shot) {
+				shot != null;
+			});
 		}
 	}
 }
