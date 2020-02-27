@@ -91,17 +91,19 @@ var myGameArea = {
     }
 }
 
-Class Shot(angle, shotId) {
-	this.shotId = shotId;
-	this.speedX = 7;
-	this.speedY = 7;
-	this.angle = angle;
-	this.x = myGamePiece.x;
-	this.y = myGamePiece.y;
-	this.width = 5;
-	this.height = 5;
+Class Shot {
+	constructor(angle, shotId) {
+		this.shotId = shotId;
+		this.speedX = 7;
+		this.speedY = 7;
+		this.angle = angle;
+		this.x = myGamePiece.x;
+		this.y = myGamePiece.y;
+		this.width = 5;
+		this.height = 5;
+	}
 	
-	this.draw = function() {
+	draw() {
 		ctx = myGameArea.context;
 		ctx.save();
 		ctx.translate(this.x, this.y);
@@ -111,7 +113,7 @@ Class Shot(angle, shotId) {
 		ctx.restore();
 	}
 	
-	this.newPos = function() {
+	newPos() {
 		this.x += this.speedX * 1 * Math.sin(angle + (0.5 * Math.PI));
 		this.y += this.speedY * -1 * Math.cos(angle + (0.5 * Math.PI));
 		
@@ -124,19 +126,21 @@ Class Shot(angle, shotId) {
 
 var shotId = 1;
 
-Class Player(width, height, color, x, y, type) {
-	this.type = type;
-	this.width = width;
-	this.height = height;
-	this.speedX = 0;
-	this.speedY = 0;
-	this.friction = 0.99;
-	this.accelerationX = 0;
-	this.accelerationY = 0;
-	this.x = x;
-	this.y = y;    
+Class Player {
+	constructor(width, height, color, x, y, type) {
+		this.type = type;
+		this.width = width;
+		this.height = height;
+		this.speedX = 0;
+		this.speedY = 0;
+		this.friction = 0.99;
+		this.accelerationX = 0;
+		this.accelerationY = 0;
+		this.x = x;
+		this.y = y;    
+	}
 	
-	this.update = function() {
+	update() {
 		distance = Math.sqrt( Math.pow( mouse.x - this.x, 2 ) + Math.pow( mouse.y - this.y, 2 ) );
 		angle = Math.atan2(mouse.y - this.y, mouse.x - this.x);
 
@@ -174,12 +178,12 @@ Class Player(width, height, color, x, y, type) {
 		}
 	}
 	
-	this.newPos = function() {
+	newPos() {
 		this.x += this.speedX + this.accelerationX;
 		this.y -= this.speedY + this.accelerationY;
 	}
 	
-	this.shoot = function() {
+	shoot() {
 		var blub = "shot" + shotId;
 		playerShots.blub = new Shot(angle, blub);
 		shotId++;
