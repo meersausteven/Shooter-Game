@@ -107,7 +107,7 @@ class Shot {
 	}
 	
 	draw() {
-		ctx = myGameArea.context;
+		var ctx = myGameArea.context;
 		ctx.save();
 		ctx.translate(this.x, this.y);
 		ctx.fillStyle = "#fff";
