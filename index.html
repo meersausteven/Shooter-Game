@@ -167,8 +167,10 @@ function Player(width, height, color, x, y, type) {
 		ctx.stroke();
 		
 		for (shot of playerShots) {
-			shot.newPos();
-			shot.draw();
+			if (shot != empty) {
+				shot.newPos();
+				shot.draw();
+			}
 		}
 	}
 	
