@@ -117,6 +117,7 @@ function Shot(angle, shotId) {
 		if ( (this.x < -20) || (this.x > myGameArea.width + 20)
 		    || (this.y < - 20) || (this.y > myGameArea.height + 20) ) {
 			delete playerShots[this.shotId];
+			console.log(playerShots);
 		}
 	}
 }
