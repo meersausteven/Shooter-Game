@@ -180,7 +180,7 @@ function Player(width, height, color, x, y, type) {
 	}
 	
 	this.shoot = function() {
-		playerShots{"shot" + shotId: new Shot(angle, "shot" + shotId)};
+		playerShots.("shot" + shotId): new Shot(angle, "shot" + shotId);
 		shotId++;
 	}
 }
