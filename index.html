@@ -79,8 +79,7 @@ var myGameArea = {
 		mouse.y = e.clientY - rect.top;
         })
 	this.canvas.addEventListener('mousedown', function (e) {
-		myGamePiece.shoot();	
-	
+		myGamePiece.shoot();
 		console.log(playerShots);
         })
     },
@@ -118,7 +117,7 @@ function Shot(angle, shotId) {
 		
 		if ( (this.x < -20) || (this.x > myGameArea.width + 20)
 		    || (this.y < - 20) || (this.y > myGameArea.height + 20) ) {
-			delete playerShots[this.shotId];
+			playerShots.splice(this.shotId, 1);
 		}
 	}
 }
