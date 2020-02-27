@@ -43,9 +43,6 @@ canvas {
 	<img id="player" src="/images/playerShip.png" style="display: none;">
 	<p id="test"></p>
 <script>
-	
-setInterval(console.log(playerShots), 1000);
-
 var myGamePiece;
 var imageSrc = document.getElementById("player");
 
@@ -58,6 +55,9 @@ var mouse = {x: 400, y: 300};
 var angle = 0;
 var playerShots = [];
 	
+	
+setInterval(console.log(playerShots), 1000);
+
 var myGameArea = {
     canvas : document.createElement("canvas"),
     start : function() {
