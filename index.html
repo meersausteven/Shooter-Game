@@ -90,9 +90,7 @@ var myGameArea = {
     }
 }
 
-var shotId = 0;
-
-function Shot(angle) {
+function Shot(angle, shotId) {
 	this.shotId = shotId;
 	this.speedX = 7;
 	this.speedY = 7;
@@ -122,6 +120,8 @@ function Shot(angle) {
 		}
 	}
 }
+
+var shotId = 0;
 
 function Player(width, height, color, x, y, type) {
 	this.type = type;
