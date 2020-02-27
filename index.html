@@ -118,10 +118,8 @@ function Shot(angle, shotId) {
 		if ( (this.x < -20) || (this.x > myGameArea.width + 20)
 		    || (this.y < - 20) || (this.y > myGameArea.height + 20) ) {
 			playerShots.splice(this.shotId, 1)
-			playerShots.filter(function (shot) {
-				if (typeof shot != undefined) {
-					return shot;
-				}
+			playerShots.filter(function ( _, shot ) {
+				return shot in playerShots
 			});
 		}
 	}
