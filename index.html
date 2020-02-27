@@ -102,7 +102,7 @@ class Shot {
 		this.width = 5;
 		this.height = 5;
 	
-		this.draw() {
+		this.draw = function() {
 			ctx = myGameArea.context;
 			ctx.save();
 			ctx.translate(this.x, this.y);
@@ -112,7 +112,7 @@ class Shot {
 			ctx.restore();
 		}
 
-		this.newPos() {
+		this.newPos = function() {
 			this.x += this.speedX * 1 * Math.sin(angle + (0.5 * Math.PI));
 			this.y += this.speedY * -1 * Math.cos(angle + (0.5 * Math.PI));
 
@@ -139,7 +139,7 @@ class Player {
 		this.x = x;
 		this.y = y;
 		
-		this.update() {
+		this.update = function() {
 			distance = Math.sqrt( Math.pow( mouse.x - this.x, 2 ) + Math.pow( mouse.y - this.y, 2 ) );
 			angle = Math.atan2(mouse.y - this.y, mouse.x - this.x);
 
@@ -177,12 +177,12 @@ class Player {
 			}
 		}
 	
-		this.newPos() {
+		this.newPos = function() {
 			this.x += this.speedX + this.accelerationX;
 			this.y -= this.speedY + this.accelerationY;
 		}
 
-		this.shoot() {
+		this.shoot = function() {
 			var blub = "shot" + shotId;
 			playerShots.blub = new Shot(angle, blub);
 			shotId++;
