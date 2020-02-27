@@ -90,7 +90,10 @@ var myGameArea = {
     }
 }
 
+var shotId = 0;
+
 function Shot(angle) {
+	this.shotId = shotId;
 	this.speedX = 7;
 	this.speedY = 7;
 	this.angle = angle;
@@ -115,8 +118,7 @@ function Shot(angle) {
 		
 		if ( (this.x < -20) || (this.x > myGameArea.width + 20)
 		    || (this.y < - 20) || (this.y > myGameArea.height + 20) ) {
-			var index = playerShots.findIndex(this);
-			playerShots.splice(index, 1);
+			playerShots.splice(this.shotId, 1);
 		}
 	}
 }
@@ -143,7 +145,6 @@ function Player(width, height, color, x, y, type) {
 			"<br>Angle: " + angle * 180 / Math.PI + "<br>Distance: " + distance +
 			"<br>Speed: " + myGamePiece.speedX + " | " +  myGamePiece.speedY +
 			"<br>Acceleration: " + myGamePiece.accelerationX + " | " + myGamePiece.accelerationY;
-			console.log(playerShots);
 		;
 		ctx = myGameArea.context;
 		myGameArea.clear();
@@ -176,7 +177,8 @@ function Player(width, height, color, x, y, type) {
 	}
 	
 	this.shoot = function() {
-		playerShots.push(new Shot(angle));
+		playerShots[shotId] = new Shot(angle);
+		shotId;
 	}
 }
 
