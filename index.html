@@ -166,7 +166,7 @@ function Player(width, height, color, x, y, type) {
 		ctx.lineTo(mouse.x, mouse.y);
 		ctx.stroke();
 		
-		for (shot of playerShots) {
+		for (shot in playerShots) {
 			if (shot != null) {
 				shot.newPos();
 				shot.draw();
