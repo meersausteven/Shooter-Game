@@ -47,7 +47,7 @@ var myGamePiece;
 var imageSrc = document.getElementById("player");
 
 function startGame() {
-    myGamePiece = new Player(30, 30, "#b22", 400, 300);
+    myGamePiece = new Player();
     myGameArea.start();
 }
 
@@ -93,6 +93,66 @@ var myGameArea = {
 	}
 }
 
+class GameObject {
+	constructor() {
+		this.width;
+		this.height;
+		this.x;
+		this.y;
+		this.angle;
+		this.speedX;
+		this.speedY;
+		this.friction;
+		this.accelerationX;
+		this.accelerationY;
+		this.image;
+		
+	}
+	
+	update() {
+		var ctx = myGameArea.context;
+		myGameArea.clear();
+		ctx.save();
+		ctx.translate(this.x, this.y);
+		ctx.rotate(this.angle);
+		ctx.drawImage(this.image, -this.width / 2, -this.height / 2 );
+		ctx.restore();
+	}
+	
+	newPos() {
+		this.x += this.speedX + this.accelerationX;
+		this.y -= this.speedY + this.accelerationY;
+	}
+}
+
+class SquareEnemy extends GameObject {
+	constructor() {
+		this.width = 30;
+		this.height = 30;
+		this.x;
+		this.y;
+		this.angle;
+		this.speedX;
+		this.speedY;
+		this.friction;
+		this.accelerationX;
+		this.accelerationY;
+		this.image;
+	}
+		
+	update() {
+		var ctx = myGameArea.context;
+		myGameArea.clear();
+		ctx.save();
+		ctx.translate(this.x, this.y);
+		ctx.rotate(this.angle);
+		ctx.fillStyle = "#bfa";
+		ctx.fillRect(this.width, this.height, -this.width / 2, -this.height / 2);
+		//ctx.drawImage(this.image, -this.width / 2, -this.height / 2 );
+		ctx.restore();
+	}
+}
+	
 class Shot {
 	constructor(angle, shotId) {
 		this.shotId = shotId;
@@ -128,68 +188,67 @@ class Shot {
 
 var shotId = 1;
 
-class Player {
-	constructor(width, height, color, x, y, type) {
-		this.type = type;
-		this.width = width;
-		this.height = height;
+class Player extends GameObject {
+	constructor() {
+		this.width = 30;
+		this.height = 30;
 		this.speedX = 0;
 		this.speedY = 0;
 		this.friction = 0.99;
 		this.accelerationX = 0;
 		this.accelerationY = 0;
-		this.x = x;
-		this.y = y;
+		this.x = 400;
+		this.y = 300;
+	}
 		
-		this.update = function() {
-			distance = Math.sqrt( Math.pow( mouse.x - this.x, 2 ) + Math.pow( mouse.y - this.y, 2 ) );
-			angle = Math.atan2(mouse.y - this.y, mouse.x - this.x);
+	update() {
+		distance = Math.sqrt( Math.pow( mouse.x - this.x, 2 ) + Math.pow( mouse.y - this.y, 2 ) );
+		angle = Math.atan2(mouse.y - this.y, mouse.x - this.x);
 
-			document.getElementById("test").innerHTML =
-				"Mouse: " + mouse.x + " | " + mouse.y +
-				"<br>Player: " + myGamePiece.x + " | " + myGamePiece.y +
-				"<br>Angle: " + angle * 180 / Math.PI + "<br>Distance: " + distance +
-				"<br>Speed: " + myGamePiece.speedX + " | " +  myGamePiece.speedY +
-				"<br>Acceleration: " + myGamePiece.accelerationX + " | " + myGamePiece.accelerationY;
-			;
-			var ctx = myGameArea.context;
-			myGameArea.clear();
-			ctx.save();
-			ctx.translate(this.x, this.y);
-			ctx.rotate(angle + (90 * Math.PI / 180));
-			ctx.drawImage( document.getElementById("player"), -this.width / 2, -this.height / 2 );
-			ctx.restore();
+		document.getElementById("test").innerHTML =
+			"Mouse: " + mouse.x + " | " + mouse.y +
+			"<br>Player: " + myGamePiece.x + " | " + myGamePiece.y +
+			"<br>Angle: " + angle * 180 / Math.PI + "<br>Distance: " + distance +
+			"<br>Speed: " + myGamePiece.speedX + " | " +  myGamePiece.speedY +
+			"<br>Acceleration: " + myGamePiece.accelerationX + " | " + myGamePiece.accelerationY;
+		;
+		var ctx = myGameArea.context;
+		myGameArea.clear();
+		ctx.save();
+		ctx.translate(this.x, this.y);
+		ctx.rotate(angle + (90 * Math.PI / 180));
+		ctx.drawImage( document.getElementById("player"), -this.width / 2, -this.height / 2 );
+		ctx.restore();
 
-			ctx.strokeStyle="#abf";
-			ctx.beginPath();
-			ctx.arc( mouse.x, mouse.y, distance, 0, 2 * Math.PI);
-			ctx.stroke();
-			ctx.strokeStyle="#ddd";
+		ctx.strokeStyle="#abf";
+		ctx.beginPath();
+		ctx.arc( mouse.x, mouse.y, distance, 0, 2 * Math.PI);
+		ctx.stroke();
+		ctx.strokeStyle="#ddd";
 
-			ctx.beginPath();
-			ctx.moveTo(myGamePiece.x, myGamePiece.y);
-			ctx.lineTo(mouse.x, mouse.y);
-			ctx.stroke();
+		ctx.beginPath();
+		ctx.moveTo(myGamePiece.x, myGamePiece.y);
+		ctx.lineTo(mouse.x, mouse.y);
+		ctx.stroke();
 
-			for (var shot in playerShots) {
-				shot = playerShots[shot];
-				if (shot != null) {
-					shot.newPos();
-					shot.draw();
-				}
+		for (var shot in playerShots) {
+			shot = playerShots[shot];
+			if (shot != null) {
+				shot.newPos();
+				shot.draw();
 			}
 		}
+	}
 	
-		this.newPos = function() {
-			this.x += this.speedX + this.accelerationX;
-			this.y -= this.speedY + this.accelerationY;
-		}
+	newPos() {
+		this.x += this.speedX + this.accelerationX;
+		this.y -= this.speedY + this.accelerationY;
+	}
 
-		this.shoot = function() {
-			var blub = "shot" + shotId;
-			playerShots[blub] = new Shot(angle, blub);
-			shotId++;
-		}
+	shoot() {
+		var blub = "shot" + shotId;
+		playerShots[blub] = new Shot(angle, blub);
+		shotId++;
 	}
 }
 
