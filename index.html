@@ -189,7 +189,7 @@ class Shot {
 var shotId = 1;
 
 class Player extends GameObject {
-	constructor() {
+	super constructor() {
 		this.width = 30;
 		this.height = 30;
 		this.speedX = 0;
@@ -201,7 +201,7 @@ class Player extends GameObject {
 		this.y = 300;
 	}
 		
-	update() {
+	super update() {
 		distance = Math.sqrt( Math.pow( mouse.x - this.x, 2 ) + Math.pow( mouse.y - this.y, 2 ) );
 		angle = Math.atan2(mouse.y - this.y, mouse.x - this.x);
 
@@ -240,12 +240,12 @@ class Player extends GameObject {
 		}
 	}
 	
-	newPos() {
+	super newPos() {
 		this.x += this.speedX + this.accelerationX;
 		this.y -= this.speedY + this.accelerationY;
 	}
 
-	shoot() {
+	super shoot() {
 		var blub = "shot" + shotId;
 		playerShots[blub] = new Shot(angle, blub);
 		shotId++;
