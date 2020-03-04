@@ -214,22 +214,6 @@ class Player extends GameObject {
 			ctx.moveTo(myGamePiece.x, myGamePiece.y);
 			ctx.lineTo(mouse.x, mouse.y);
 			ctx.stroke();
-			
-			for (var shot in playerShots) {
-				shot = playerShots[shot];
-				if (shot != null) {
-					shot.newPos();
-					shot.draw();
-				}
-			}
-			
-			for (var enemy in enemies) {
-				enemy = enemies[enemy];
-				if (enemy != null) {
-					enemy.newPos();
-					enemy.draw();
-				}
-			}
 		}
 
 		this.newPos = function() {
@@ -310,6 +294,22 @@ function updateGameArea() {
 
 	myGamePiece.newPos();
 	myGamePiece.draw();
+			
+	for (var shot in playerShots) {
+		shot = playerShots[shot];
+		if (shot != null) {
+			shot.newPos();
+			shot.draw();
+		}
+	}
+	
+	for (var enemy in enemies) {
+		enemy = enemies[enemy];
+		if (enemy != null) {
+			enemy.newPos();
+			enemy.draw();
+		}
+	}
 }
 </script>
 </body>
