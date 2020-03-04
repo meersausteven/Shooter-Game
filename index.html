@@ -306,6 +306,7 @@ function updateGameArea() {
 	for (var enemy in enemies) {
 		enemy = enemies[enemy];
 		if (enemy != null) {
+			enemy.move();
 			enemy.newPos();
 			enemy.draw();
 		}
