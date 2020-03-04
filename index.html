@@ -123,8 +123,8 @@ class GameObject {
 		}
 		
 		this.move = function() {
-			this.speedX += 1 * Math.sin(this.angle + (0.5 * Math.PI));
-			this.speedY += 1 * Math.cos(this.angle + (0.5 * Math.PI));
+			this.speedX += 0.1 * Math.sin(this.angle + (0.5 * Math.PI));
+			this.speedY += 0.1 * Math.cos(this.angle + (0.5 * Math.PI));
 		}
 	}
 }
