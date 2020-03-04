@@ -131,7 +131,7 @@ class GameObject {
 
 class SquareEnemy extends GameObject {
 	constructor() {
-		super(30, 30, document.getElementById("player"));
+		super(30, 30, "");
 		this.angle = Math.atan2(myGamePiece.y - this.y, myGamePiece.x - this.x);
 	}
 }
