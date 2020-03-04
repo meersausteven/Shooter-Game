@@ -222,7 +222,7 @@ class Player extends GameObject {
 			}
 			
 			for (var enemy in enemies) {
-				enemy = enemies[enemie];
+				enemy = enemies[enemy];
 				if (enemy != null) {
 					enemy.newPos();
 					enemy.draw();
@@ -242,7 +242,15 @@ class Player extends GameObject {
 		}
 	}
 }
-
+	
+var enemyId = 1;
+	
+function spawnSquareEnemy() {
+	var lol = "enemy" + enemyId;
+	enemies[lol] = new SquareEnemy();
+	enemyId++;
+}
+	
 function updateGameArea() {
 	myGameArea.clear();
 	myGamePiece.speedX = 0;
