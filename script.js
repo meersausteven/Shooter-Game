@@ -87,8 +87,12 @@ class GameObject {
 		}
 		
 		this.move = function() {
-			this.speedX += 0.1 * Math.sin(this.angle + (0.5 * Math.PI));
-			this.speedY += 0.1 * Math.cos(this.angle + (0.5 * Math.PI));
+			if (this.speedX < 1.5) {
+				this.speedX += 0.1 * Math.sin(this.angle + (0.5 * Math.PI));
+			}
+			if (this.speedY < 1.5) {
+				this.speedY += 0.1 * Math.cos(this.angle + (0.5 * Math.PI));
+			}
 		}
 	}
 }
