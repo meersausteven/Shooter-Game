@@ -80,18 +80,13 @@ class GameObject {
 			//ctx.drawImage(this.image, -this.width / 2, -this.height / 2 );
 			ctx.restore();
 		}
-	
-		this.newPos = function() {
-			this.x += this.speedX;
-			this.y -= this.speedY;
-		}
-		
+
 		this.move = function() {
 			if (this.speedX < 1.5) {
-				this.speedX += 0.1 * Math.sin(this.angle + (0.5 * Math.PI));
+				this.speedX += 1 * Math.sin(this.angle + (0.5 * Math.PI));
 			}
 			if (this.speedY < 1.5) {
-				this.speedY += 0.1 * Math.cos(this.angle + (0.5 * Math.PI));
+				this.speedY += 1 * Math.cos(this.angle + (0.5 * Math.PI));
 			}
 		}
 	}
