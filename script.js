@@ -71,7 +71,6 @@ class GameObject {
 	
 		this.draw = function() {
 			var ctx = myGameArea.context;
-			myGameArea.clear();
 			ctx.save();
 			ctx.translate(this.x, this.y);
 			ctx.rotate(this.angle);
