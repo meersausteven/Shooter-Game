@@ -168,8 +168,11 @@ class Player extends GameObject {
 				"<br>Player: " + myGamePiece.x + " | " + myGamePiece.y +
 				"<br>Angle: " + angle * 180 / Math.PI + "<br>Distance: " + distance +
 				"<br>Speed: " + myGamePiece.speedX + " | " +  myGamePiece.speedY +
-				"<br>Acceleration: " + myGamePiece.accelerationX + " | " + myGamePiece.accelerationY;
+				"<br>Acceleration: " + myGamePiece.accelerationX + " | " + myGamePiece.accelerationY
 			;
+			
+			console.log("lol");
+			
 			var ctx = myGameArea.context;
 			myGameArea.clear();
 			ctx.save();
