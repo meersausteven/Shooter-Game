@@ -20,7 +20,7 @@ var angle = 0;
 var playerShots = {};
 
 var gameWave = 0;
-var enemies = {}, enemyShots{};
+var enemies = {}, enemyShots = {};
 
 var myGameArea = {
 	canvas : document.createElement("canvas"),
