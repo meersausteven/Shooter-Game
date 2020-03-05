@@ -64,7 +64,7 @@ class GameObject {
 		this.height = height;
 		this.x = Math.floor(Math.random() * myGameArea.canvas.width + 50);
 		this.y = Math.floor(Math.random() * myGameArea.canvas.height + 50);
-		this.angle;
+		this.angle = Math.atan2(myGamePiece.y - this.y, myGamePiece.x - this.x);
 		this.speedX = 0;
 		this.speedY = 0;
 		// this.image = image;
@@ -84,6 +84,7 @@ class GameObject {
 		this.newPos = function() {
 			this.x += this.speedX;
 			this.y -= this.speedY;
+			this.angle = Math.atan2(myGamePiece.y - this.y, myGamePiece.x - this.x);
 		}
 		
 		this.move = function() {
@@ -96,7 +97,6 @@ class GameObject {
 class SquareEnemy extends GameObject {
 	constructor() {
 		super(30, 30, "");
-		this.angle = Math.atan2(myGamePiece.y - this.y, myGamePiece.x - this.x);
 	}
 }
 	
