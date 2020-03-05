@@ -115,7 +115,7 @@ class Shot {
 			var ctx = myGameArea.context;
 			ctx.save();
 			ctx.translate(this.x, this.y);
-			ctx.fillStyle = "#fbb";
+			ctx.fillStyle = "#ff0";
 			ctx.fillRect(this.width / -2, this.height / -2, this.width, this.height);
 			ctx.rotate(angle);
 			ctx.restore();
