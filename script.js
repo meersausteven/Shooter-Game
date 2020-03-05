@@ -8,25 +8,30 @@ var playerSpeed = 1, playerShotDamage = 1, playerShotType = 1, playerShotSpeed =
 var playerHealth = 10;
 var playerUpgrades = [], playerShots = []
 var playerSpeedLevel = 0, playerDamageLevel = 0, playerHealthLevel = 0, playerShotType = 0, playShotStyle = 0;
-
-var gameWave = 0;
-var enemies = [], enemyShots[];
-var mousePos;
-
+*/
 function startGame() {
-	player = new PlayerObject(playerHealth, playerSpeed);
-	gameArea.start();
+    myGamePiece = new Player();
+    myGameArea.start();
 }
 
-var gameArea = {
+var mouse = {x: 400, y: 300};
+var distance;
+var angle = 0;
+var playerShots = {};
+
+var gameWave = 0;
+var enemies = {}, enemyShots{};
+
+var myGameArea = {
 	canvas : document.createElement("canvas"),
 	start : function() {
 		this.canvas.width = 1200;
-		this.canvas.height = 600;
+		this.canvas.height = 700;
 		this.context = this.canvas.getContext("2d");
 		document.body.insertBefore(this.canvas, document.body.childNodes[0]);
 		this.frameNo = 0;
-		this.interval = setInterval(updateGameArea, 20);
+		this.interval = setInterval(updateGameArea, 5);
+
 		window.addEventListener('keydown', function (e) {
 			e.preventDefault();
 			myGameArea.keys = (myGameArea.keys || []);
@@ -36,62 +41,246 @@ var gameArea = {
 			myGameArea.keys[e.keyCode] = (e.type == "keydown");
 		})
 		this.canvas.addEventListener('mousemove', function (e) {
-       			mousePos = getMousePos(this.canvas, e);
-		}
+			var rect = myGameArea.canvas.getBoundingClientRect();
+			mouse.x = e.clientX - rect.left;
+			mouse.y = e.clientY - rect.top;
+		})
+		this.canvas.addEventListener('mousedown', function (e) {
+			myGamePiece.shoot();
+		})
 	},
+	
 	stop : function() {
 		clearInterval(this.interval);
-	},    
+	},
+	
 	clear : function() {
 		this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
 	}
 }
 
-class PlayerObject(health, damage, speed, shots) {
-	this.width = 50;
-	this.height = 50;
-	this.speedX = 0;
-	this.speedY = 0;   
-	this.angle = 0;
-	this.moveAngle = Math.asin( (mousePos.y - this.y) , Math.sqrt( Math.pow(mousePos.x - this.x, 2) + Math.pow(mousePos.y - this.y, 2) );
-	this.x = gameArea.canvas.width / 2;
-	this.y = gameArea.canvas.height / 2;
-	this.acceleration = 0;
-	this.friction = 0;
-	this.accelerationSpeed = 0;
+class GameObject {
+	constructor(width, height, image) {
+		this.width = width;
+		this.height = height;
+		this.x = Math.random() * myGameArea.canvas.width;
+		this.y = Math.random() * myGameArea.canvas.height;
+		this.angle;
+		this.speedX = 0;
+		this.speedY = 0;
+		// this.image = image;
 	
-	this.update = function() {
-		ctx = gameArea.context;
-		ctx.rotate(this.angle);
-		ctx.drawImage('images/playerShip.png', this.x, this.y);
-		ctx.restore();
-	}
+		this.draw = function() {
+			var ctx = myGameArea.context;
+			myGameArea.clear();
+			ctx.save();
+			ctx.translate(this.x, this.y);
+			ctx.rotate(this.angle);
+			ctx.fillStyle= "#f00";
+			ctx.fillRect(this.x, this.y, this.width, this.height);
+			//ctx.drawImage(this.image, -this.width / 2, -this.height / 2 );
+			ctx.restore();
+		}
 	
-	this.update = function() {
-		ctx = myGameArea.context;
-		ctx.save();
-		ctx.translate(this.x, this.y);
-		ctx.rotate(this.angle);
-		ctx.fillStyle = color;
-		ctx.fillRect(this.width / -2, this.height / -2, this.width, this.height);
-		ctx.restore();
-	}
-	
-	this.newPos = function() {
-		this.angle += this.moveAngle * Math.PI / 180;
-		this.x += this.speed * Math.sin(this.angle);
-		this.y -= this.speed * Math.cos(this.angle);
+		this.newPos = function() {
+			this.x += this.speedX;
+			this.y -= this.speedY;
+		}
+		
+		this.move = function() {
+			this.speedX += 0.1 * Math.sin(this.angle + (0.5 * Math.PI));
+			this.speedY += 0.1 * Math.cos(this.angle + (0.5 * Math.PI));
+		}
 	}
 }
 
-function getMousePos(canvas, event) {
-	var rect = canvas.getBoundingClientRect();
-	return {
-		x: event.clientX - rect.left,
-		y: event.clientY - rect.top
-	};
+class SquareEnemy extends GameObject {
+	constructor() {
+		super(30, 30, "");
+		this.angle = Math.atan2(myGamePiece.y - this.y, myGamePiece.x - this.x);
+	}
+}
+	
+class Shot {
+	constructor(angle, shotId) {
+		this.shotId = shotId;
+		this.speedX = 7;
+		this.speedY = 7;
+		this.angle = angle;
+		this.x = myGamePiece.x;
+		this.y = myGamePiece.y;
+		this.width = 5;
+		this.height = 5;
+	
+		this.draw = function() {
+			var ctx = myGameArea.context;
+			ctx.save();
+			ctx.translate(this.x, this.y);
+			ctx.fillStyle = "#fbb";
+			ctx.fillRect(this.width / -2, this.height / -2, this.width, this.height);
+			ctx.rotate(angle);
+			ctx.restore();
+		}
+	
+		this.newPos = function() {
+			this.x += this.speedX * 1 * Math.sin(this.angle + (0.5 * Math.PI));
+			this.y += this.speedY * -1 * Math.cos(this.angle + (0.5 * Math.PI));
+
+			if ( (this.x < -20) || (this.x > myGameArea.canvas.width + 20)
+			    || (this.y < - 20) || (this.y > myGameArea.canvas.height + 20) ) {
+				delete playerShots[this.shotId];
+			}
+		}
+	}
 }
 
+var shotId = 1;
+
+class Player extends GameObject {
+	constructor() {
+		super(0, 0, "");
+		
+		this.width = 30;
+		this.height = 30;
+		this.speedX = 0;
+		this.speedY = 0;
+		this.friction = 0.99;
+		this.accelerationX = 0;
+		this.accelerationY = 0;
+		this.x = 400;
+		this.y = 300;
+		
+		this.draw = function() {
+			distance = Math.sqrt( Math.pow( mouse.x - this.x, 2 ) + Math.pow( mouse.y - this.y, 2 ) );
+			angle = Math.atan2(mouse.y - this.y, mouse.x - this.x);
+
+			document.getElementById("test").innerHTML =
+				"Mouse: " + mouse.x + " | " + mouse.y +
+				"<br>Player: " + myGamePiece.x + " | " + myGamePiece.y +
+				"<br>Angle: " + angle * 180 / Math.PI + "<br>Distance: " + distance +
+				"<br>Speed: " + myGamePiece.speedX + " | " +  myGamePiece.speedY +
+				"<br>Acceleration: " + myGamePiece.accelerationX + " | " + myGamePiece.accelerationY;
+			;
+			var ctx = myGameArea.context;
+			myGameArea.clear();
+			ctx.save();
+			ctx.translate(this.x, this.y);
+			ctx.rotate(angle + (90 * Math.PI / 180));
+			ctx.drawImage( document.getElementById("player"), -this.width / 2, -this.height / 2 );
+			ctx.restore();
+
+			ctx.strokeStyle="#abf";
+			ctx.beginPath();
+			ctx.arc(mouse.x, mouse.y, distance, 0, 2 * Math.PI);
+			ctx.stroke();
+			ctx.strokeStyle="#ddd";
+
+			ctx.beginPath();
+			ctx.moveTo(myGamePiece.x, myGamePiece.y);
+			ctx.lineTo(mouse.x, mouse.y);
+			ctx.stroke();
+		}
+
+		this.newPos = function() {
+			this.x += this.speedX + this.accelerationX;
+			this.y -= this.speedY + this.accelerationY;
+		}
+		
+		this.move = "";
+		
+		this.shoot = function() {
+			var index = "shot" + shotId;
+			playerShots[index] = new Shot(angle, index);
+			shotId++;
+		}
+	}
+}
+	
+var enemyId = 1;
+	
+function spawnSquareEnemy() {
+	var index = "enemy" + enemyId;
+	enemies[index] = new SquareEnemy();
+	enemyId++;
+}
+	
+function updateGameArea() {
+	myGameArea.clear();
+	myGamePiece.speedX = 0;
+	myGamePiece.speedY = 0;
+	
+	myGamePiece.accelerationX *= myGamePiece.friction;
+	myGamePiece.accelerationY *= myGamePiece.friction;
+	
+	if ( (myGamePiece.accelerationX < 0.01) && (myGamePiece.accelerationX > -0.01) ) {
+		myGamePiece.accelerationX = 0;
+	}
+	if ( (myGamePiece.accelerationY < 0.01) && (myGamePiece.accelerationY > -0.01) ) {
+		myGamePiece.accelerationY = 0;
+	}
+	
+	if (myGameArea.keys && myGameArea.keys[87]) {
+		if (distance > 10) {
+			myGamePiece.speedX += 1 * Math.sin(angle + (0.5 * Math.PI));
+			myGamePiece.speedY += 1 * Math.cos(angle + (0.5 * Math.PI));
+			
+			myGamePiece.accelerationX += 0.1 * Math.sin(angle + (0.5 * Math.PI));
+			myGamePiece.accelerationY += 0.1 * Math.cos(angle + (0.5 * Math.PI));
+		}
+	}
+
+	if (myGameArea.keys && myGameArea.keys[83]) {
+		myGamePiece.speedX += -1 * Math.sin(angle + (0.5 * Math.PI));
+		myGamePiece.speedY += -1 * Math.cos(angle + (0.5 * Math.PI));
+		
+		myGamePiece.accelerationX += -0.1 * Math.sin(angle + (0.5 * Math.PI));
+		myGamePiece.accelerationY += -0.1 * Math.cos(angle + (0.5 * Math.PI));
+	}
+
+	if (myGameArea.keys && myGameArea.keys[65]) {
+		if (distance > 10) {
+			angle += Math.acos(1 - Math.pow(1 / distance,2) / 2);
+			myGamePiece.speedX += 1 * Math.sin(angle + (2 * Math.PI));
+			myGamePiece.speedY += 1 * Math.cos(angle + (2 * Math.PI));
+			
+			myGamePiece.accelerationX += 0.05 * Math.sin(angle + (2 * Math.PI)) + 0.025 * Math.sin(angle + (0.5 * Math.PI));
+			myGamePiece.accelerationY += 0.05 * Math.cos(angle + (2 * Math.PI)) + 0.025 * Math.cos(angle + (0.5 * Math.PI));
+		}
+	}
+
+	if (myGameArea.keys && myGameArea.keys[68]) {
+		if (distance > 10) {
+			angle -= Math.acos(1 - Math.pow(1 / distance,2) / 2);
+			myGamePiece.speedX += -1 * Math.sin(angle + (2 * Math.PI));
+			myGamePiece.speedY += -1 * Math.cos(angle + (2 * Math.PI));
+			
+			myGamePiece.accelerationX += -0.05 * Math.sin(angle + (2 * Math.PI)) + 0.025 * Math.sin(angle + (0.5 * Math.PI));
+			myGamePiece.accelerationY += -0.05 * Math.cos(angle + (2 * Math.PI)) + 0.025 * Math.cos(angle + (0.5 * Math.PI));
+		}
+	}
+
+	myGamePiece.newPos();
+	myGamePiece.draw();
+			
+	for (var shot in playerShots) {
+		shot = playerShots[shot];
+		if (shot != null) {
+			shot.newPos();
+			shot.draw();
+		}
+	}
+	
+	for (var enemy in enemies) {
+		enemy = enemies[enemy];
+		if (enemy != null) {
+			enemy.move();
+			enemy.newPos();
+			enemy.draw();
+		}
+	}
+}
+
+/*
 // FOLLOWING CODE IS TAKE FROM w3schools.com's CANVAS GAME TUTORIAL
 // i will use the code to learn how to use canvas for games
 
@@ -220,159 +409,3 @@ function accelerate(n) {
 }
 
 <button onmousedown="accelerate(-0.2)" onmouseup="accelerate(0.05)">ACCELERATE</button>
-
-// ###
-// move canvas object with keyboard inputs across canvas
-// altered: rotates in mouse direction and draws a line between mouse and object
-// for now, this will be the basis i will work with
-// ###
-
-<!DOCTYPE html>
-<html>
-<head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<style>
-body {
-	background-color: #000;
-    color: #fff;
-}
-canvas {
-	margin: 20px auto 0px;
-    display: block;
-    border: 3px inset #999;
-    background-color: #ffffff;
-}
-</style>
-</head>
-<body onload="startGame()">
-<script>
-var myGamePiece;
-
-function startGame() {
-    myGamePiece = new component(30, 30, "#b22", 400, 300);
-    myGameArea.start();
-}
-
-var mouse = {x: 400, y: 300};
-var angle = 0;
-var myGameArea = {
-    canvas : document.createElement("canvas"),
-    start : function() {
-        this.canvas.width = 800;
-        this.canvas.height = 600;
-        this.context = this.canvas.getContext("2d");
-        document.body.insertBefore(this.canvas, document.body.childNodes[0]);
-        this.frameNo = 0;
-        this.interval = setInterval(updateGameArea, 5);
-        window.addEventListener('keydown', function (e) {
-            e.preventDefault();
-            myGameArea.keys = (myGameArea.keys || []);
-            myGameArea.keys[e.keyCode] = (e.type == "keydown");
-        })
-        window.addEventListener('keyup', function (e) {
-            myGameArea.keys[e.keyCode] = (e.type == "keydown");
-        })
-        this.canvas.addEventListener('mousemove', function (e) {
-      		var rect = myGameArea.canvas.getBoundingClientRect();
-            mouse.x = e.clientX - rect.left;
-            mouse.y = e.clientY - rect.top;
-        })
-    },
-    stop : function() {
-        clearInterval(this.interval);
-    },    
-    clear : function() {
-        this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    }
-}
-
-function component(width, height, color, x, y, type) {
-    this.type = type;
-    this.width = width;
-    this.height = height;
-    this.speedX = 0;
-    this.speedY = 0;
-    this.friction = -0.05;
-    this.acceleration = 0;
-    this.x = x;
-    this.y = y;    
-    this.update = function() {
-        distance = Math.sqrt( Math.pow( mouse.x - this.x, 2 ) + Math.pow( mouse.y - this.y, 2 ) );
-       	angle = Math.atan2(mouse.y - this.y, mouse.x - this.x);
-        
-        document.getElementById("test").innerHTML =
-        	"Mouse: " + mouse.x + " | " + mouse.y +
-      		"<br>Player: " + myGamePiece.x + " | " + myGamePiece.y +
-        	"<br>Angle: " + angle * 180 / Math.PI + "<br>Distance: " + distance +
-            "<br>X-Speed: " + myGamePiece.speedX + "<br>Y-Speed: " + myGamePiece.speedY +
-            "<br>Acceleration: " + myGamePiece.acceleration
-        ;
-            
-        ctx = myGameArea.context;
-        myGameArea.clear();
-        ctx.save();
-        ctx.translate(this.x, this.y);
-        ctx.rotate(angle);
-        ctx.fillStyle = color;
-        ctx.fillRect(this.width / -2, this.height / -2, this.width, this.height);
-        ctx.restore();
-        
-        ctx.strokeStyle="#abf";
-        ctx.beginPath();
-        ctx.arc( mouse.x, mouse.y, distance, 0, 2 * Math.PI);
-        ctx.stroke();
-        ctx.strokeStyle="#ddd";
-       
-        ctx.beginPath();
-        ctx.moveTo(myGamePiece.x, myGamePiece.y);
-        ctx.lineTo(mouse.x, mouse.y);
-        ctx.stroke();
-    }
-    this.newPos = function() {
-        this.x += this.speedX;
-        this.y -= this.speedY;
-    }
-}
-
-function updateGameArea() {
-    myGameArea.clear();
-    myGamePiece.speedX = 0;
-    myGamePiece.speedY = 0;
-    
-    if (myGameArea.keys && myGameArea.keys[87]) {
-    	if (distance > 10) {
-          	myGamePiece.speedX += 1 * Math.sin(angle + (0.5 * Math.PI));
-          	myGamePiece.speedY += 1 * Math.cos(angle + (0.5 * Math.PI));
-		}
-    }
-    
-    if (myGameArea.keys && myGameArea.keys[83]) {
-    	myGamePiece.speedX += -1 * Math.sin(angle + (0.5 * Math.PI));
-        myGamePiece.speedY += -1 * Math.cos(angle + (0.5 * Math.PI));
-    }
-    
-    if (myGameArea.keys && myGameArea.keys[65]) {
-		if (distance > 10) {
-			angle += Math.acos(1 - Math.pow(1 / distance,2) / 2);
-			myGamePiece.speedX += 1 * Math.sin(angle + (2 * Math.PI));
-			myGamePiece.speedY += 1 * Math.cos(angle + (2 * Math.PI));
-        }
-    }
-    
-    if (myGameArea.keys && myGameArea.keys[68]) {
-        if (distance > 10) {
-            angle -= Math.acos(1 - Math.pow(1 / distance,2) / 2);
-            myGamePiece.speedX += -1 * Math.sin(angle + (2 * Math.PI));
-            myGamePiece.speedY += -1 * Math.cos(angle + (2 * Math.PI));
-        }
-    }
-    
-    myGamePiece.newPos();
-    myGamePiece.update();
-}
-</script>
-
-<p id="test"></p>
-
-</body>
-</html>
