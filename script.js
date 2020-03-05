@@ -62,8 +62,8 @@ class GameObject {
 	constructor(width, height, image) {
 		this.width = width;
 		this.height = height;
-		this.x = Math.random() * myGameArea.canvas.width;
-		this.y = Math.random() * myGameArea.canvas.height;
+		this.x = Math.random() * myGameArea.canvas.width + 50;
+		this.y = Math.random() * myGameArea.canvas.height + 50;
 		this.angle;
 		this.speedX = 0;
 		this.speedY = 0;
