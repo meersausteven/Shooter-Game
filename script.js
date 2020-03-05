@@ -1,8 +1,7 @@
-
+/*
 // NEW CODE
 // declare variables that are needed globally
 
-/*
 var playerXP = 0, playerScore = 0;
 var playerSpeed = 1, playerShotDamage = 1, playerShotType = 1, playerShotSpeed = 1;
 var playerHealth = 10;
