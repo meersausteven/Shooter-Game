@@ -79,6 +79,12 @@ class GameObject {
 			ctx.fillRect(this.width / -2, this.height / -2, this.width, this.height);
 			//ctx.drawImage(this.image, -this.width / 2, -this.height / 2 );
 			ctx.restore();
+			
+			ctx.strokeStyle="#ddd";
+			ctx.beginPath();
+			ctx.moveTo(this.x, this.y);
+			ctx.lineTo(myGamePiece.x, myGamePiece.y);
+			ctx.stroke();
 		}
 
 		this.move = function() {
@@ -176,8 +182,8 @@ class Player extends GameObject {
 			ctx.beginPath();
 			ctx.arc(mouse.x, mouse.y, distance, 0, 2 * Math.PI);
 			ctx.stroke();
+			
 			ctx.strokeStyle="#ddd";
-
 			ctx.beginPath();
 			ctx.moveTo(myGamePiece.x, myGamePiece.y);
 			ctx.lineTo(mouse.x, mouse.y);
