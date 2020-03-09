@@ -67,7 +67,6 @@ class GameObject {
 		this.angle = 0;
 		this.speedX = 0;
 		this.speedY = 0;
-		this.enemyId = enemyId;
 		// this.image = image;
 	
 		this.draw = function() {
@@ -100,7 +99,8 @@ class GameObject {
 
 class SquareEnemy extends GameObject {
 	constructor(index) {
-		super(30, 30, "", index);
+		super(30, 30, "");
+		this.enemyId = index;
 		
 		this.newPos = function() {
 			this.x += this.speedX;
