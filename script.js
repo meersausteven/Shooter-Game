@@ -180,8 +180,6 @@ class Player extends GameObject {
 				"<br>Acceleration: " + myGamePiece.accelerationX + " | " + myGamePiece.accelerationY
 			;
 			
-			console.log("lol");
-			
 			var ctx = myGameArea.context;
 			myGameArea.clear();
 			ctx.save();
