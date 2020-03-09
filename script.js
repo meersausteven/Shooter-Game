@@ -97,8 +97,8 @@ class GameObject {
 			for (var shot in playerShots) {
 				shot = playerShots[shot];
 				if (shot != null) {
-					if ( (this.x == shot.x + 3) || (this.x == shot.x - 3) ||
-					     (this.y == shot.y + 3) || (this.y == shot.y - 3) ) {
+					if ( (this.x + 15 == shot.x) || (this.x + 15 == shot.x) ||
+					     (this.y + 15 == shot.y) || (this.y + 15 == shot.y) ) {
 						delete enemies[this.enemyId];
 					}
 				}
