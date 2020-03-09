@@ -67,6 +67,7 @@ class GameObject {
 		this.angle = 0;
 		this.speedX = 0;
 		this.speedY = 0;
+		this.enemyId = enemyId;
 		// this.image = image;
 	
 		this.draw = function() {
@@ -85,7 +86,7 @@ class GameObject {
 			ctx.lineTo(myGamePiece.x, myGamePiece.y);
 			ctx.stroke();
 		}
-
+		
 		this.move = function() {
 			if (this.speedX < 1.5) {
 				this.speedX += 1 * Math.sin(this.angle + (0.5 * Math.PI));
@@ -94,12 +95,24 @@ class GameObject {
 				this.speedY += 1 * Math.cos(this.angle + (0.5 * Math.PI));
 			}
 		}
+		
+		this.hit = function() {
+			for (var shot in playerShots) {
+				shot = playerShots[shot];
+				if (shot != null) {
+					if ( (this.x == shot.x + 3) || (this.x == shot.x - 3) ||
+					     (this.y == shot.y + 3) || (this.y == shot.y - 3) ) {
+						delete enemies[this.enemyId];
+					}
+				}
+			}
+		}
 	}
 }
 
 class SquareEnemy extends GameObject {
-	constructor() {
-		super(30, 30, "");
+	constructor(index) {
+		super(30, 30, "", index);
 		
 		this.newPos = function() {
 			this.x += this.speedX;
@@ -211,7 +224,7 @@ var enemyId = 1;
 	
 function spawnSquareEnemy() {
 	var index = "enemy" + enemyId;
-	enemies[index] = new SquareEnemy();
+	enemies[index] = new SquareEnemy(index);
 	enemyId++;
 }
 	
