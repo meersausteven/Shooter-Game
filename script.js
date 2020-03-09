@@ -111,8 +111,8 @@ class SquareEnemy extends GameObject {
 				shot = playerShots[shot];
 				if (shot != null) {
 					console.log("shot found");
-					if ( (this.x + 15 == shot.x) || (this.x + 15 == shot.x) ||
-					     (this.y + 15 == shot.y) || (this.y + 15 == shot.y) ) {
+					if ( (this.x - 15 >= shot.x) && (this.x + 15 <= shot.x) ||
+					     (this.y - 15 >= shot.y) &&(this.y + 15 <= shot.y) ) {
 						console.log("fetus deletus");
 						delete enemies[this.enemyId];
 					}
