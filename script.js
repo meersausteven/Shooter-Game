@@ -94,9 +94,6 @@ class GameObject {
 			if (this.speedY < 1.5) {
 				this.speedY += 1 * Math.cos(this.angle + (0.5 * Math.PI));
 			}
-		}
-		
-		this.hit = function() {
 			for (var shot in playerShots) {
 				shot = playerShots[shot];
 				if (shot != null) {
