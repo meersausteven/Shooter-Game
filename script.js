@@ -94,15 +94,6 @@ class GameObject {
 			if (this.speedY < 1.5) {
 				this.speedY += 1 * Math.cos(this.angle + (0.5 * Math.PI));
 			}
-			for (var shot in playerShots) {
-				shot = playerShots[shot];
-				if (shot != null) {
-					if ( (this.x + 15 == shot.x) || (this.x + 15 == shot.x) ||
-					     (this.y + 15 == shot.y) || (this.y + 15 == shot.y) ) {
-						delete enemies[this.enemyId];
-					}
-				}
-			}
 		}
 	}
 }
@@ -115,6 +106,18 @@ class SquareEnemy extends GameObject {
 			this.x += this.speedX;
 			this.y -= this.speedY;
 			this.angle = Math.atan2(myGamePiece.y - this.y, myGamePiece.x - this.x);
+			
+			for (var shot in playerShots) {
+				shot = playerShots[shot];
+				if (shot != null) {
+					console.log("shot found");
+					if ( (this.x + 15 == shot.x) || (this.x + 15 == shot.x) ||
+					     (this.y + 15 == shot.y) || (this.y + 15 == shot.y) ) {
+						console.log("fetus deletus");
+						delete enemies[this.enemyId];
+					}
+				}
+			}
 		}
 	}
 }
