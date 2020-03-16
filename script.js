@@ -169,6 +169,8 @@ class Player extends GameObject {
 		this.accelerationY = 0;
 		this.x = 400;
 		this.y = 300;
+		this.image = new Image();
+		this.image.src = "/images/playerShip.png";
 		
 		this.draw = function() {
 			distance = Math.sqrt( Math.pow( mouse.x - this.x, 2 ) + Math.pow( mouse.y - this.y, 2 ) );
@@ -187,7 +189,7 @@ class Player extends GameObject {
 			ctx.save();
 			ctx.translate(this.x, this.y);
 			ctx.rotate(angle + (90 * Math.PI / 180));
-			ctx.drawImage( document.getElementById("player"), -this.width / 2, -this.height / 2 );
+			ctx.drawImage( this.image, -this.width / 2, -this.height / 2 );
 			ctx.restore();
 
 			ctx.strokeStyle="#abf";
