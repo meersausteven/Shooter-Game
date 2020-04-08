@@ -145,10 +145,14 @@ class Shot {
 		this.newPos = function() {
 			this.x += this.speedX * 1 * Math.sin(this.angle + (0.5 * Math.PI));
 			this.y += this.speedY * -1 * Math.cos(this.angle + (0.5 * Math.PI));
-
-			if ( (this.x < -20) || (this.x > myGameArea.canvas.width + 20)
-			    || (this.y < - 20) || (this.y > myGameArea.canvas.height + 20) ) {
-				delete playerShots[this.shotId];
+			
+			var playerDistance = Math.sqrt( Math.pow( myGamePiece.x - this.x, 2 ) + Math.pow( myGamePiece.y - this.y, 2 ) );
+			
+			if (playerDistance > 100) {
+				if ( (this.x < -50) || (this.x > myGameArea.canvas.width + 50)
+				    || (this.y < - 50) || (this.y > myGameArea.canvas.height + 50) ) {
+					delete playerShots[this.shotId];
+				}
 			}
 		}
 	}
