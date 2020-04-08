@@ -207,6 +207,18 @@ class Player extends GameObject {
 		this.newPos = function() {
 			this.x += this.speedX + this.accelerationX;
 			this.y -= this.speedY + this.accelerationY;
+			
+			if (this.x < -50) {
+				this.x = myGameArea.canvas.width + 50;
+			} else if (this.x > myGameArea.canvas.width + 50) {
+				this.x = -50;
+			}
+			
+			if (this.y < -50) {
+				this.y = myGameArea.canvas.height + 50;
+			} else if (this.y > myGameArea.canvas.height + 50) {
+				this.y = -50;
+			}
 		}
 		
 		this.move = "";
