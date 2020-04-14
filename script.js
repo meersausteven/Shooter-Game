@@ -100,7 +100,7 @@ class SquareEnemy extends GameObject {
 	constructor(index) {
 		super(30, 30, "");
 		this.enemyId = index;
-		this.health = 5;
+		this.health = 3;
 		this.damage = 1;
 		this.objectSpeed = 1.5;
 		
@@ -298,8 +298,8 @@ function updateGameArea() {
 			myGamePiece.speedX += -1 * Math.sin(angle + (2 * Math.PI));
 			myGamePiece.speedY += -1 * Math.cos(angle + (2 * Math.PI));
 			
-			myGamePiece.accelerationX += -0.05 * Math.sin(angle + (2 * Math.PI)) + 0.025 * Math.sin(angle + (0.5 * Math.PI));
-			myGamePiece.accelerationY += -0.05 * Math.cos(angle + (2 * Math.PI)) + 0.025 * Math.cos(angle + (0.5 * Math.PI));
+			myGamePiece.accelerationX += -0.05 * Math.sin(angle + (2 * Math.PI)) - 0.025 * Math.sin(angle + (0.5 * Math.PI));
+			myGamePiece.accelerationY += -0.05 * Math.cos(angle + (2 * Math.PI)) - 0.025 * Math.cos(angle + (0.5 * Math.PI));
 		}
 	}
 
