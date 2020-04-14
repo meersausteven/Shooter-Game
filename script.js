@@ -319,6 +319,8 @@ function updateGameArea() {
 			enemy.draw();
 		}
 	}
+	
+	window.requestAnimationFrame(updateGameArea);
 }
 
 function thingHitThat(thing, that) {
