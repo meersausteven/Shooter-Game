@@ -1,13 +1,7 @@
-/*
+
 // NEW CODE
 // declare variables that are needed globally
 
-var playerXP = 0, playerScore = 0;
-var playerSpeed = 1, playerShotDamage = 1, playerShotType = 1, playerShotSpeed = 1;
-var playerHealth = 10;
-var playerUpgrades = [], playerShots = []
-var playerSpeedLevel = 0, playerDamageLevel = 0, playerHealthLevel = 0, playerShotType = 0, playShotStyle = 0;
-*/
 function startGame() {
     myGamePiece = new Player();
     myGameArea.start();
@@ -16,7 +10,12 @@ function startGame() {
 var mouse = {x: 400, y: 300};
 var distance;
 var angle = 0;
+
+var playerXP = 0, playerScore = 0;
+var playerShotDamage = 1, playerShotType = 1;
+var playerHealth = 10;
 var playerShots = {};
+var playerUpgrades = {};
 
 var gameWave = 0;
 var enemies = {}, enemyShots = {};
@@ -113,7 +112,7 @@ class SquareEnemy extends GameObject {
 					if ( (shot.x >= this.x - 15) && (shot.x <= this.x + 15) &&
 					     (shot.y >= this.y - 15) &&(shot.y <= this.y + 15) ) {
 						delete playerShots[shot.shotId];
-						this.health -= shot.damage;
+						this.health -= shot.shotDamage;
 						
 						if (this.health == 0) {
 							delete enemies[this.enemyId];
@@ -128,6 +127,8 @@ class SquareEnemy extends GameObject {
 class Shot {
 	constructor(angle, shotId) {
 		this.shotId = shotId;
+		this.shotType = playerShotType;
+		this.shotDamage = playerShotDamage;
 		this.speedX = 7;
 		this.speedY = 7;
 		this.angle = angle;
@@ -135,15 +136,16 @@ class Shot {
 		this.y = myGamePiece.y;
 		this.width = 5;
 		this.height = 5;
-		this.damage = 1;
 	
 		this.draw = function() {
 			var ctx = myGameArea.context;
 			ctx.save();
+			
 			ctx.translate(this.x, this.y);
 			ctx.fillStyle = "#ff6";
 			ctx.fillRect(this.width / -2, this.height / -2, this.width, this.height);
 			ctx.rotate(angle);
+			
 			ctx.restore();
 		}
 	
@@ -178,7 +180,7 @@ class Player extends GameObject {
 		this.accelerationY = 0;
 		this.x = 400;
 		this.y = 300;
-		this.health = 10;
+		this.health = playerHealth;
 		this.image = new Image();
 		this.image.src = "/images/playerShip.png";
 		
