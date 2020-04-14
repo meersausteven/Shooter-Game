@@ -28,8 +28,7 @@ var myGameArea = {
 		this.context = this.canvas.getContext("2d");
 		document.body.insertBefore(this.canvas, document.body.childNodes[0]);
 		this.frameNo = 0;
-		//window.requestAnimationFrame(updateGameArea);
-		this.interval = setInterval(updateGameArea, 5);
+		this.interval = window.requestAnimationFrame(updateGameArea);
 		
 		window.addEventListener('keydown', function (e) {
 			e.preventDefault();
@@ -50,8 +49,7 @@ var myGameArea = {
 	},
 	
 	stop : function() {
-		//window.cancelAnimationFrame();
-		clearInterval(this.interval);
+		window.cancelAnimationFrame(interval);
 	},
 	
 	clear : function() {
