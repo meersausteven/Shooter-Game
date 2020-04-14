@@ -63,8 +63,8 @@ class GameObject {
 		this.height = height;
 		this.x = Math.floor(Math.random() * myGameArea.canvas.width + 50);
 		this.y = Math.floor(Math.random() * myGameArea.canvas.height + 50);
-		this.health;
-		this.damage;
+		this.health = 1;
+		this.damage = 1;
 		this.objectSpeed = 1;
 		this.angle = 0;
 		this.speedX = 0;
