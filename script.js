@@ -63,9 +63,10 @@ class GameObject {
 		this.height = height;
 		this.x = Math.floor(Math.random() * myGameArea.canvas.width + 50);
 		this.y = Math.floor(Math.random() * myGameArea.canvas.height + 50);
-		this.health = 5;
-		this.angle = 0;
+		this.health;
+		this.damage;
 		this.objectSpeed = 1;
+		this.angle = 0;
 		this.speedX = 0;
 		this.speedY = 0;
 		// this.image = image;
@@ -99,6 +100,8 @@ class SquareEnemy extends GameObject {
 	constructor(index) {
 		super(30, 30, "");
 		this.enemyId = index;
+		this.health = 5;
+		this.damage = 1;
 		this.objectSpeed = 1.5;
 		
 		this.newPos = function() {
@@ -106,19 +109,9 @@ class SquareEnemy extends GameObject {
 			this.y -= this.speedY;
 			this.angle = Math.atan2(myGamePiece.y - this.y, myGamePiece.x - this.x);
 			
-			for (var shot in playerShots) {
-				shot = playerShots[shot];
-				if (shot != null) {
-					if ( (shot.x >= this.x - 15) && (shot.x <= this.x + 15) &&
-					     (shot.y >= this.y - 15) &&(shot.y <= this.y + 15) ) {
-						delete playerShots[shot.shotId];
-						this.health -= shot.shotDamage;
-						
-						if (this.health == 0) {
-							delete enemies[this.enemyId];
-						}
-					}
-				}
+			shotHitThat(this);			
+			if (this.health == 0) {
+				delete enemies[this.enemyId];
 			}
 		}
 	}
@@ -326,6 +319,29 @@ function updateGameArea() {
 			enemy.draw();
 		}
 	}
+}
+
+function thingHitThat(thing, that) {
+	if ( (thing.x >= that.x - (that.width / 2)) &&
+	     (thing.x <= that.x + (that.width / 2)) &&
+	     (thing.y >= that.y - (that.height / 2)) &&
+	     (thing.y <= that.y + (that.height / 2)) ) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
+function shotHitThat(that) {
+	for (var shot in playerShots) {
+		shot = playerShots[shot];
+		if (shot != null) {
+			if (thingHitThat(shot, that)) {
+				delete playerShots[shot.shotId];
+				that.health -= shot.shotDamage;
+			}
+		}
+	}	
 }
 
 /*
