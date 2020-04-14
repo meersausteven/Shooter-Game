@@ -113,7 +113,7 @@ class SquareEnemy extends GameObject {
 					if ( (shot.x >= this.x - 15) && (shot.x <= this.x + 15) &&
 					     (shot.y >= this.y - 15) &&(shot.y <= this.y + 15) ) {
 						delete playerShots[shot.shotId];
-						this.health -= 1;
+						this.health -= shot.damage;
 						
 						if (this.health == 0) {
 							delete enemies[this.enemyId];
@@ -135,6 +135,7 @@ class Shot {
 		this.y = myGamePiece.y;
 		this.width = 5;
 		this.height = 5;
+		this.damage = 1;
 	
 		this.draw = function() {
 			var ctx = myGameArea.context;
@@ -177,6 +178,7 @@ class Player extends GameObject {
 		this.accelerationY = 0;
 		this.x = 400;
 		this.y = 300;
+		this.health = 10;
 		this.image = new Image();
 		this.image.src = "/images/playerShip.png";
 		
