@@ -174,8 +174,10 @@ class Player extends GameObject {
 		this.x = 400;
 		this.y = 300;
 		this.health = playerHealth;
-		this.image = new Image();
-		this.image.src = "/images/playerShip.png";
+		this.playerImage = new Image();
+		this.playerImage.src = "/images/playerShip.png";
+		this.mouseImage = new Imagee();
+		this.mouseImage.src ="/images/mouseCursor.png";
 		
 		this.draw = function() {
 			distance = Math.sqrt( Math.pow( mouse.x - this.x, 2 ) + Math.pow( mouse.y - this.y, 2 ) );
@@ -205,6 +207,7 @@ class Player extends GameObject {
 			
 			ctx.strokeStyle="#ddd";
 			ctx.beginPath();
+			//ctx.drawImage( this.cursorImage, mouse.x, mouse.y);
 			ctx.moveTo(myGamePiece.x, myGamePiece.y);
 			ctx.lineTo(mouse.x, mouse.y);
 			ctx.stroke();
