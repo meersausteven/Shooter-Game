@@ -190,7 +190,7 @@ class Player extends GameObject {
 				"<br>Angle: " + angle * 180 / Math.PI + "<br>Distance: " + distance +
 				"<br>Speed: " + myGamePiece.speedX + " | " +  myGamePiece.speedY +
 				"<br>Acceleration: " + myGamePiece.accelerationX + " | " + myGamePiece.accelerationY +
-				"<br>Enemis alive: " + (enemies.length !== 'undefined' ? enemies.length : 0);
+				"<br>Enemis alive: " + (enemies.length !== 'undefined' ? 0 : enemies.length);
 			;
 			
 			var ctx = myGameArea.context;
