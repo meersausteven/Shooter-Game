@@ -176,7 +176,7 @@ class Player extends GameObject {
 		this.health = playerHealth;
 		this.playerImage = new Image();
 		this.playerImage.src = "/images/playerShip.png";
-		this.mouseImage = new Imagee();
+		this.mouseImage = new Image();
 		this.mouseImage.src ="/images/mouseCursor.png";
 		
 		this.draw = function() {
