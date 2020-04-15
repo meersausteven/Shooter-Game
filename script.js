@@ -101,6 +101,8 @@ class GameObject {
 					if (thingHitThat(shot, this)) {
 						delete playerShots[shot.shotId];
 						this.health -= shot.shotDamage;
+						
+						console.log(this + " was hit.");
 					}
 				}
 			}
