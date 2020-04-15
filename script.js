@@ -93,6 +93,21 @@ class GameObject {
 			this.speedX = this.objectSpeed * Math.sin(this.angle + (0.5 * Math.PI));
 			this.speedY = this.objectSpeed * Math.cos(this.angle + (0.5 * Math.PI));
 		}
+		
+		this.calculateDamage = function() {
+			for (var shot in playerShots) {
+				shot = playerShots[shot];
+				if (shot != null) {
+					if (thingHitThat(shot, this)) {
+						delete playerShots[shot.shotId];
+						this.health -= shot.shotDamage;
+					}
+				}
+			}
+			if (this.health == 0) {
+				delete enemies[this.enemyId];
+			}
+		}
 	}
 }
 
@@ -109,10 +124,7 @@ class SquareEnemy extends GameObject {
 			this.y -= this.speedY;
 			this.angle = Math.atan2(myGamePiece.y - this.y, myGamePiece.x - this.x);
 			
-			shotHitEnemy(this);			
-			if (this.health == 0) {
-				delete enemies[this.enemyId];
-			}
+			this.calculateDamage();
 		}
 	}
 }
@@ -206,8 +218,8 @@ class Player extends GameObject {
 			ctx.stroke();
 			
 			ctx.strokeStyle="#ddd";
+			//ctx.drawImage( this.mouseImage, mouse.x - 5, mouse.y - 5);
 			ctx.beginPath();
-			//ctx.drawImage( this.mouseImage, mouse.x, mouse.y);
 			ctx.moveTo(myGamePiece.x, myGamePiece.y);
 			ctx.lineTo(mouse.x, mouse.y);
 			ctx.stroke();
@@ -231,6 +243,8 @@ class Player extends GameObject {
 		}
 		
 		this.move = "";
+		
+		this.calculateDamage = "";
 		
 		this.shoot = function() {
 			var index = "shot" + shotId;
@@ -335,18 +349,6 @@ function thingHitThat(thing, that) {
 	} else {
 		return false;
 	}
-}
-
-function shotHitEnemy(enemy) {
-	for (var shot in playerShots) {
-		shot = playerShots[shot];
-		if (shot != null) {
-			if (thingHitThat(shot, enemy)) {
-				delete playerShots[shot.shotId];
-				enemy.health -= shot.shotDamage;
-			}
-		}
-	}	
 }
 
 /*
