@@ -263,13 +263,15 @@ class Player extends GameObject {
 }
 	
 var enemyId = 1;
-	
+
+var repeat = setInterval(spawnSquareEnemey, 5000);
+
 function spawnSquareEnemy() {
 	var index = "enemy" + enemyId;
 	enemies[index] = new SquareEnemy(index);
 	enemyId++;
 }
-	
+
 function updateGameArea() {
 	myGameArea.clear();
 	myGamePiece.speedX = 0;
