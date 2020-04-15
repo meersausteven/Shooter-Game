@@ -197,7 +197,7 @@ class Player extends GameObject {
 			ctx.save();
 			ctx.translate(this.x, this.y);
 			ctx.rotate(angle + (90 * Math.PI / 180));
-			ctx.drawImage( this.image, -this.width / 2, -this.height / 2 );
+			ctx.drawImage( this.playerImage, -this.width / 2, -this.height / 2 );
 			ctx.restore();
 
 			ctx.strokeStyle="#abf";
@@ -207,7 +207,7 @@ class Player extends GameObject {
 			
 			ctx.strokeStyle="#ddd";
 			ctx.beginPath();
-			//ctx.drawImage( this.cursorImage, mouse.x, mouse.y);
+			//ctx.drawImage( this.mouseImage, mouse.x, mouse.y);
 			ctx.moveTo(myGamePiece.x, myGamePiece.y);
 			ctx.lineTo(mouse.x, mouse.y);
 			ctx.stroke();
