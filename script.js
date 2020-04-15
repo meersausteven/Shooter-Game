@@ -78,16 +78,10 @@ class GameObject {
 			ctx.translate(this.x, this.y);
 			ctx.rotate(this.angle);
 			ctx.fillStyle= "#f00";
-			ctx.fillRect(this.width / -2, this.height / -2, this.width, this.height);
 			//ctx.drawImage(this.image, -this.width / 2, -this.height / 2 );
+			
+			ctx.fillRect(this.width / -2, this.height / -2, this.width, this.height);
 			ctx.restore();
-			/*
-			ctx.strokeStyle="#ddd";
-			ctx.beginPath();
-			ctx.moveTo(this.x, this.y);
-			ctx.lineTo(myGamePiece.x, myGamePiece.y);
-			ctx.stroke();
-			*/
 		}
 		
 		this.move = function() {
@@ -132,6 +126,38 @@ class SquareEnemy extends GameObject {
 			this.angle = Math.atan2(myGamePiece.y - this.y, myGamePiece.x - this.x);
 			
 			this.calculateDamage();
+		}
+	}
+}
+
+class CircleEnemy extends GameObject {
+	constructor(index) {
+		super(30, 30, "");
+		this.enemyId = index;
+		this.health = 1;
+		this.damage = 1;
+		this.destructionPoints = 300;
+		this.objectSpeed = 2.5;
+		
+		this.newPos = function() {
+			this.x += this.speedX;
+			this.y -= this.speedY;
+			this.angle = Math.atan2(myGamePiece.y - this.y, myGamePiece.x - this.x);
+			
+			this.calculateDamage();
+		}
+		
+		this.draw = function() {
+			var ctx = myGameArea.context;
+			ctx.save();
+			ctx.translate(this.x, this.y);
+			ctx.rotate(this.angle);
+			ctx.fillStyle= "#0f0";
+			//ctx.drawImage(this.image, -this.width / 2, -this.height / 2 );
+			
+			ctx.arc(this.x, this.y, this.width, 0, 2 * Math.PI);
+			ctx.fill();
+			ctx.restore();
 		}
 	}
 }
