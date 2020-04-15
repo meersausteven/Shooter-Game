@@ -102,12 +102,14 @@ class GameObject {
 						delete playerShots[shot.shotId];
 						this.health -= shot.shotDamage;
 						
-						console.log(this + " was hit.");
+						console.log("Enemy hit.");
 					}
 				}
 			}
 			if (this.health == 0) {
 				delete enemies[this.enemyId];
+				
+				console.log("Enemy destroyed.");
 			}
 		}
 	}
