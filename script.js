@@ -103,9 +103,10 @@ class GameObject {
 				shot = playerShots[shot];
 				if (shot != null) {
 					if (thingHitThat(shot, this)) {
-						delete playerShots[shot.shotId];
 						this.health -= shot.damage;
-						
+						if (shot.type != 2) {
+							delete playerShots[shot.shotId];
+						}
 						console.log("Enemy hit.");
 					}
 				}
