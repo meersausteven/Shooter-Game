@@ -1,11 +1,5 @@
 
-// NEW CODE
 // declare variables that are needed globally
-
-function startGame() {
-    myGamePiece = new Player();
-    myGameArea.start();
-}
 
 var mouse = {x: 400, y: 300};
 var distance;
@@ -19,6 +13,11 @@ var playerUpgrades = {};
 
 var gameWave = 0;
 var enemies = {}, enemyShots = {};
+
+function startGame() {
+    myGamePiece = new Player();
+    myGameArea.start();
+}
 
 var myGameArea = {
 	canvas : document.createElement("canvas"),
