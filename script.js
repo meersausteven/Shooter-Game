@@ -96,7 +96,7 @@ class GameObject {
 			ctx.rotate(this.angle);
 			ctx.font = this.height + "px Arial";
 			ctx.fillStyle = "#fff";
-			ctx.fillText(this.health, -this.width / 2, 0);
+			ctx.fillText(this.health, 0, 0);
 			ctx.restore();
 		}
 		
