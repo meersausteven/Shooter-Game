@@ -77,10 +77,7 @@ class GameObject {
 			ctx.save();
 			ctx.translate(this.x, this.y);
 			ctx.rotate(this.angle);
-			ctx.fillStyle= "#f00";
-			//ctx.drawImage(this.image, -this.width / 2, -this.height / 2 );
-			
-			ctx.fillRect(this.width / -2, this.height / -2, this.width, this.height);
+			ctx.drawImage(this.image, -this.width / 2, -this.height / 2 );
 			ctx.restore();
 			
 			this.drawHealth();
@@ -107,7 +104,7 @@ class GameObject {
 				if (shot != null) {
 					if (thingHitThat(shot, this)) {
 						delete playerShots[shot.shotId];
-						this.health -= shot.shotDamage;
+						this.health -= shot.damage;
 						
 						console.log("Enemy hit.");
 					}
@@ -131,6 +128,18 @@ class SquareEnemy extends GameObject {
 		this.damage = 1;
 		this.destructionPoints = 100;
 		this.objectSpeed = 1.5;
+		
+		this.draw = function() {
+			var ctx = myGameArea.context;
+			ctx.save();
+			ctx.translate(this.x, this.y);
+			ctx.rotate(this.angle);
+			ctx.fillStyle= "#f00";
+			ctx.fillRect(this.width / -2, this.height / -2, this.width, this.height);
+			ctx.restore();
+			
+			this.drawHealth();
+		}
 		
 		this.newPos = function() {
 			this.x += this.speedX;
@@ -177,8 +186,8 @@ class CircleEnemy extends GameObject {
 class Shot {
 	constructor(angle, shotId) {
 		this.shotId = shotId;
-		this.shotType = playerShotType;
-		this.shotDamage = playerShotDamage;
+		this.type = playerShotType;
+		this.damage = playerShotDamage;
 		this.speedX = 7;
 		this.speedY = 7;
 		this.angle = angle;
@@ -191,17 +200,38 @@ class Shot {
 			var ctx = myGameArea.context;
 			ctx.save();
 			
-			ctx.translate(this.x, this.y);
-			ctx.fillStyle = "#ff6";
-			ctx.fillRect(this.width / -2, this.height / -2, this.width, this.height);
-			ctx.rotate(angle);
+			switch (this.type) {
+				case 1: // normal bullet
+					ctx.translate(this.x, this.y);
+					ctx.fillStyle = "#ff6";
+					ctx.fillRect(this.width / -2, this.height / -2, this.width, this.height);
+					ctx.rotate(angle);
+					break;
+				case 2: // big penetrating bullet
+					
+					break;
+				case 3: // magic missile
+					
+					break;
+			}
 			
 			ctx.restore();
 		}
 	
 		this.newPos = function() {
-			this.x += this.speedX * 1 * Math.sin(this.angle + (0.5 * Math.PI));
-			this.y += this.speedY * -1 * Math.cos(this.angle + (0.5 * Math.PI));
+			
+			switch (this.type) {
+				case 1: // normal bullet
+					this.x += this.speedX * 1 * Math.sin(this.angle + (0.5 * Math.PI));
+					this.y += this.speedY * -1 * Math.cos(this.angle + (0.5 * Math.PI));
+					break;
+				case 2: // big penetrating bullet
+					
+					break;
+				case 3: // magic missile
+					
+					break;
+			}
 			
 			var playerDistance = Math.sqrt( Math.pow( myGamePiece.x - this.x, 2 ) + Math.pow( myGamePiece.y - this.y, 2 ) );
 			
