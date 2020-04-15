@@ -167,7 +167,7 @@ class CircleEnemy extends GameObject {
 			var ctx = myGameArea.context;
 			ctx.save();
 			ctx.beginPath();
-			ctx.fillStyle= "#f00";
+			ctx.fillStyle= "#00f";
 			//ctx.drawImage(this.image, -this.width / 2, -this.height / 2 );
 			
 			ctx.arc(this.x, this.y, this.width, 0, 2 * Math.PI);
