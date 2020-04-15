@@ -290,7 +290,7 @@ class Player extends GameObject {
 	
 var enemyId = 1;
 
-var repeat = setInterval(spawnSquareEnemey, 5000);
+var repeat = setInterval(spawnSquareEnemy, 5000);
 
 function spawnSquareEnemy() {
 	var index = "enemy" + enemyId;
