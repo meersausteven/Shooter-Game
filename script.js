@@ -92,7 +92,7 @@ class GameObject {
 			ctx.translate(this.x, this.y);
 			ctx.font = "20px Arial";
 			ctx.fillStyle = "#fff";
-			ctx.fillText(this.health, -5, 10);
+			ctx.fillText(this.health, -5, 7.5);
 			ctx.restore();
 		}
 		
@@ -246,7 +246,6 @@ class Player extends GameObject {
 				"<br>Angle: " + angle * 180 / Math.PI + "<br>Distance: " + distance +
 				"<br>Speed: " + myGamePiece.speedX + " | " +  myGamePiece.speedY +
 				"<br>Acceleration: " + myGamePiece.accelerationX + " | " + myGamePiece.accelerationY +
-				"<br>Enemis alive: " + (enemies.length !== 'undefined' ? 0 : enemies.length) +
 				"<br>Score: " + playerScore;
 			;
 			
