@@ -65,6 +65,7 @@ class GameObject {
 		this.y = Math.floor(Math.random() * myGameArea.canvas.height + 50);
 		this.health;
 		this.damage;
+		this.destructionPoints;
 		this.objectSpeed = 1;
 		this.angle = 0;
 		this.speedX = 0;
@@ -107,6 +108,7 @@ class GameObject {
 				}
 			}
 			if (this.health == 0) {
+				playerScore += this.destructionPoints;
 				delete enemies[this.enemyId];
 				
 				console.log("Enemy destroyed.");
@@ -121,6 +123,7 @@ class SquareEnemy extends GameObject {
 		this.enemyId = index;
 		this.health = 3;
 		this.damage = 1;
+		this.destructionPoints = 100;
 		this.objectSpeed = 1.5;
 		
 		this.newPos = function() {
@@ -205,7 +208,8 @@ class Player extends GameObject {
 				"<br>Angle: " + angle * 180 / Math.PI + "<br>Distance: " + distance +
 				"<br>Speed: " + myGamePiece.speedX + " | " +  myGamePiece.speedY +
 				"<br>Acceleration: " + myGamePiece.accelerationX + " | " + myGamePiece.accelerationY +
-				"<br>Enemis alive: " + (enemies.length !== 'undefined' ? 0 : enemies.length);
+				"<br>Enemis alive: " + (enemies.length !== 'undefined' ? 0 : enemies.length) +
+				"<br>Score: " + playerScore;
 			;
 			
 			var ctx = myGameArea.context;
