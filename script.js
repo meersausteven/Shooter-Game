@@ -77,6 +77,9 @@ class GameObject {
 			ctx.save();
 			ctx.translate(this.x, this.y);
 			ctx.rotate(this.angle);
+			ctx.font = this.height + "px Arial";
+			ctx.fillStyle = "#fff";
+			ctx.fillText(this.health, this.x, this.y + this.height);
 			ctx.fillStyle= "#f00";
 			//ctx.drawImage(this.image, -this.width / 2, -this.height / 2 );
 			
@@ -150,8 +153,13 @@ class CircleEnemy extends GameObject {
 		this.draw = function() {
 			var ctx = myGameArea.context;
 			ctx.save();
+			ctx.translate(this.x, this.y);
+			ctx.rotate(this.angle);
+			ctx.font = this.height + "px Arial";
+			ctx.fillStyle = "#fff";
+			ctx.fillText(this.health, this.x, this.y + this.height);
 			ctx.beginPath();
-			ctx.fillStyle= "#0f0";
+			ctx.fillStyle= "#f00";
 			//ctx.drawImage(this.image, -this.width / 2, -this.height / 2 );
 			
 			ctx.arc(this.x, this.y, this.width, 0, 2 * Math.PI);
