@@ -92,7 +92,7 @@ class GameObject {
 			ctx.translate(this.x, this.y);
 			ctx.font = "15px Arial";
 			ctx.fillStyle = "#fff";
-			ctx.fillText(this.health, -7.5, 7.5);
+			ctx.fillText(this.health, 0, 0);
 			ctx.restore();
 		}
 		
