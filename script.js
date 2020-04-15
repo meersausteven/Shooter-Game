@@ -90,9 +90,9 @@ class GameObject {
 			var ctx = myGameArea.context;
 			ctx.save();
 			ctx.translate(this.x, this.y);
-			ctx.font = "15px Arial";
+			ctx.font = "20px Arial";
 			ctx.fillStyle = "#fff";
-			ctx.fillText(this.health, 0, 0);
+			ctx.fillText(this.health, -5, 10);
 			ctx.restore();
 		}
 		
