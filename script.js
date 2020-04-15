@@ -150,8 +150,7 @@ class CircleEnemy extends GameObject {
 		this.draw = function() {
 			var ctx = myGameArea.context;
 			ctx.save();
-			ctx.translate(this.x, this.y);
-			ctx.rotate(this.angle);
+			ctx.beginPath();
 			ctx.fillStyle= "#0f0";
 			//ctx.drawImage(this.image, -this.width / 2, -this.height / 2 );
 			
