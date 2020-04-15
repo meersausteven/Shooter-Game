@@ -92,7 +92,6 @@ class GameObject {
 		this.drawHealth = function() {
 			var ctx = myGameArea.context;
 			ctx.save();
-			ctx.translate(this.x, this.y);
 			ctx.rotate(this.angle);
 			ctx.font = this.height + "px Arial";
 			ctx.fillStyle = "#fff";
