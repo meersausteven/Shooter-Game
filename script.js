@@ -132,7 +132,7 @@ class SquareEnemy extends GameObject {
 
 class CircleEnemy extends GameObject {
 	constructor(index) {
-		super(30, 30, "");
+		super(15, 15, "");
 		this.enemyId = index;
 		this.health = 1;
 		this.damage = 1;
@@ -295,6 +295,8 @@ function spawnEnemies() {
 	var index = "enemy" + enemyId;
 	enemies[index] = new SquareEnemy(index);
 	enemyId++;
+	
+	var index = "enemy" + enemyId;
 	enemies[index] = new CircleEnemy(index);
 	enemyId++;
 }
