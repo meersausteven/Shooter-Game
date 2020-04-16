@@ -13,6 +13,7 @@ var playerUpgrades = {};
 
 var gameWave = 0;
 var enemies = {}, enemyShots = {};
+var aliveEnemies = 0;
 
 function startGame() {
     myGameArea.start();
@@ -120,6 +121,7 @@ class GameObject {
 			if (this.health == 0) {
 				playerScore += this.destructionPoints;
 				delete enemies[this.enemyId];
+				aliveEnemies--;
 				
 				console.log("Enemy destroyed.");
 			}
@@ -344,10 +346,12 @@ function spawnEnemies() {
 	var index = "enemy" + enemyId;
 	enemies[index] = new SquareEnemy(index);
 	enemyId++;
+	aliveEnemies++;
 	
 	var index = "enemy" + enemyId;
 	enemies[index] = new CircleEnemy(index);
 	enemyId++;
+	aliveEnemies++;
 }
 
 function updateGameArea() {
@@ -457,6 +461,6 @@ function enemySpawnPoint() {
 			x = Math.floor(Math.random() * (myGameArea.canvas.width + 101)) - 50;
 		} while ( (x >= -20) && (x <= myGameArea.canvas.width + 20) );
 	}
-	console.log(x + " " + y);
+	
 	return coords = {x: x, y: y};
 }
