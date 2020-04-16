@@ -437,13 +437,13 @@ function enemySpawnPoint() {
 	var coords;
 	var x;
 	var y;
-	console.log(myGameArea.canvas.width + ", " + myGameArea.canvas.height);
+	
 	do {
-		x = Math.floor(Math.random(myGameArea.canvas.width + 100) - 50);
+		x = Math.floor(Math.random() * (myGameArea.canvas.width + 101)) - 50;
 	} while ( (x >= -20) && (x <= myGameArea.canvas.width + 20) );
 	
 	do {
-		y = Math.floor(Math.random(myGameArea.canvas.height + 100) - 50);
+		y = Math.floor(Math.random() * (myGameArea.canvas.height + 101)) - 50;
 	} while ( (y >= -20) && (x <= myGameArea.canvas.height + 20) );
 	
 	return coords = {x: x, y: y};
