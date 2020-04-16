@@ -19,6 +19,8 @@ function startGame() {
     myGamePiece = new Player();
 }
 
+var autofire;
+
 var myGameArea = {
 	canvas : document.createElement("canvas"),
 	start : function() {
@@ -43,7 +45,7 @@ var myGameArea = {
 			mouse.y = e.clientY - rect.top;
 		});
 		this.canvas.addEventListener('mousedown', function (e) {
-			var autofire = setInterval(myGamePiece.shoot, 500);
+			autofire = setInterval(myGamePiece.shoot, 500);
 		});
 		this.canvas.addEventListener('mouseup', function (e) {
 			clearInterval(autofire);
