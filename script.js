@@ -60,7 +60,7 @@ class GameObject {
 	constructor(width, height, image) {
 		this.width = width;
 		this.height = height;
-		var spawn = enemySpawnPoint();console.log(spawn);
+		var spawn = enemySpawnPoint();console.log(myGameArea.canvas.width + ", " + myGameArea.canvas.height);console.log(spawn);
 		this.x = spawn.x;
 		this.y = spawn.y;
 		this.health;
@@ -259,8 +259,8 @@ class Player extends GameObject {
 		this.friction = 0.99;
 		this.accelerationX = 0;
 		this.accelerationY = 0;
-		this.x = myGameArea.canvas.width / 2;
-		this.y = myGameArea.canvas.height / 2;
+		this.x = (myGameArea.canvas.width / 2);
+		this.y = (myGameArea.canvas.height / 2);
 		this.health = playerHealth;
 		this.playerImage = new Image();
 		this.playerImage.src = "/images/playerShip.png";
