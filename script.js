@@ -46,7 +46,7 @@ var myGameArea = {
 		});
 		this.canvas.addEventListener('mousedown', function (e) {
 			myGamePiece.shoot();
-			autofire = setInterval(myGamePiece.shoot, 500);
+			autofire = setInterval(myGamePiece.shoot, 300);
 		});
 		this.canvas.addEventListener('mouseup', function (e) {
 			clearInterval(autofire);
