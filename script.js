@@ -13,7 +13,6 @@ var playerUpgrades = {};
 
 var gameWave = 0;
 var enemies = {}, enemyShots = {};
-var aliveEnemies = 0;
 
 function startGame() {
     myGameArea.start();
@@ -121,7 +120,6 @@ class GameObject {
 			if (this.health == 0) {
 				playerScore += this.destructionPoints;
 				delete enemies[this.enemyId];
-				aliveEnemies--;
 				
 				console.log("Enemy destroyed.");
 			}
@@ -286,8 +284,9 @@ class Player extends GameObject {
 				"<br>Angle: " + angle * 180 / Math.PI + "<br>Distance: " + distance +
 				"<br>Speed: " + myGamePiece.speedX + " | " +  myGamePiece.speedY +
 				"<br>Acceleration: " + myGamePiece.accelerationX + " | " + myGamePiece.accelerationY +
-				"<br>Enemies alive: " + aliveEnemies +
-				"<br>Score: " + playerScore;
+				"<br>Enemies alive: " + (Object.keys(enemies)).length +
+				"<br>Score: " + playerScore +
+				"<br>Active bullets: " + (Object.keys(playerShots)).length;
 			;
 			
 			var ctx = myGameArea.context;
@@ -347,12 +346,10 @@ function spawnEnemies() {
 	var index = "enemy" + enemyId;
 	enemies[index] = new SquareEnemy(index);
 	enemyId++;
-	aliveEnemies++;
 	
 	var index = "enemy" + enemyId;
 	enemies[index] = new CircleEnemy(index);
 	enemyId++;
-	aliveEnemies++;
 }
 
 function updateGameArea() {
