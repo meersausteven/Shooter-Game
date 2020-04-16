@@ -451,6 +451,6 @@ function enemySpawnPoint() {
 	do {
 		y = Math.floor(Math.random() * (myGameArea.canvas.height + 101)) - 50;
 	} while ( (y >= -20) && (x <= myGameArea.canvas.height + 20) );
-	
+	console.log(coords);
 	return coords = {x: x, y: y};
 }
