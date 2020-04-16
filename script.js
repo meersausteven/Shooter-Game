@@ -286,6 +286,7 @@ class Player extends GameObject {
 				"<br>Angle: " + angle * 180 / Math.PI + "<br>Distance: " + distance +
 				"<br>Speed: " + myGamePiece.speedX + " | " +  myGamePiece.speedY +
 				"<br>Acceleration: " + myGamePiece.accelerationX + " | " + myGamePiece.accelerationY +
+				"<br>Enemies alive: " + aliveEnemies +
 				"<br>Score: " + playerScore;
 			;
 			
