@@ -60,8 +60,8 @@ class GameObject {
 	constructor(width, height, image) {
 		this.width = width;
 		this.height = height;
-		this.x = Math.floor(Math.random() * myGameArea.canvas.width + 50);
-		this.y = Math.floor(Math.random() * myGameArea.canvas.height + 50);
+		this.x = enemySpawnPoint().x;
+		this.y = enemySpawnPoint().y;
 		this.health;
 		this.damage;
 		this.destructionPoints;
@@ -258,8 +258,8 @@ class Player extends GameObject {
 		this.friction = 0.99;
 		this.accelerationX = 0;
 		this.accelerationY = 0;
-		this.x = 400;
-		this.y = 300;
+		this.x = myGameArea.canvas.width / 2;
+		this.y = myGameArea.canvas.height / 2;
 		this.health = playerHealth;
 		this.playerImage = new Image();
 		this.playerImage.src = "/images/playerShip.png";
@@ -430,4 +430,16 @@ function thingHitThat(thing, that) {
 	} else {
 		return false;
 	}
+}
+
+function enemySpawnPoint() {
+	do {
+		var x = Math.random(myGameArea.canvas.width + 100) - 50;
+	} while ( (x >= -20) && (x <= myGameArea.canvas.width + 20) );
+	
+	do {
+		var y = Math.random(myGameArea.canvas.height + 100) - 50;
+	} while ( (y >= -20) && (x <= myGameArea.canvas.height + 20) );
+	
+	return var coords = {x: x, y: y};
 }
