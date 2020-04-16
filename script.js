@@ -441,16 +441,22 @@ function thingHitThat(thing, that) {
 
 function enemySpawnPoint() {
 	var coords;
-	var x;
-	var y;
+	var x, y;
+	var coin = Math.floor(Math.random() * 101);
 	
-	do {
+	if (coin >= 50) {
 		x = Math.floor(Math.random() * (myGameArea.canvas.width + 101)) - 50;
-	} while ( (x >= -20) && (x <= myGameArea.canvas.width + 20) );
-	
-	do {
+		
+		do {
+			y = Math.floor(Math.random() * (myGameArea.canvas.height + 101)) - 50;
+		} while ( (y >= -20) && (x <= myGameArea.canvas.height + 20) );
+	} else {
 		y = Math.floor(Math.random() * (myGameArea.canvas.height + 101)) - 50;
-	} while ( (y >= -20) && (x <= myGameArea.canvas.height + 20) );
-	console.log(x + " - " + y);
+		
+		do {
+			x = Math.floor(Math.random() * (myGameArea.canvas.width + 101)) - 50;
+		} while ( (x >= -20) && (x <= myGameArea.canvas.width + 20) );
+	}
+	
 	return coords = {x: x, y: y};
 }
