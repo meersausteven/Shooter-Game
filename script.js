@@ -435,13 +435,15 @@ function thingHitThat(thing, that) {
 
 function enemySpawnPoint() {
 	var coords;
+	var x;
+	var y;
 	
 	do {
-		var x = Math.random(myGameArea.canvas.width + 100) - 50;
+		x = Math.floor(Math.random(myGameArea.canvas.width + 100) - 50);
 	} while ( (x >= -20) && (x <= myGameArea.canvas.width + 20) );
 	
 	do {
-		var y = Math.random(myGameArea.canvas.height + 100) - 50;
+		y = Math.floor(Math.random(myGameArea.canvas.height + 100) - 50);
 	} while ( (y >= -20) && (x <= myGameArea.canvas.height + 20) );
 	
 	return coords = {x: x, y: y};
