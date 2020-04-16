@@ -15,8 +15,8 @@ var gameWave = 0;
 var enemies = {}, enemyShots = {};
 
 function startGame() {
-    myGamePiece = new Player();
     myGameArea.start();
+    myGamePiece = new Player();
 }
 
 var myGameArea = {
