@@ -60,8 +60,9 @@ class GameObject {
 	constructor(width, height, image) {
 		this.width = width;
 		this.height = height;
-		this.x = enemySpawnPoint().x;
-		this.y = enemySpawnPoint().y;
+		var spawn = enemySpawnPoint();console.log(spawn);
+		this.x = spawn.x;
+		this.y = spawn.y;
 		this.health;
 		this.damage;
 		this.destructionPoints;
