@@ -98,7 +98,7 @@ class GameObject {
 			this.speedY = this.objectSpeed * Math.cos(this.angle + (0.5 * Math.PI));
 		}
 		
-		this.calculateDamage = function() {
+		this.hitByShot = function() {
 			for (var shot in playerShots) {
 				shot = playerShots[shot];
 				if (shot != null) {
@@ -270,7 +270,8 @@ class Player extends GameObject {
 		this.draw = function() {
 			distance = Math.sqrt( Math.pow( mouse.x - this.x, 2 ) + Math.pow( mouse.y - this.y, 2 ) );
 			angle = Math.atan2(mouse.y - this.y, mouse.x - this.x);
-
+			
+			// debugging output
 			document.getElementById("test").innerHTML =
 				"Mouse: " + mouse.x + " | " + mouse.y +
 				"<br>Player: " + myGamePiece.x + " | " + myGamePiece.y +
@@ -281,7 +282,6 @@ class Player extends GameObject {
 			;
 			
 			var ctx = myGameArea.context;
-			//myGameArea.clear();
 			ctx.drawImage( this.mouseImage, mouse.x - 10, mouse.y - 10);
 			ctx.save();
 			ctx.translate(this.x, this.y);
@@ -320,7 +320,7 @@ class Player extends GameObject {
 		
 		this.move = "";
 		this.drawHealth = "";
-		this.calculateDamage = "";
+		this.hitByShot = "";
 		
 		this.shoot = function() {
 			var index = "shot" + shotId;
