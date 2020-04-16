@@ -280,7 +280,8 @@ class Player extends GameObject {
 			;
 			
 			var ctx = myGameArea.context;
-			myGameArea.clear();
+			//myGameArea.clear();
+			ctx.drawImage( this.mouseImage, mouse.x - 5, mouse.y - 5);
 			ctx.save();
 			ctx.translate(this.x, this.y);
 			ctx.rotate(angle + (90 * Math.PI / 180));
@@ -293,7 +294,6 @@ class Player extends GameObject {
 			ctx.stroke();
 			
 			ctx.strokeStyle="#ddd";
-			//ctx.drawImage( this.mouseImage, mouse.x - 5, mouse.y - 5);
 			ctx.beginPath();
 			ctx.moveTo(myGamePiece.x, myGamePiece.y);
 			ctx.lineTo(mouse.x, mouse.y);
