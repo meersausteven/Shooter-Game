@@ -2,7 +2,7 @@
 // declare variables that are needed globally
 
 var mouse = {x: 400, y: 300};
-var distance;
+var distance = 0;
 var angle = 0;
 
 var playerXP = 0, playerScore = 0;
@@ -33,18 +33,21 @@ var myGameArea = {
 			e.preventDefault();
 			myGameArea.keys = (myGameArea.keys || []);
 			myGameArea.keys[e.keyCode] = (e.type == "keydown");
-		})
+		});
 		window.addEventListener('keyup', function (e) {
 			myGameArea.keys[e.keyCode] = (e.type == "keydown");
-		})
+		});
 		this.canvas.addEventListener('mousemove', function (e) {
 			var rect = myGameArea.canvas.getBoundingClientRect();
 			mouse.x = e.clientX - rect.left;
 			mouse.y = e.clientY - rect.top;
-		})
+		});
 		this.canvas.addEventListener('mousedown', function (e) {
-			myGamePiece.shoot();
-		})
+			var autofire = setInterval(myGamePiece.shoot, 500);
+		});
+		this.canvas.addEventListener('mouseup', function (e) {
+			clearInterval(autofire);
+		});
 	},
 	
 	stop : function() {
