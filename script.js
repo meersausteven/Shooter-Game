@@ -152,7 +152,7 @@ class SquareEnemy extends GameObject {
 			this.y -= this.speedY;
 			this.angle = Math.atan2(myGamePiece.y - this.y, myGamePiece.x - this.x);
 			
-			this.calculateDamage();
+			this.hitByShot();
 		}
 	}
 }
@@ -171,7 +171,7 @@ class CircleEnemy extends GameObject {
 			this.y -= this.speedY;
 			this.angle = Math.atan2(myGamePiece.y - this.y, myGamePiece.x - this.x);
 			
-			this.calculateDamage();
+			this.hitByShot();
 		}
 		
 		this.draw = function() {
