@@ -3,11 +3,12 @@ body {
 	background-color: #444;
 }
 canvas {
-	margin: 50px auto 0px;
+	margin: 20px auto 0px;
 	background-color: #000 !important;
 	display: block;
 	border: 3px inset #999;
 	background-color: #ffffff;
+	cursor: none;
 }
 #test {
 	margin-left: 120px;
