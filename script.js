@@ -60,7 +60,7 @@ class GameObject {
 	constructor(width, height, image) {
 		this.width = width;
 		this.height = height;
-		var spawn = enemySpawnPoint();console.log(myGameArea.canvas.width + ", " + myGameArea.canvas.height);console.log(spawn);
+		var spawn = enemySpawnPoint();
 		this.x = spawn.x;
 		this.y = spawn.y;
 		this.health;
@@ -437,7 +437,7 @@ function enemySpawnPoint() {
 	var coords;
 	var x;
 	var y;
-	
+	console.log(myGameArea.canvas.width + ", " + myGameArea.canvas.height);
 	do {
 		x = Math.floor(Math.random(myGameArea.canvas.width + 100) - 50);
 	} while ( (x >= -20) && (x <= myGameArea.canvas.width + 20) );
