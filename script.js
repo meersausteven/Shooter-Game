@@ -145,9 +145,10 @@ class MenuObject {
 		this.y = y;
 		
 		this.draw = function() {
+			console.log(this.type);
 			ctx.save();
 
-			switch (type) {
+			switch (this.type) {
 				case "label":
 					ctx.translate(this.x, this.y);
 					ctx.font = "15px Arial";
@@ -620,7 +621,6 @@ function updateGameArea() {
 			}
 		}
 	} else if (myGameArea.screen == "menu") {
-		console.log("lol");
 		for (var item in menuItems) {
 			item = menuItems[item];
 			if (item != null) {
