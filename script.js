@@ -211,10 +211,12 @@ function spawnSingleEnemy(enemyType) {
 	}
 	enemyId++;
 }
-/*
+
 function spawnEnemyWaves(waveLevel) {
+	var i = 0;
 	for (wave of enemyWaves[waveLevel]) {
-		(function (enemyWaves.indexOf(wave)) {
+		i++;
+		(function (i) {
 			setTimeout(function() {
 				if (typeof(wave) == "object") {
 					for(enemy of wave) {
@@ -224,10 +226,10 @@ function spawnEnemyWaves(waveLevel) {
 					spawnSingleEnemy(wave);
 				}
 			}, 5000 * enemyWaves.indexOf(wave));
-		})(enemyWaves.indexOf(wave));
+		})(i);
 	}
 }
-*/
+
 var enemyWaves = [
 	[1, 1, [1, 2], [1, 1, 1, 1, 1], [2, 2, 2]],
 	[],
