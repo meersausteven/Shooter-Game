@@ -85,10 +85,9 @@ class MenuObject {
 				break;				
 			default:
 				// calculate width from percentage
-				console.log("height input: " + height);console.log("height should be: " + height.replace("%", ""));
-				height.replace("%", "");console.log("height is: " + height);
-				var percentage = height / 100;console.log("percentage is: " + percentage);
-				height = myGameArea.canvas.height * percentage;console.log("new height is: " + height);
+				try {height.replace("%", "");}catch(e) {console.log(e);}
+				var percentage = height / 100;
+				height = myGameArea.canvas.height * percentage;
 				break;
 		}
 		
