@@ -14,8 +14,6 @@ var playerUpgrades = {};
 var waveLevel = 0;
 var enemies = {}, enemyShots = {};
 
-document.onload(myGameArea.initialize());
-
 function startGame() {
 	myGameArea.clear();
 	myGameArea.startGame();
@@ -657,3 +655,5 @@ function enemySpawnPoint() {
 	
 	return coords = {x: x, y: y};
 }
+
+window.onload(myGameArea.initialize());
