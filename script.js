@@ -225,7 +225,7 @@ function spawnEnemyWaves(waveLevel) {
 				} else {
 					spawnSingleEnemy(wave);
 				}
-			}, 5000 * enemyWaves.indexOf(wave)
+			}, 5000 * enemyWaves.indexOf(wave));
 		})(i);
 	}
 }
