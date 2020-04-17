@@ -27,13 +27,13 @@ var myGameArea = {
 		document.body.insertBefore(this.canvas, document.body.childNodes[0]);
 		this.showScreen("main");
 		this.gameState = "menu";
-		document.getElementsByTagName("canvas").style.cssText = "cursor: unset;"
+		document.getElementsByTagName("canvas").style.cursor = "unset;"
 		this.interval = window.requestAnimationFrame(updateGameArea);
 	},
 	
 	startGame : function() {
 		this.gameState = "game";
-		document.getElementsByTagName("canvas").style.cssText = "cursor: none;"
+		document.getElementsByTagName("canvas").style.cursor = "none;"
 		
 		window.addEventListener('keydown', function (e) {
 			e.preventDefault();
