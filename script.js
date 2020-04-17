@@ -190,12 +190,9 @@ class CircleEnemy extends GameObject {
 	}
 }
 
-class enemyWave {
-	constructor() {
-		this.level = waveLevel;
-		spawnEnemyWaves(enemyWaves[this.level]);
-		waveLevel++;
-	}
+function startNextWave() {
+	spawnEnemyWaves(enemyWaves[waveLevel]);
+	waveLevel++;
 }
 	
 var enemyId = 1;
@@ -218,6 +215,7 @@ function spawnSingleEnemy(enemyType) {
 function spawnEnemyWaves(waveLevel) {
 	setTimeout(function() {
 		for (enemy of enemyWaves[waveLevel]) {
+			console.log(enemy);
 			if (typeof(enemy) == "object") {
 				enemy.foreach(function() {
 					spawnSingleEnemy(enemy);
