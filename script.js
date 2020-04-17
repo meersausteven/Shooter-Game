@@ -216,9 +216,8 @@ function spawnEnemyWaves(waveLevel) {
 	var i = 0;
 	for (let wave of enemyWaves[waveLevel]) {
 		(function (i) {
-			console.log("delay: " + 5000*i);
 			setTimeout(function() {
-				console.log("wave: " + wave);
+				console.log("wave " + i + ": " + wave);
 				if (typeof(wave) == "object") {
 					for(enemy of wave) {
 						console.log("array: " + wave);
