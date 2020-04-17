@@ -214,7 +214,7 @@ function spawnSingleEnemy(enemyType) {
 
 function spawnEnemyWaves(waveLevel) {
 	var i = 0;
-	for (wave of enemyWaves[waveLevel]) {
+	for (let wave of enemyWaves[waveLevel]) {
 		(function (i) {
 			console.log("delay: " + 5000*i);
 			setTimeout(function() {
