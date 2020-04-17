@@ -25,12 +25,13 @@ var myGameArea = {
 		this.canvas.height = 900;
 		this.context = this.canvas.getContext("2d");
 		document.body.insertBefore(this.canvas, document.body.childNodes[0]);
-		this.showScreen("menu");
+		this.showScreen("main");
+		this.gameState = "menu";
 		this.interval = window.requestAnimationFrame(updateGameArea);
 	},
 	
 	startGame : function() {
-		this.screen = "game";
+		this.gameState = "game";
 		
 		window.addEventListener('keydown', function (e) {
 			e.preventDefault();
@@ -551,7 +552,7 @@ class Player extends GameObject {
 function updateGameArea() {
 	myGameArea.clear();
 	
-	if (myGameArea.screen == "game") {
+	if (myGameArea.gameState == "game") {
 		myGamePiece.speedX = 0;
 		myGamePiece.speedY = 0;
 
@@ -624,7 +625,7 @@ function updateGameArea() {
 				enemy.draw();
 			}
 		}
-	} else if (myGameArea.screen == "menu") {
+	} else if (myGameArea.gameState == "menu") {
 		for (var item in menuItems) {
 			item = menuItems[item];
 			if (item != null) {
