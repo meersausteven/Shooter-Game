@@ -215,16 +215,17 @@ function spawnSingleEnemy(enemyType) {
 function spawnEnemyWaves(waveLevel) {
 	for (wave of enemyWaves[waveLevel]) {
 		(function (enemyWaves.indexOf(wave)) {
-		setTimeout(function() {
-			if (typeof(wave) == "object") {
-				for(enemy of wave) {
-					spawnSingleEnemy(enemy);
+			setTimeout(function() {
+				if (typeof(wave) == "object") {
+					for(enemy of wave) {
+						spawnSingleEnemy(enemy);
+					}
+				} else {
+					spawnSingleEnemy(wave);
 				}
-			} else {
-				spawnSingleEnemy(wave);
-			}
-		}, 5000 * enemyWaves.indexOf(wave));
-	})(enemyWaves.indexOf(wave));
+			}, 5000 * enemyWaves.indexOf(wave));
+		})(enemyWaves.indexOf(wave));
+	}
 }
 
 var enemyWaves = [
