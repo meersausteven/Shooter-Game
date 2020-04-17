@@ -217,14 +217,11 @@ function spawnEnemyWaves(waveLevel) {
 	for (let wave of enemyWaves[waveLevel]) {
 		(function (i) {
 			setTimeout(function() {
-				console.log("wave " + i + ": " + wave);
 				if (typeof(wave) == "object") {
 					for(enemy of wave) {
-						console.log("array: " + wave);
 						spawnSingleEnemy(enemy);
 					}
 				} else {
-					console.log("single: " + wave);
 					spawnSingleEnemy(wave);
 				}
 			}, 5000 * i);
