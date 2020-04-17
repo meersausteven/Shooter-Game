@@ -14,7 +14,7 @@ var playerUpgrades = {};
 var waveLevel = 0;
 var enemies = {}, enemyShots = {};
 
-window.onload(myGameArea.initialize());
+document.onload(myGameArea.initialize());
 
 function startGame() {
 	myGameArea.clear();
