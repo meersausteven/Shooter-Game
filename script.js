@@ -213,20 +213,18 @@ function spawnSingleEnemy(enemyType) {
 }
 
 function spawnEnemyWaves(waveLevel) {
-	for (let wave of enemyWaves[waveLevel]) {
-		console.log("wave: " + wave);
+	for (wave of enemyWaves[waveLevel]) {
+		(function (enemyWaves.indexOf(wave)) {
 		setTimeout(function() {
 			if (typeof(wave) == "object") {
 				for(enemy of wave) {
-					console.log("array: " + enemy);
 					spawnSingleEnemy(enemy);
 				}
 			} else {
 				spawnSingleEnemy(wave);
-				console.log("single: " + enemy);
 			}
-		}, 5000);
-	}
+		}, 5000 * enemyWaves.indexOf(wave));
+	})(enemyWaves.indexOf(wave));
 }
 
 var enemyWaves = [
