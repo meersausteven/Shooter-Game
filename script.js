@@ -11,7 +11,7 @@ var playerHealth = 10;
 var playerShots = {};
 var playerUpgrades = {};
 
-var gameWave = 0;
+var waveLevel = 0;
 var enemies = {}, enemyShots = {};
 
 function startGame() {
@@ -189,7 +189,62 @@ class CircleEnemy extends GameObject {
 		}
 	}
 }
+
+class enemyWave {
+	constructor() {
+		this.level = waveLevel;
+		
+		spawnEnemyWave(enemyWaves[this.level]);
+		waveLevel++;
+	}
+}
 	
+var enemyId = 1;
+
+var repeat = setInterval(spawnEnemies, 5000);
+
+function spawnEnemies() {
+	var index = "enemy" + enemyId;
+	enemies[index] = new SquareEnemy(index);
+	enemyId++;
+	
+	var index = "enemy" + enemyId;
+	enemies[index] = new CircleEnemy(index);
+	enemyId++;
+}
+
+/*
+function spawnEnemyWaves(waveLevel) {
+
+	for (enemy of enemyWaves[waveLevel]) {
+		console.log(enemy);
+	}
+	
+	var index = "enemy" + enemyId;
+	
+	switch (enemy) {
+		case 1:
+			enemies[index] = new SquareEnemy(index);
+			break;
+		case 2:
+			enemies[index] = new CircleEnemy(index);
+			break;
+	}
+	
+	enemyId++;
+}
+*/
+var enemyWaves = [
+	[1, 1, [1, 2], [1, 1, 1, 1, 1], [2, 2, 2]],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[],
+	[]
+];
+
 class Shot {
 	constructor(angle, shotId) {
 		this.shotId = shotId;
@@ -336,20 +391,6 @@ class Player extends GameObject {
 			shotId++;
 		}
 	}
-}
-	
-var enemyId = 1;
-
-var repeat = setInterval(spawnEnemies, 5000);
-
-function spawnEnemies() {
-	var index = "enemy" + enemyId;
-	enemies[index] = new SquareEnemy(index);
-	enemyId++;
-	
-	var index = "enemy" + enemyId;
-	enemies[index] = new CircleEnemy(index);
-	enemyId++;
 }
 
 function updateGameArea() {
