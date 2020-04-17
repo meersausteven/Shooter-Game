@@ -144,7 +144,7 @@ class MenuObject {
 		}
 		
 		this.y = y;
-		
+		console.log(this.x + ", " + this.y + ", " + this.width + ", " + this.height);
 		this.draw = function() {
 			ctx.save();
 
