@@ -432,7 +432,6 @@ class Shot {
 		}
 	
 		this.newPos = function() {
-			
 			switch (this.type) {
 				case 1: // normal bullet
 					this.x += this.speedX * 1 * Math.sin(this.angle + (0.5 * Math.PI));
@@ -621,6 +620,7 @@ function updateGameArea() {
 			}
 		}
 	} else if (myGameArea.screen == "menu") {
+		console.log("lol");
 		for (var item in menuItems) {
 			item = menuItems[item];
 			if (item != null) {
