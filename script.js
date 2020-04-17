@@ -57,6 +57,7 @@ var myGameArea = {
 	showScreen : function(screen) {
 		this.clear();
 		this.screen = screen;
+		console.log("i will display the following screen: " + this.screen);
 		displayScreen(this.screen);
 	},
 	
@@ -189,6 +190,9 @@ class MenuObject {
 var menuItemId = 1;
 
 function displayScreen(screen) {
+	
+	console.log("Function is being called and will display this screen: " + screen);
+	
 	switch (screen) {
 		case "main":
 			// Main Menu
