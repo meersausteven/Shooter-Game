@@ -193,7 +193,7 @@ class CircleEnemy extends GameObject {
 class enemyWave {
 	constructor() {
 		this.level = waveLevel;
-		spawnEnemyWave(enemyWaves[this.level]);
+		spawnEnemyWaves(enemyWaves[this.level]);
 		waveLevel++;
 	}
 }
