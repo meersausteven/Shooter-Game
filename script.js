@@ -215,8 +215,8 @@ function spawnSingleEnemy(enemyType) {
 function spawnEnemyWaves(waveLevel) {
 	var i = 0;
 	for (wave of enemyWaves[waveLevel]) {
-		i++;
 		(function (i) {
+			i++;
 			setTimeout(function() {
 				if (typeof(wave) == "object") {
 					for(enemy of wave) {
@@ -225,9 +225,9 @@ function spawnEnemyWaves(waveLevel) {
 				} else {
 					spawnSingleEnemy(wave);
 				}
-			}, 5000 * enemyWaves.indexOf(wave));
-		})(i);
-	}
+			}, 5000 * enemyWaves.indexOf(wave)
+		});
+	})(i);
 }
 
 var enemyWaves = [
