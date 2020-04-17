@@ -85,9 +85,10 @@ class MenuObject {
 				break;				
 			default:
 				// calculate width from percentage
+				console.log("before: " + height);
 				height.replace("%", "");
 				var percentage = height / 100;
-				height = myGameArea.canvas.height * percentage;
+				height = myGameArea.canvas.height * percentage;console.log("after: " + height);
 				break;
 		}
 		
@@ -145,7 +146,7 @@ class MenuObject {
 		}
 		
 		this.y = y;
-		console.log(this.x + ", " + this.y + ", " + this.width + ", " + this.height);
+		
 		this.draw = function() {
 			ctx.save();
 
