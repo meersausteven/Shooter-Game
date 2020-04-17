@@ -8,7 +8,6 @@ canvas {
 	display: block;
 	border: 3px inset #999;
 	background-color: #ffffff;
-	cursor: none;
 }
 #test {
 	margin-left: 120px;
