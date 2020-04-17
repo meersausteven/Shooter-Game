@@ -211,7 +211,7 @@ function spawnSingleEnemy(enemyType) {
 	}
 	enemyId++;
 }
-
+/*
 function spawnEnemyWaves(waveLevel) {
 	for (wave of enemyWaves[waveLevel]) {
 		(function (enemyWaves.indexOf(wave)) {
@@ -227,7 +227,7 @@ function spawnEnemyWaves(waveLevel) {
 		})(enemyWaves.indexOf(wave));
 	}
 }
-
+*/
 var enemyWaves = [
 	[1, 1, [1, 2], [1, 1, 1, 1, 1], [2, 2, 2]],
 	[],
