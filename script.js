@@ -80,7 +80,8 @@ class MenuObject {
 		
 		switch (height) {
 			case "auto":
-				
+				ctx.font = "bold 25px Arial";
+				height = ctx.measureText(this.text).height;
 				break;				
 			default:
 				// calculate width from percentage
