@@ -214,12 +214,12 @@ function spawnSingleEnemy(enemyType) {
 
 function spawnEnemyWaves(waveLevel) {
 	setTimeout(function() {
-		for (enemy of enemyWaves[waveLevel]) {
+		for (wave of enemyWaves[waveLevel]) {
 			console.log(enemy);
 			if (typeof(enemy) == "object") {
-				enemy.foreach(function() {
+				for(enemy of wave) {
 					spawnSingleEnemy(enemy);
-				});
+				}
 			} else {
 				spawnSingleEnemy(enemy);
 			}
