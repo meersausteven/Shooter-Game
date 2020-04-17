@@ -185,7 +185,7 @@ class MenuObject {
 	}
 }
 
-var menuItemId = 0;
+var menuItemId = 1;
 
 function displayScreen(screen) {
 	switch (screen) {
@@ -195,11 +195,11 @@ function displayScreen(screen) {
 			menuItems[index] = new MenuObject("heading", "100%", "30%", "center", "top", "Space Shooter Thingy!");
 			menuItemId++;
 			
-			var index = "menuItem" + menuItemId;
+			index = "menuItem" + menuItemId;
 			menuItems[index] = new MenuObject("startbutton", "50%", "auto", "center", "center", "Start Game");
 			menuItemId++;
 			
-			var index = "menuItem" + menuItemId;
+			index = "menuItem" + menuItemId;
 			menuItems[index] = new MenuObject("shopbutton", "50%", "auto", "center", "bottom", "Shop");
 			menuItemId++;
 			break;
