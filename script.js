@@ -14,22 +14,30 @@ var playerUpgrades = {};
 var waveLevel = 0;
 var enemies = {}, enemyShots = {};
 
+window.onload(myGameArea.initialize());
+
 function startGame() {
-    myGameArea.start();
-    myGamePiece = new Player();
+	myGameArea.clear();
+	myGameArea.startGame();
+	myGamePiece = new Player();
 }
 
 var autofire;
 
 var myGameArea = {
 	canvas : document.createElement("canvas"),
-	start : function() {
+	
+	initialize : function() {
 		this.canvas.width = 1600;
 		this.canvas.height = 900;
 		this.context = this.canvas.getContext("2d");
 		document.body.insertBefore(this.canvas, document.body.childNodes[0]);
-		this.frameNo = 0;
+		this.showScreen("main");
 		this.interval = window.requestAnimationFrame(updateGameArea);
+	},
+	
+	startGame : function() {
+		this.screen = "game";
 		
 		window.addEventListener('keydown', function (e) {
 			e.preventDefault();
@@ -53,12 +61,157 @@ var myGameArea = {
 		});
 	},
 	
+	showScreen : function(screen) {
+		this.clear();
+		this.screen = screen;
+		displayScreen(this.screen);
+	},
+	
 	stop : function() {
 		window.cancelAnimationFrame(interval);
 	},
 	
 	clear : function() {
 		this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+	}
+}
+
+class MenuObject {
+	constructor(type, width, height, x, y, text) {
+		this.type = type;
+		this.text = text;
+		this.scale = 1;
+		
+		var ctx = myGameArea.context;
+		
+		switch (height) {
+			case "auto":
+				
+				break;				
+			default:
+				// calculate width from percentage
+				height.replace("%", "");
+				var percentage = height / 100;
+				height = myGameArea.canvas.height * percentage;
+				break;
+		}
+		
+		this.height = height;
+		this.textHeight = this.height - 10;
+		
+		switch (width) {
+			case "auto":
+				// not tested yet
+				ctx.font = "bold " + this.textHeight + "px Arial";
+				width = ctx.measureText(this.text).width;
+				break;				
+			default:
+				// calculate width from percentage
+				width.replace("%", "");
+				var percentage = width / 100;
+				width = myGameArea.canvas.width * percentage;
+				break;
+		}
+		
+		this.width = width;
+		this.textWidth = this.width - 10;
+		ctx.scale(this.width / this.textWidth, this.height / this.textHeight);
+		
+		switch (x) {
+			case "left":
+				x = 20 + this.width / 2;
+				break;				
+			case "center":
+				x = myGameArea.canvas.width / 2;
+				break;				
+			case "right":
+				x = myGameArea.canvas.width - 20 - (this.width / 2);
+				break;				
+			default:
+				// nothing i guess
+				break;
+		}
+		
+		this.x = x;
+		
+		switch (y) {
+			case "top":
+				y = 20 + this.height / 2;
+				break;				
+			case "center":
+				y = myGameArea.canvas.height / 2;
+				break;				
+			case "bottom":
+				y = myGameArea.canvas.height - 20 - (this.height / 2);
+				break;				
+			default:
+				// nothing i guess
+				break;
+		}
+		
+		this.y = y;
+		
+		this.draw = function() {
+			ctx.save();
+
+			switch (type) {
+				case "label":
+					ctx.translate(this.x, this.y);
+					ctx.font = "15px Arial";
+					ctx.textAlign="center"; 
+					ctx.textBaseline = "middle";
+					ctx.fillStyle = "ffffff";
+					ctx.fillText(this.text, this.x + (this.width / 2), this.y + (this.height / 2));
+					break;
+				case "heading":
+					ctx.translate(this.x, this.y);
+					ctx.font = "bold 42px Arial";
+					ctx.textAlign="center"; 
+					ctx.textBaseline = "middle";
+					ctx.fillStyle = "ffffff";
+					ctx.fillText(this.text, this.x + (this.width / 2), this.y + (this.height / 2));
+					break;
+				case "button":
+					ctx.translate(this.x, this.y);
+					ctx.lineWidth = 4;
+					ctx.strokeStyle = "#ffffff";
+					ctx.strokeRect(this.width / -2, this.height / -2, this.width, this.height);
+					ctx.font = "25px Arial";
+					ctx.textAlign="center"; 
+					ctx.textBaseline = "middle";
+					ctx.fillStyle = "ffffff";
+					ctx.fillText(this.text, this.x + (this.width / 2), this.y + (this.height / 2));
+					break;
+				default:
+					// default will be used for different upgrades
+					// type will contain upgrade id as well
+					break;
+			}
+			ctx.restore();
+		}
+		this.draw();
+	}
+}
+
+function displayScreen(screen) {
+	switch (screen) {
+		case "main":
+			// Main Menu
+			new MenuObject("heading", "100%", "30%", "center", "top", "Space Shooter Thingy!");
+			new MenuObject("startbutton", "50%", "auto", "center", "center", "Start Game");
+			new MenuObject("shopbutton", "50%", "auto", "center", "bottom", "Shop");
+			break;
+		case "shop":
+			// Upgrade Shop Menu
+			new MenuObject("heading", "100%", "30%", "center", "top", "Upgrade Shop");
+			new MenuObject("menubutton", "auto", "auto", "left", "bottom", "Main Menu");
+			// Still needs buttons for upgrades
+			// ...
+			//
+			break;
+		default:
+			
+			break;
 	}
 }
 
@@ -391,77 +544,82 @@ class Player extends GameObject {
 
 function updateGameArea() {
 	myGameArea.clear();
-	myGamePiece.speedX = 0;
-	myGamePiece.speedY = 0;
 	
-	myGamePiece.accelerationX *= myGamePiece.friction;
-	myGamePiece.accelerationY *= myGamePiece.friction;
-	
-	if ( (myGamePiece.accelerationX < 0.01) && (myGamePiece.accelerationX > -0.01) ) {
-		myGamePiece.accelerationX = 0;
-	}
-	if ( (myGamePiece.accelerationY < 0.01) && (myGamePiece.accelerationY > -0.01) ) {
-		myGamePiece.accelerationY = 0;
-	}
-	
-	if (myGameArea.keys && myGameArea.keys[87]) {
-		if (distance > 10) {
-			myGamePiece.speedX += 1 * Math.sin(angle + (0.5 * Math.PI));
-			myGamePiece.speedY += 1 * Math.cos(angle + (0.5 * Math.PI));
-			
-			myGamePiece.accelerationX += 0.1 * Math.sin(angle + (0.5 * Math.PI));
-			myGamePiece.accelerationY += 0.1 * Math.cos(angle + (0.5 * Math.PI));
-		}
-	}
+	if (myGameArea.screen == "game") {
+		myGamePiece.speedX = 0;
+		myGamePiece.speedY = 0;
 
-	if (myGameArea.keys && myGameArea.keys[83]) {
-		myGamePiece.speedX += -1 * Math.sin(angle + (0.5 * Math.PI));
-		myGamePiece.speedY += -1 * Math.cos(angle + (0.5 * Math.PI));
+		myGamePiece.accelerationX *= myGamePiece.friction;
+		myGamePiece.accelerationY *= myGamePiece.friction;
+
+		if ( (myGamePiece.accelerationX < 0.01) && (myGamePiece.accelerationX > -0.01) ) {
+			myGamePiece.accelerationX = 0;
+		}
+		if ( (myGamePiece.accelerationY < 0.01) && (myGamePiece.accelerationY > -0.01) ) {
+			myGamePiece.accelerationY = 0;
+		}
+
+		if (myGameArea.keys && myGameArea.keys[87]) {
+			if (distance > 10) {
+				myGamePiece.speedX += 1 * Math.sin(angle + (0.5 * Math.PI));
+				myGamePiece.speedY += 1 * Math.cos(angle + (0.5 * Math.PI));
+
+				myGamePiece.accelerationX += 0.1 * Math.sin(angle + (0.5 * Math.PI));
+				myGamePiece.accelerationY += 0.1 * Math.cos(angle + (0.5 * Math.PI));
+			}
+		}
+
+		if (myGameArea.keys && myGameArea.keys[83]) {
+			myGamePiece.speedX += -1 * Math.sin(angle + (0.5 * Math.PI));
+			myGamePiece.speedY += -1 * Math.cos(angle + (0.5 * Math.PI));
+
+			myGamePiece.accelerationX += -0.1 * Math.sin(angle + (0.5 * Math.PI));
+			myGamePiece.accelerationY += -0.1 * Math.cos(angle + (0.5 * Math.PI));
+		}
+
+		if (myGameArea.keys && myGameArea.keys[65]) {
+			if (distance > 10) {
+				angle += Math.acos(1 - Math.pow(1 / distance,2) / 2);
+				myGamePiece.speedX += 1 * Math.sin(angle + (2 * Math.PI));
+				myGamePiece.speedY += 1 * Math.cos(angle + (2 * Math.PI));
+
+				myGamePiece.accelerationX += 0.05 * Math.sin(angle + (2 * Math.PI)) + 0.025 * Math.sin(angle + (0.5 * Math.PI));
+				myGamePiece.accelerationY += 0.05 * Math.cos(angle + (2 * Math.PI)) + 0.025 * Math.cos(angle + (0.5 * Math.PI));
+			}
+		}
+
+		if (myGameArea.keys && myGameArea.keys[68]) {
+			if (distance > 10) {
+				angle -= Math.acos(1 - Math.pow(1 / distance,2) / 2);
+				myGamePiece.speedX += -1 * Math.sin(angle + (2 * Math.PI));
+				myGamePiece.speedY += -1 * Math.cos(angle + (2 * Math.PI));
+
+				myGamePiece.accelerationX += -0.05 * Math.sin(angle + (2 * Math.PI)) + 0.025 * Math.sin(angle + (0.5 * Math.PI));
+				myGamePiece.accelerationY += -0.05 * Math.cos(angle + (2 * Math.PI)) + 0.025 * Math.cos(angle + (0.5 * Math.PI));
+			}
+		}
+
+		myGamePiece.newPos();
+		myGamePiece.draw();
+
+		for (var shot in playerShots) {
+			shot = playerShots[shot];
+			if (shot != null) {
+				shot.newPos();
+				shot.draw();
+			}
+		}
+
+		for (var enemy in enemies) {
+			enemy = enemies[enemy];
+			if (enemy != null) {
+				enemy.move();
+				enemy.newPos();
+				enemy.draw();
+			}
+		}
+	} else if (myGameArea.screen == "menu") {
 		
-		myGamePiece.accelerationX += -0.1 * Math.sin(angle + (0.5 * Math.PI));
-		myGamePiece.accelerationY += -0.1 * Math.cos(angle + (0.5 * Math.PI));
-	}
-
-	if (myGameArea.keys && myGameArea.keys[65]) {
-		if (distance > 10) {
-			angle += Math.acos(1 - Math.pow(1 / distance,2) / 2);
-			myGamePiece.speedX += 1 * Math.sin(angle + (2 * Math.PI));
-			myGamePiece.speedY += 1 * Math.cos(angle + (2 * Math.PI));
-			
-			myGamePiece.accelerationX += 0.05 * Math.sin(angle + (2 * Math.PI)) + 0.025 * Math.sin(angle + (0.5 * Math.PI));
-			myGamePiece.accelerationY += 0.05 * Math.cos(angle + (2 * Math.PI)) + 0.025 * Math.cos(angle + (0.5 * Math.PI));
-		}
-	}
-
-	if (myGameArea.keys && myGameArea.keys[68]) {
-		if (distance > 10) {
-			angle -= Math.acos(1 - Math.pow(1 / distance,2) / 2);
-			myGamePiece.speedX += -1 * Math.sin(angle + (2 * Math.PI));
-			myGamePiece.speedY += -1 * Math.cos(angle + (2 * Math.PI));
-			
-			myGamePiece.accelerationX += -0.05 * Math.sin(angle + (2 * Math.PI)) + 0.025 * Math.sin(angle + (0.5 * Math.PI));
-			myGamePiece.accelerationY += -0.05 * Math.cos(angle + (2 * Math.PI)) + 0.025 * Math.cos(angle + (0.5 * Math.PI));
-		}
-	}
-
-	myGamePiece.newPos();
-	myGamePiece.draw();
-			
-	for (var shot in playerShots) {
-		shot = playerShots[shot];
-		if (shot != null) {
-			shot.newPos();
-			shot.draw();
-		}
-	}
-	
-	for (var enemy in enemies) {
-		enemy = enemies[enemy];
-		if (enemy != null) {
-			enemy.move();
-			enemy.newPos();
-			enemy.draw();
-		}
 	}
 	
 	window.requestAnimationFrame(updateGameArea);
