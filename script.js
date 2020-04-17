@@ -181,7 +181,6 @@ class MenuObject {
 			}
 			ctx.restore();
 		}
-		this.draw();
 	}
 }
 
@@ -189,9 +188,12 @@ function displayScreen(screen) {
 	switch (screen) {
 		case "main":
 			// Main Menu
-			new MenuObject("heading", "100%", "30%", "center", "top", "Space Shooter Thingy!");
-			new MenuObject("startbutton", "50%", "auto", "center", "center", "Start Game");
-			new MenuObject("shopbutton", "50%", "auto", "center", "bottom", "Shop");
+			var headline1 = new MenuObject("heading", "100%", "30%", "center", "top", "Space Shooter Thingy!");
+			headline1.draw();
+			var button1 = new MenuObject("startbutton", "50%", "auto", "center", "center", "Start Game");
+			button1.draw();
+			var button2 = new MenuObject("shopbutton", "50%", "auto", "center", "bottom", "Shop");
+			button2.draw();
 			break;
 		case "shop":
 			// Upgrade Shop Menu
