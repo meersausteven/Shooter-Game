@@ -656,4 +656,6 @@ function startGame() {
 	myGamePiece = new Player();
 }
 
-window.onload(myGameArea.initialize());
+window.onload = function() {
+	myGameArea.initialize();
+}
