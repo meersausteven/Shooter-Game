@@ -14,6 +14,7 @@ var playerUpgrades = {};
 var waveLevel = 0;
 var enemies = {}, enemyShots = {};
 
+var menuItems = {};
 var autofire;
 
 var myGameArea = {
@@ -184,16 +185,23 @@ class MenuObject {
 	}
 }
 
+var menuItemId = 0;
+
 function displayScreen(screen) {
 	switch (screen) {
 		case "main":
 			// Main Menu
-			var headline1 = new MenuObject("heading", "100%", "30%", "center", "top", "Space Shooter Thingy!");
-			headline1.draw();
-			var button1 = new MenuObject("startbutton", "50%", "auto", "center", "center", "Start Game");
-			button1.draw();
-			var button2 = new MenuObject("shopbutton", "50%", "auto", "center", "bottom", "Shop");
-			button2.draw();
+			var index = "menuItem" + menuItemId;
+			menuItems[index] = new MenuObject("heading", "100%", "30%", "center", "top", "Space Shooter Thingy!");
+			menuItemId++;
+			
+			var index = "menuItem" + menuItemId;
+			menuItems[index] = new MenuObject("startbutton", "50%", "auto", "center", "center", "Start Game");
+			menuItemId++;
+			
+			var index = "menuItem" + menuItemId;
+			menuItems[index] = new MenuObject("shopbutton", "50%", "auto", "center", "bottom", "Shop");
+			menuItemId++;
 			break;
 		case "shop":
 			// Upgrade Shop Menu
@@ -613,6 +621,12 @@ function updateGameArea() {
 			}
 		}
 	} else if (myGameArea.screen == "menu") {
+		for (var item in menuItems) {
+			item = menuItems[item];
+			if (item != null) {
+				item.draw();
+			}
+		}
 		
 	}
 	
