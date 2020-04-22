@@ -158,7 +158,7 @@ class MenuObject {
 					ctx.textAlign = "center"; 
 					ctx.textBaseline = "middle";
 					ctx.fillStyle = "#ffffff";
-					ctx.fillText(this.text, this.x, this.y);
+					ctx.fillText(this.text, 0, 0);
 					break;
 				case "heading":
 					ctx.translate(this.x, this.y);
@@ -166,19 +166,18 @@ class MenuObject {
 					ctx.textAlign = "center"; 
 					ctx.textBaseline = "middle";
 					ctx.fillStyle = "#ffffff";
-					ctx.fillText(this.text, this.x, this.y);
+					ctx.fillText(this.text, 0, 0);
 					break;
 				case "button":
 					ctx.translate(this.x, this.y);
 					ctx.lineWidth = 4;
 					ctx.strokeStyle = "#ffffff";
 					ctx.strokeRect(this.width / -2, this.height / -2, this.width, this.height);
-					ctx.translate(this.x, this.y);
 					ctx.font = "25px Arial";
 					ctx.textAlign = "center"; 
 					ctx.textBaseline = "middle";
 					ctx.fillStyle = "#ffffff";
-					ctx.fillText(this.text, this.x, this.y);
+					ctx.fillText(this.text, 0, 0);
 					break;
 				default:
 					// default will be used for different upgrades
