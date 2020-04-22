@@ -149,13 +149,13 @@ class MenuObject {
 		
 		this.draw = function() {
 			var ctx = gameArea.context;
-			ctx.save();console.log(this.type);
+			ctx.save();
 
 			switch (this.type) {
 				case "label":
 					ctx.translate(this.x, this.y);
 					ctx.font = "15px Arial";
-					ctx.textAlign="center"; 
+					ctx.textAlign = "center"; 
 					ctx.textBaseline = "middle";
 					ctx.fillStyle = "#ffffff";
 					ctx.fillText(this.text, this.x + (this.width / 2), this.y + (this.height / 2));
@@ -163,10 +163,10 @@ class MenuObject {
 				case "heading":
 					ctx.translate(this.x, this.y);
 					ctx.font = "bold 42px Arial";
-					ctx.textAlign="center"; 
+					ctx.textAlign = "center"; 
 					ctx.textBaseline = "middle";
 					ctx.fillStyle = "#ffffff";
-					ctx.fillText(this.text, this.x + (this.width / 2), this.y + (this.height / 2));
+					ctx.fillText(this.text, this.x/* + (this.width / 2)*/, this.y/* + (this.height / 2)*/);
 					break;
 				case "button":
 					ctx.translate(this.x, this.y);
@@ -174,7 +174,7 @@ class MenuObject {
 					ctx.strokeStyle = "#ffffff";
 					ctx.strokeRect(this.width / -2, this.height / -2, this.width, this.height);
 					ctx.font = "25px Arial";
-					ctx.textAlign="center"; 
+					ctx.textAlign = "center"; 
 					ctx.textBaseline = "middle";
 					ctx.fillStyle = "#ffffff";
 					ctx.fillText(this.text, this.x + (this.width / 2), this.y + (this.height / 2));
