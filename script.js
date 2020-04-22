@@ -16,8 +16,9 @@ var enemies = {}, enemyShots = {};
 
 var menuItems = {};
 var autofire;
+var playerShip;
 
-var myGameArea = {
+var gameArea = {
 	canvas : document.createElement("canvas"),
 	
 	initialize : function() {
@@ -35,20 +36,20 @@ var myGameArea = {
 		
 		window.addEventListener('keydown', function (e) {
 			e.preventDefault();
-			myGameArea.keys = (myGameArea.keys || []);
-			myGameArea.keys[e.keyCode] = (e.type == "keydown");
+			gameArea.keys = (gameArea.keys || []);
+			gameArea.keys[e.keyCode] = (e.type == "keydown");
 		});
 		window.addEventListener('keyup', function (e) {
-			myGameArea.keys[e.keyCode] = (e.type == "keydown");
+			gameArea.keys[e.keyCode] = (e.type == "keydown");
 		});
 		this.canvas.addEventListener('mousemove', function (e) {
-			var rect = myGameArea.canvas.getBoundingClientRect();
+			var rect = gameArea.canvas.getBoundingClientRect();
 			mouse.x = e.clientX - rect.left;
 			mouse.y = e.clientY - rect.top;
 		});
 		this.canvas.addEventListener('mousedown', function (e) {
-			myGamePiece.shoot();
-			autofire = setInterval(myGamePiece.shoot, 300);
+			playerShip.shoot();
+			autofire = setInterval(playerShip.shoot, 300);
 		});
 		this.canvas.addEventListener('mouseup', function (e) {
 			clearInterval(autofire);
@@ -76,7 +77,7 @@ class MenuObject {
 		this.text = text;
 		this.scale = 1;
 		
-		var ctx = myGameArea.context;
+		var ctx = gameArea.context;
 		
 		switch (height) {
 			case "auto":
@@ -87,7 +88,7 @@ class MenuObject {
 				// calculate width from percentage
 				height = height.replace("%", "");
 				var percentage = height / 100;
-				height = myGameArea.canvas.height * percentage;
+				height = gameArea.canvas.height * percentage;
 				break;
 		}
 		
@@ -104,7 +105,7 @@ class MenuObject {
 				// calculate width from percentage
 				width = width.replace("%", "");
 				var percentage = width / 100;
-				width = myGameArea.canvas.width * percentage;
+				width = gameArea.canvas.width * percentage;
 				break;
 		}
 		
@@ -117,10 +118,10 @@ class MenuObject {
 				x = 20 + this.width / 2;
 				break;				
 			case "center":
-				x = myGameArea.canvas.width / 2;
+				x = gameArea.canvas.width / 2;
 				break;				
 			case "right":
-				x = myGameArea.canvas.width - 20 - (this.width / 2);
+				x = gameArea.canvas.width - 20 - (this.width / 2);
 				break;				
 			default:
 				// nothing i guess
@@ -134,10 +135,10 @@ class MenuObject {
 				y = 20 + this.height / 2;
 				break;				
 			case "center":
-				y = myGameArea.canvas.height / 2;
+				y = gameArea.canvas.height / 2;
 				break;				
 			case "bottom":
-				y = myGameArea.canvas.height - 20 - (this.height / 2);
+				y = gameArea.canvas.height - 20 - (this.height / 2);
 				break;				
 			default:
 				// nothing i guess
@@ -147,6 +148,7 @@ class MenuObject {
 		this.y = y;
 		
 		this.draw = function() {
+			var ctx = gameArea.context;
 			ctx.save();
 
 			switch (this.type) {
@@ -236,7 +238,7 @@ class GameObject {
 		// this.image = image;
 	
 		this.draw = function() {
-			var ctx = myGameArea.context;
+			var ctx = gameArea.context;
 			ctx.save();
 			ctx.translate(this.x, this.y);
 			ctx.rotate(this.angle);
@@ -247,7 +249,7 @@ class GameObject {
 		}
 		
 		this.drawHealth = function() {
-			var ctx = myGameArea.context;
+			var ctx = gameArea.context;
 			ctx.save();
 			ctx.translate(this.x, this.y);
 			ctx.font = "20px Arial";
@@ -294,7 +296,7 @@ class SquareEnemy extends GameObject {
 		this.objectSpeed = 1.5;
 		
 		this.draw = function() {
-			var ctx = myGameArea.context;
+			var ctx = gameArea.context;
 			ctx.save();
 			ctx.translate(this.x, this.y);
 			ctx.rotate(this.angle);
@@ -308,7 +310,7 @@ class SquareEnemy extends GameObject {
 		this.newPos = function() {
 			this.x += this.speedX;
 			this.y -= this.speedY;
-			this.angle = Math.atan2(myGamePiece.y - this.y, myGamePiece.x - this.x);
+			this.angle = Math.atan2(playerShip.y - this.y, playerShip.x - this.x);
 			
 			this.hitByShot();
 		}
@@ -327,13 +329,13 @@ class CircleEnemy extends GameObject {
 		this.newPos = function() {
 			this.x += this.speedX;
 			this.y -= this.speedY;
-			this.angle = Math.atan2(myGamePiece.y - this.y, myGamePiece.x - this.x);
+			this.angle = Math.atan2(playerShip.y - this.y, playerShip.x - this.x);
 			
 			this.hitByShot();
 		}
 		
 		this.draw = function() {
-			var ctx = myGameArea.context;
+			var ctx = gameArea.context;
 			ctx.save();
 			ctx.beginPath();
 			ctx.fillStyle= "#00f";
@@ -406,13 +408,13 @@ class Shot {
 		this.speedX = 7;
 		this.speedY = 7;
 		this.angle = angle;
-		this.x = myGamePiece.x;
-		this.y = myGamePiece.y;
+		this.x = playerShip.x;
+		this.y = playerShip.y;
 		this.width = 5;
 		this.height = 5;
 	
 		this.draw = function() {
-			var ctx = myGameArea.context;
+			var ctx = gameArea.context;
 			ctx.save();
 			
 			switch (this.type) {
@@ -447,11 +449,11 @@ class Shot {
 					break;
 			}
 			
-			var playerDistance = Math.sqrt( Math.pow( myGamePiece.x - this.x, 2 ) + Math.pow( myGamePiece.y - this.y, 2 ) );
+			var playerDistance = Math.sqrt( Math.pow( playerShip.x - this.x, 2 ) + Math.pow( playerShip.y - this.y, 2 ) );
 			
 			if (playerDistance > 100) {
-				if ( (this.x < -50) || (this.x > myGameArea.canvas.width + 50)
-				    || (this.y < - 50) || (this.y > myGameArea.canvas.height + 50) ) {
+				if ( (this.x < -50) || (this.x > gameArea.canvas.width + 50)
+				    || (this.y < - 50) || (this.y > gameArea.canvas.height + 50) ) {
 					delete playerShots[this.shotId];
 				}
 			}
@@ -472,8 +474,8 @@ class Player extends GameObject {
 		this.friction = 0.99;
 		this.accelerationX = 0;
 		this.accelerationY = 0;
-		this.x = (myGameArea.canvas.width / 2);
-		this.y = (myGameArea.canvas.height / 2);
+		this.x = (gameArea.canvas.width / 2);
+		this.y = (gameArea.canvas.height / 2);
 		this.health = playerHealth;
 		this.playerImage = new Image();
 		this.playerImage.src = "/images/playerShip.png";
@@ -487,16 +489,16 @@ class Player extends GameObject {
 			// debugging output
 			document.getElementById("test").innerHTML =
 				"Mouse: " + mouse.x + " | " + mouse.y +
-				"<br>Player: " + myGamePiece.x + " | " + myGamePiece.y +
+				"<br>Player: " + playerShip.x + " | " + playerShip.y +
 				"<br>Angle: " + angle * 180 / Math.PI + "<br>Distance: " + distance +
-				"<br>Speed: " + myGamePiece.speedX + " | " +  myGamePiece.speedY +
-				"<br>Acceleration: " + myGamePiece.accelerationX + " | " + myGamePiece.accelerationY +
+				"<br>Speed: " + playerShip.speedX + " | " +  playerShip.speedY +
+				"<br>Acceleration: " + playerShip.accelerationX + " | " + playerShip.accelerationY +
 				"<br>Enemies alive: " + (Object.keys(enemies)).length +
 				"<br>Score: " + playerScore +
 				"<br>Active bullets: " + (Object.keys(playerShots)).length;
 			;
 			
-			var ctx = myGameArea.context;
+			var ctx = gameArea.context;
 			ctx.drawImage( this.mouseImage, mouse.x - 10, mouse.y - 10);
 			ctx.save();
 			ctx.translate(this.x, this.y);
@@ -511,7 +513,7 @@ class Player extends GameObject {
 			
 			ctx.strokeStyle="#ddd";
 			ctx.beginPath();
-			ctx.moveTo(myGamePiece.x, myGamePiece.y);
+			ctx.moveTo(playerShip.x, playerShip.y);
 			ctx.lineTo(mouse.x, mouse.y);
 			ctx.stroke();
 		}
@@ -521,14 +523,14 @@ class Player extends GameObject {
 			this.y -= this.speedY + this.accelerationY;
 			
 			if (this.x < -50) {
-				this.x = myGameArea.canvas.width + 50;
-			} else if (this.x > myGameArea.canvas.width + 50) {
+				this.x = gameArea.canvas.width + 50;
+			} else if (this.x > gameArea.canvas.width + 50) {
 				this.x = -50;
 			}
 			
 			if (this.y < -50) {
-				this.y = myGameArea.canvas.height + 50;
-			} else if (this.y > myGameArea.canvas.height + 50) {
+				this.y = gameArea.canvas.height + 50;
+			} else if (this.y > gameArea.canvas.height + 50) {
 				this.y = -50;
 			}
 		}
@@ -546,64 +548,64 @@ class Player extends GameObject {
 }
 
 function updateGameArea() {
-	myGameArea.clear();
+	gameArea.clear();
 	
-	if (myGameArea.gameState == "game") {
-		myGamePiece.speedX = 0;
-		myGamePiece.speedY = 0;
+	if (gameArea.gameState == "game") {
+		playerShip.speedX = 0;
+		playerShip.speedY = 0;
 
-		myGamePiece.accelerationX *= myGamePiece.friction;
-		myGamePiece.accelerationY *= myGamePiece.friction;
+		playerShip.accelerationX *= playerShip.friction;
+		playerShip.accelerationY *= playerShip.friction;
 
-		if ( (myGamePiece.accelerationX < 0.01) && (myGamePiece.accelerationX > -0.01) ) {
-			myGamePiece.accelerationX = 0;
+		if ( (playerShip.accelerationX < 0.01) && (playerShip.accelerationX > -0.01) ) {
+			playerShip.accelerationX = 0;
 		}
-		if ( (myGamePiece.accelerationY < 0.01) && (myGamePiece.accelerationY > -0.01) ) {
-			myGamePiece.accelerationY = 0;
+		if ( (playerShip.accelerationY < 0.01) && (playerShip.accelerationY > -0.01) ) {
+			playerShip.accelerationY = 0;
 		}
 
-		if (myGameArea.keys && myGameArea.keys[87]) {
+		if (gameArea.keys && gameArea.keys[87]) {
 			if (distance > 10) {
-				myGamePiece.speedX += 1 * Math.sin(angle + (0.5 * Math.PI));
-				myGamePiece.speedY += 1 * Math.cos(angle + (0.5 * Math.PI));
+				playerShip.speedX += 1 * Math.sin(angle + (0.5 * Math.PI));
+				playerShip.speedY += 1 * Math.cos(angle + (0.5 * Math.PI));
 
-				myGamePiece.accelerationX += 0.1 * Math.sin(angle + (0.5 * Math.PI));
-				myGamePiece.accelerationY += 0.1 * Math.cos(angle + (0.5 * Math.PI));
+				playerShip.accelerationX += 0.1 * Math.sin(angle + (0.5 * Math.PI));
+				playerShip.accelerationY += 0.1 * Math.cos(angle + (0.5 * Math.PI));
 			}
 		}
 
-		if (myGameArea.keys && myGameArea.keys[83]) {
-			myGamePiece.speedX += -1 * Math.sin(angle + (0.5 * Math.PI));
-			myGamePiece.speedY += -1 * Math.cos(angle + (0.5 * Math.PI));
+		if (gameArea.keys && gameArea.keys[83]) {
+			playerShip.speedX += -1 * Math.sin(angle + (0.5 * Math.PI));
+			playerShip.speedY += -1 * Math.cos(angle + (0.5 * Math.PI));
 
-			myGamePiece.accelerationX += -0.1 * Math.sin(angle + (0.5 * Math.PI));
-			myGamePiece.accelerationY += -0.1 * Math.cos(angle + (0.5 * Math.PI));
+			playerShip.accelerationX += -0.1 * Math.sin(angle + (0.5 * Math.PI));
+			playerShip.accelerationY += -0.1 * Math.cos(angle + (0.5 * Math.PI));
 		}
 
-		if (myGameArea.keys && myGameArea.keys[65]) {
+		if (gameArea.keys && gameArea.keys[65]) {
 			if (distance > 10) {
 				angle += Math.acos(1 - Math.pow(1 / distance,2) / 2);
-				myGamePiece.speedX += 1 * Math.sin(angle + (2 * Math.PI));
-				myGamePiece.speedY += 1 * Math.cos(angle + (2 * Math.PI));
+				playerShip.speedX += 1 * Math.sin(angle + (2 * Math.PI));
+				playerShip.speedY += 1 * Math.cos(angle + (2 * Math.PI));
 
-				myGamePiece.accelerationX += 0.05 * Math.sin(angle + (2 * Math.PI)) + 0.025 * Math.sin(angle + (0.5 * Math.PI));
-				myGamePiece.accelerationY += 0.05 * Math.cos(angle + (2 * Math.PI)) + 0.025 * Math.cos(angle + (0.5 * Math.PI));
+				playerShip.accelerationX += 0.05 * Math.sin(angle + (2 * Math.PI)) + 0.025 * Math.sin(angle + (0.5 * Math.PI));
+				playerShip.accelerationY += 0.05 * Math.cos(angle + (2 * Math.PI)) + 0.025 * Math.cos(angle + (0.5 * Math.PI));
 			}
 		}
 
-		if (myGameArea.keys && myGameArea.keys[68]) {
+		if (gameArea.keys && gameArea.keys[68]) {
 			if (distance > 10) {
 				angle -= Math.acos(1 - Math.pow(1 / distance,2) / 2);
-				myGamePiece.speedX += -1 * Math.sin(angle + (2 * Math.PI));
-				myGamePiece.speedY += -1 * Math.cos(angle + (2 * Math.PI));
+				playerShip.speedX += -1 * Math.sin(angle + (2 * Math.PI));
+				playerShip.speedY += -1 * Math.cos(angle + (2 * Math.PI));
 
-				myGamePiece.accelerationX += -0.05 * Math.sin(angle + (2 * Math.PI)) + 0.025 * Math.sin(angle + (0.5 * Math.PI));
-				myGamePiece.accelerationY += -0.05 * Math.cos(angle + (2 * Math.PI)) + 0.025 * Math.cos(angle + (0.5 * Math.PI));
+				playerShip.accelerationX += -0.05 * Math.sin(angle + (2 * Math.PI)) + 0.025 * Math.sin(angle + (0.5 * Math.PI));
+				playerShip.accelerationY += -0.05 * Math.cos(angle + (2 * Math.PI)) + 0.025 * Math.cos(angle + (0.5 * Math.PI));
 			}
 		}
 
-		myGamePiece.newPos();
-		myGamePiece.draw();
+		playerShip.newPos();
+		playerShip.draw();
 
 		for (var shot in playerShots) {
 			shot = playerShots[shot];
@@ -621,7 +623,7 @@ function updateGameArea() {
 				enemy.draw();
 			}
 		}
-	} else if (myGameArea.gameState == "menu") {
+	} else if (gameArea.gameState == "menu") {
 		for (var item in menuItems) {
 			item = menuItems[item];
 			if (item != null) {
@@ -651,28 +653,28 @@ function enemySpawnPoint() {
 	var coin = Math.floor(Math.random() * 101);
 	
 	if (coin >= 50) {
-		x = Math.floor(Math.random() * (myGameArea.canvas.width + 101)) - 50;
+		x = Math.floor(Math.random() * (gameArea.canvas.width + 101)) - 50;
 		
 		do {
-			y = Math.floor(Math.random() * (myGameArea.canvas.height + 101)) - 50;
-		} while ( (y >= -20) && (x <= myGameArea.canvas.height + 20) );
+			y = Math.floor(Math.random() * (gameArea.canvas.height + 101)) - 50;
+		} while ( (y >= -20) && (x <= gameArea.canvas.height + 20) );
 	} else {
-		y = Math.floor(Math.random() * (myGameArea.canvas.height + 101)) - 50;
+		y = Math.floor(Math.random() * (gameArea.canvas.height + 101)) - 50;
 		
 		do {
-			x = Math.floor(Math.random() * (myGameArea.canvas.width + 101)) - 50;
-		} while ( (x >= -20) && (x <= myGameArea.canvas.width + 20) );
+			x = Math.floor(Math.random() * (gameArea.canvas.width + 101)) - 50;
+		} while ( (x >= -20) && (x <= gameArea.canvas.width + 20) );
 	}
 	
 	return coords = {x: x, y: y};
 }
 
 function startGame() {
-	myGameArea.clear();
-	myGameArea.startGame();
-	myGamePiece = new Player();
+	gameArea.clear();
+	gameArea.startGame();
+	playerShip = new Player();
 }
 
 window.onload = function() {
-	myGameArea.initialize();
+	gameArea.initialize();
 }
