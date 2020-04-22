@@ -177,7 +177,7 @@ class MenuObject {
 					ctx.textAlign = "center"; 
 					ctx.textBaseline = "middle";
 					ctx.fillStyle = "#ffffff";
-					ctx.fillText(this.text, this.x + (this.width / 2), this.y + (this.height / 2));
+					ctx.fillText(this.text, this.x/* + (this.width / 2)*/, this.y/* + (this.height / 2)*/);
 					break;
 				default:
 					// default will be used for different upgrades
