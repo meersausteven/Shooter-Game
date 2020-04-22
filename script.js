@@ -81,6 +81,7 @@ class MenuObject {
 		
 		switch (height) {
 			case "auto":
+				// not tested yet, might be completely removed later
 				ctx.font = "bold 25px Arial";
 				height = ctx.measureText(this.text).height;
 				break;				
@@ -97,7 +98,7 @@ class MenuObject {
 		
 		switch (width) {
 			case "auto":
-				// not tested yet
+				// not tested yet, might be completely removed later
 				ctx.font = "bold " + this.textHeight + "px Arial";
 				width = ctx.measureText(this.text).width;
 				break;				
@@ -124,7 +125,10 @@ class MenuObject {
 				x = gameArea.canvas.width - 20 - this.width;
 				break;				
 			default:
-				// nothing i guess
+				// calculate from percentage
+				x = x.replace("%", "");
+				var percentage = x / 100;
+				x = gameArea.canvas.width * percentage;
 				break;
 		}
 		
@@ -141,7 +145,11 @@ class MenuObject {
 				y = gameArea.canvas.height - 20 - this.height;
 				break;				
 			default:
-				// nothing i guess
+				
+				// calculate from percentage
+				y = y.replace("%", "");
+				var percentage = y / 100;
+				y = gameArea.canvas.height * percentage;
 				break;
 		}
 		
