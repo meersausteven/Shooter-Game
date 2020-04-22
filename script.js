@@ -149,7 +149,7 @@ class MenuObject {
 		
 		this.draw = function() {
 			var ctx = gameArea.context;
-			ctx.save();
+			ctx.save();console.log(this.type);
 
 			switch (this.type) {
 				case "label":
