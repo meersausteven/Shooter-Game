@@ -121,7 +121,7 @@ class MenuObject {
 				x = gameArea.canvas.width / 2;
 				break;				
 			case "right":
-				x = gameArea.canvas.width - 20 - (this.width / 2);
+				x = gameArea.canvas.width - 20 - this.width;
 				break;				
 			default:
 				// nothing i guess
@@ -138,7 +138,7 @@ class MenuObject {
 				y = gameArea.canvas.height / 2;
 				break;				
 			case "bottom":
-				y = gameArea.canvas.height - 20 - (this.height / 2);
+				y = gameArea.canvas.height - 20 - this.height;
 				break;				
 			default:
 				// nothing i guess
