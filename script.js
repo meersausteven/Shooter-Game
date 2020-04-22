@@ -196,15 +196,15 @@ function displayScreen(screen) {
 		case "main":
 			// Main Menu
 			var index = "menuItem" + menuItemId;
-			menuItems[index] = new MenuObject("heading", "100%", "30%", "center", "top", "Space Shooter Thingy!");
+			menuItems[index] = new MenuObject("heading", "100%", "10%", "center", "top", "Space Shooter Thingy!");
 			menuItemId++;
 			
 			index = "menuItem" + menuItemId;
-			menuItems[index] = new MenuObject("button", "50%", "20%", "center", "center", "Start Game");
+			menuItems[index] = new MenuObject("button", "25%", "10%", "center", "center", "Start Game");
 			menuItemId++;
 			
 			index = "menuItem" + menuItemId;
-			menuItems[index] = new MenuObject("button", "50%", "20%", "center", "bottom", "Shop");
+			menuItems[index] = new MenuObject("button", "25%", "10%", "center", "bottom", "Shop");
 			menuItemId++;
 			break;
 		case "shop":
