@@ -173,6 +173,7 @@ class MenuObject {
 					ctx.lineWidth = 4;
 					ctx.strokeStyle = "#ffffff";
 					ctx.strokeRect(this.width / -2, this.height / -2, this.width, this.height);
+					ctx.translate(this.x, this.y);
 					ctx.font = "25px Arial";
 					ctx.textAlign = "center"; 
 					ctx.textBaseline = "middle";
