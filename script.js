@@ -157,7 +157,7 @@ class MenuObject {
 					ctx.font = "15px Arial";
 					ctx.textAlign="center"; 
 					ctx.textBaseline = "middle";
-					ctx.fillStyle = "ffffff";
+					ctx.fillStyle = "#ffffff";
 					ctx.fillText(this.text, this.x + (this.width / 2), this.y + (this.height / 2));
 					break;
 				case "heading":
@@ -165,7 +165,7 @@ class MenuObject {
 					ctx.font = "bold 42px Arial";
 					ctx.textAlign="center"; 
 					ctx.textBaseline = "middle";
-					ctx.fillStyle = "ffffff";
+					ctx.fillStyle = "#ffffff";
 					ctx.fillText(this.text, this.x + (this.width / 2), this.y + (this.height / 2));
 					break;
 				case "button":
@@ -176,7 +176,7 @@ class MenuObject {
 					ctx.font = "25px Arial";
 					ctx.textAlign="center"; 
 					ctx.textBaseline = "middle";
-					ctx.fillStyle = "ffffff";
+					ctx.fillStyle = "#ffffff";
 					ctx.fillText(this.text, this.x + (this.width / 2), this.y + (this.height / 2));
 					break;
 				default:
