@@ -192,6 +192,7 @@ class MenuObject {
 					break;
 			}
 			ctx.restore();
+			console.log(this.x + " - " + this.y);
 		}
 	}
 }
