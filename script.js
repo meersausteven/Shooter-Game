@@ -212,7 +212,7 @@ function displayScreen(screen) {
 			menuItemId++;
 			
 			index = "menuItem" + menuItemId;
-			menuItems[index] = new MenuObject("button", "25%", "10%", "center", "70%", "Shop", showScreen("shop"));
+			menuItems[index] = new MenuObject("button", "25%", "10%", "center", "70%", "Shop", displayScreen("shop"));
 			menuItemId++;
 			break;
 		case "shop":
