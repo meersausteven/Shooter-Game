@@ -28,8 +28,7 @@ var gameArea = {
 		document.body.insertBefore(this.canvas, document.body.childNodes[0]);
 		this.showScreen("main");
 		this.gameState = "menu";
-		this.interval = window.requestAnimationFrame(updateGameArea);
-
+		
 		window.addEventListener('keydown', function (e) {
 			e.preventDefault();
 			gameArea.keys = (gameArea.keys || []);
@@ -51,7 +50,7 @@ var gameArea = {
 				playerShip.shoot();
 				autofire = setInterval(playerShip.shoot, 300);
 			} else if (gameArea.gameState == "menu") {
-				mouse.click == true;console.log(gameArea.gameState);
+				mouse.click == true;
 			}
 		});
 
@@ -62,6 +61,8 @@ var gameArea = {
 				mouse.click == false;
 			}
 		});
+		
+		this.interval = window.requestAnimationFrame(updateGameArea);
 	},
 	
 	startGame : function() {
@@ -646,12 +647,13 @@ function updateGameArea() {
 			item = menuItems[item];
 			if (item != null) {
 				item.draw();
-
+				
+				/*
 				if (mouse.click == true) {
 					item.onClickFunction();
-				}
+				}*/
 			}
-		}console.log(mouse.click);
+		}
 	}
 	
 	window.requestAnimationFrame(updateGameArea);
