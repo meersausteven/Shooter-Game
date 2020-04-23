@@ -192,7 +192,7 @@ class MenuObject {
 				case "button":
 					ctx.translate(this.x, this.y);
 					ctx.lineWidth = 4;
-					ctx.fillStyle = "#f00000";
+					ctx.fillStyle = "#000000";
 					ctx.fillRect(-this.width / 2, -this.height / 2, this.width, this.height);
 					ctx.strokeStyle = "#ffffff";
 					ctx.strokeRect(-this.width / 2, -this.height / 2, this.width, this.height);
