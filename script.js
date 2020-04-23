@@ -51,7 +51,7 @@ var gameArea = {
 				playerShip.shoot();
 				autofire = setInterval(playerShip.shoot, 300);
 			} else if (this.gameState == "menu") {
-				mouse.click == true;
+				mouse.click == true;console.log("mousedown event thrown");
 			}
 		});
 
@@ -59,7 +59,7 @@ var gameArea = {
 			if (this.gameState == "game") {
 				clearInterval(autofire);
 			} else if (this.gameState == "menu") {
-				mouse.click == false;
+				mouse.click == false;console.log("mouseup event thrown");
 			}
 		});
 	},
