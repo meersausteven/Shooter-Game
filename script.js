@@ -51,7 +51,7 @@ var gameArea = {
 				playerShip.shoot();
 				autofire = setInterval(playerShip.shoot, 300);
 			} else if (gameArea.gameState == "menu") {
-				mouse.click == true;
+				mouse.click == true;console.log(gameArea.gameState);
 			}
 		});
 
