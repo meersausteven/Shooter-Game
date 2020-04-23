@@ -43,23 +43,23 @@ var gameArea = {
 		this.canvas.addEventListener('mousemove', function (e) {
 			var rect = gameArea.canvas.getBoundingClientRect();
 			mouse.x = e.clientX - rect.left;
-			mouse.y = e.clientY - rect.top;console.log("mousemove event thrown");
+			mouse.y = e.clientY - rect.top;
 		});
 
-		this.canvas.addEventListener('mousedown', function (e) {
+		this.canvas.addEventListener('mousedown', function (e) {console.log("mousedown event thrown");
 			if (this.gameState == "game") {
 				playerShip.shoot();
 				autofire = setInterval(playerShip.shoot, 300);
 			} else if (this.gameState == "menu") {
-				mouse.click == true;console.log("mousedown event thrown");
+				mouse.click == true;
 			}
 		});
 
-		this.canvas.addEventListener('mouseup', function (e) {
+		this.canvas.addEventListener('mouseup', function (e) {console.log("mouseup event thrown");
 			if (this.gameState == "game") {
 				clearInterval(autofire);
 			} else if (this.gameState == "menu") {
-				mouse.click == false;console.log("mouseup event thrown");
+				mouse.click == false;
 			}
 		});
 	},
