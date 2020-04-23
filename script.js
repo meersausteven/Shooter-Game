@@ -35,14 +35,17 @@ var gameArea = {
 			gameArea.keys = (gameArea.keys || []);
 			gameArea.keys[e.keyCode] = (e.type == "keydown");
 		});
+
 		window.addEventListener('keyup', function (e) {
 			gameArea.keys[e.keyCode] = (e.type == "keydown");
 		});
+
 		this.canvas.addEventListener('mousemove', function (e) {
 			var rect = gameArea.canvas.getBoundingClientRect();
 			mouse.x = e.clientX - rect.left;
 			mouse.y = e.clientY - rect.top;
 		});
+
 		this.canvas.addEventListener('mousedown', function (e) {
 			if (this.gameState == "game") {
 				playerShip.shoot();
@@ -51,6 +54,7 @@ var gameArea = {
 				mouse.click == true;
 			}
 		});
+
 		this.canvas.addEventListener('mouseup', function (e) {
 			if (this.gameState == "game") {
 				clearInterval(autofire);
@@ -648,7 +652,7 @@ function updateGameArea() {
 				}
 			}
 		}
-		console.log(mouse.click);
+		console.log(mouse + ", " + gameArea.keys);
 	}
 	
 	window.requestAnimationFrame(updateGameArea);
