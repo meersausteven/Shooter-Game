@@ -648,12 +648,11 @@ function updateGameArea() {
 			if (item != null) {
 				item.draw();
 				
-				/*
-				if (mouse.click == true) {
+				if ( (mouse.click == true) && thingHitThat(mouse, item) ) {
 					item.onClickFunction();
-				}*/
+				}
 			}
-		}console.log(mouse.click);
+		}
 	}
 	
 	window.requestAnimationFrame(updateGameArea);
