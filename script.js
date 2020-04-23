@@ -46,19 +46,19 @@ var gameArea = {
 			mouse.y = e.clientY - rect.top;
 		});
 
-		window.addEventListener('mousedown', function (e) {console.log(this);
-			if (this.gameState == "game") {
+		this.canvas.addEventListener('mousedown', function (e) {
+			if (gameArea.gameState == "game") {
 				playerShip.shoot();
 				autofire = setInterval(playerShip.shoot, 300);
-			} else if (this.gameState == "menu") {
+			} else if (gameArea.gameState == "menu") {
 				mouse.click == true;
 			}
 		});
 
-		window.addEventListener('mouseup', function (e) {
-			if (this.gameState == "game") {
+		this.canvas.addEventListener('mouseup', function (e) {
+			if (gameArea.gameState == "game") {
 				clearInterval(autofire);
-			} else if (this.gameState == "menu") {
+			} else if (gameArea.gameState == "menu") {
 				mouse.click == false;
 			}
 		});
