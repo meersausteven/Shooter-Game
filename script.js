@@ -1,7 +1,7 @@
 
 // declare variables that are needed globally
 
-var mouse = {x: 400, y: 300, click:false};
+var mouse = {x: 400, y: 300, click: false};
 var distance = 0;
 var angle = 0;
 
@@ -84,7 +84,7 @@ class MenuObject {
 		this.type = type;
 		this.text = text;
 		this.scale = 1;
-		this.onclick = onclick;
+		this.onClickFunction = function() {onclick};
 		
 		var ctx = gameArea.context;
 		
@@ -643,8 +643,8 @@ function updateGameArea() {
 			if (item != null) {
 				item.draw();
 
-				if (mouse.click) {
-					item.onclick();
+				if (mouse.click == true) {
+					item.onClickFunction();
 				}
 			}
 		}
