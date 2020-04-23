@@ -72,10 +72,11 @@ var gameArea = {
 }
 
 class MenuObject {
-	constructor(type, width, height, x, y, text) {
+	constructor(type, width, height, x, y, text, onclick) {
 		this.type = type;
 		this.text = text;
 		this.scale = 1;
+		this.onclick = onclick;
 		
 		var ctx = gameArea.context;
 		
@@ -192,7 +193,6 @@ class MenuObject {
 					break;
 			}
 			ctx.restore();
-			console.log(this.x + " - " + this.y);
 		}
 	}
 }
@@ -204,15 +204,15 @@ function displayScreen(screen) {
 		case "main":
 			// Main Menu
 			var index = "menuItem" + menuItemId;
-			menuItems[index] = new MenuObject("heading", "100%", "10%", "center", "top", "Space Shooter Thingy!");
+			menuItems[index] = new MenuObject("heading", "100%", "10%", "center", "top", "Space Shooter Thingy!", "");
 			menuItemId++;
 			
 			index = "menuItem" + menuItemId;
-			menuItems[index] = new MenuObject("button", "25%", "10%", "center", "center", "Start Game");
+			menuItems[index] = new MenuObject("button", "25%", "10%", "center", "50%", "Start Game", startGame());
 			menuItemId++;
 			
 			index = "menuItem" + menuItemId;
-			menuItems[index] = new MenuObject("button", "25%", "10%", "center", "bottom", "Shop");
+			menuItems[index] = new MenuObject("button", "25%", "10%", "center", "70%", "Shop", showScreen("shop"));
 			menuItemId++;
 			break;
 		case "shop":
