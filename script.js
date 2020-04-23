@@ -650,7 +650,7 @@ function updateGameArea() {
 			if (item != null) {
 				item.draw();
 				
-				if ( (mouse.click == true) && thingHitThat(mouse, item) ) {
+				if ( (mouse.click == true) && thingHitThat(mouse, item) ) {console.log("clicked it");
 					item.onClickFunction();
 				}
 			}
