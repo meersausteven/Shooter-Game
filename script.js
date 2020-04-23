@@ -652,7 +652,7 @@ function updateGameArea() {
 				}
 			}
 		}
-		console.log(mouse + ", " + gameArea.keys);
+		console.log(mouse.click);
 	}
 	
 	window.requestAnimationFrame(updateGameArea);
