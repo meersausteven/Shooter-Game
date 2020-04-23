@@ -29,6 +29,35 @@ var gameArea = {
 		this.showScreen("main");
 		this.gameState = "menu";
 		this.interval = window.requestAnimationFrame(updateGameArea);
+
+		window.addEventListener('keydown', function (e) {
+			e.preventDefault();
+			gameArea.keys = (gameArea.keys || []);
+			gameArea.keys[e.keyCode] = (e.type == "keydown");
+		});
+		window.addEventListener('keyup', function (e) {
+			gameArea.keys[e.keyCode] = (e.type == "keydown");
+		});
+		this.canvas.addEventListener('mousemove', function (e) {
+			var rect = gameArea.canvas.getBoundingClientRect();
+			mouse.x = e.clientX - rect.left;
+			mouse.y = e.clientY - rect.top;
+		});
+		this.canvas.addEventListener('mousedown', function (e) {
+			if (this.gameState == "game") {
+				playerShip.shoot();
+				autofire = setInterval(playerShip.shoot, 300);
+			} else if (this.gameState == "menu") {
+				mouse.click == true;
+			}
+		});
+		this.canvas.addEventListener('mouseup', function (e) {
+			if (this.gameState == "game") {
+				clearInterval(autofire);
+			} else if (this.gameState == "menu") {
+				mouse.click == false;
+			}
+		});
 	},
 	
 	startGame : function() {
@@ -203,17 +232,9 @@ function displayScreen(screen) {
 	switch (screen) {
 		case "main":
 			// Main Menu
-			var index = "menuItem" + menuItemId;
-			menuItems[index] = new MenuObject("heading", "100%", "10%", "center", "top", "Space Shooter Thingy!", "");
-			menuItemId++;
-			
-			index = "menuItem" + menuItemId;
-			menuItems[index] = new MenuObject("button", "25%", "10%", "center", "50%", "Start Game", startGame());
-			menuItemId++;
-			
-			index = "menuItem" + menuItemId;
-			menuItems[index] = new MenuObject("button", "25%", "10%", "center", "70%", "Shop", displayScreen("shop"));
-			menuItemId++;
+			createMenuItem("heading", "100%", "10%", "center", "top", "Space Shooter Thingy!", "");
+			createMenuItem("button", "25%", "10%", "center", "50%", "Start Game", startGame());
+			createMenuItem("button", "25%", "10%", "center", "70%", "Shop", displayScreen("shop"));
 			break;
 		case "shop":
 			// Upgrade Shop Menu
@@ -227,6 +248,12 @@ function displayScreen(screen) {
 			
 			break;
 	}
+}
+
+function createMenuItem(type, width, height, x, y, text, onclick) {
+	var index = "menuItem" + menuItemId;
+	menuItems[index] = new MenuObject(type, width, height, x, y, text, onclick);
+	menuItemId++;
 }
 
 class GameObject {
@@ -636,6 +663,10 @@ function updateGameArea() {
 			item = menuItems[item];
 			if (item != null) {
 				item.draw();
+
+				if (mouse.click) {
+					item.onclick();
+				}
 			}
 		}
 		
