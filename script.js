@@ -51,7 +51,7 @@ var gameArea = {
 				autofire = setInterval(playerShip.shoot, 300);
 			} else if (gameArea.gameState == "menu") {
 				mouse.click == true;
-			}
+			}console.log(mouse.click);
 		});
 
 		this.canvas.addEventListener('mouseup', function (e) {
@@ -59,7 +59,7 @@ var gameArea = {
 				clearInterval(autofire);
 			} else if (gameArea.gameState == "menu") {
 				mouse.click == false;
-			}
+			}console.log(mouse.click);
 		});
 		
 		this.interval = window.requestAnimationFrame(updateGameArea);
@@ -653,7 +653,7 @@ function updateGameArea() {
 					item.onClickFunction();
 				}*/
 			}
-		}console.log(mouse.click);
+		}
 	}
 	
 	window.requestAnimationFrame(updateGameArea);
