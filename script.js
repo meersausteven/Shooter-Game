@@ -1,7 +1,7 @@
 
 // declare variables that are needed globally
 
-var mouse = {x: 400, y: 300};
+var mouse = {x: 400, y: 300, click:false};
 var distance = 0;
 var angle = 0;
 
@@ -62,27 +62,6 @@ var gameArea = {
 	
 	startGame : function() {
 		this.gameState = "game";
-		
-		window.addEventListener('keydown', function (e) {
-			e.preventDefault();
-			gameArea.keys = (gameArea.keys || []);
-			gameArea.keys[e.keyCode] = (e.type == "keydown");
-		});
-		window.addEventListener('keyup', function (e) {
-			gameArea.keys[e.keyCode] = (e.type == "keydown");
-		});
-		this.canvas.addEventListener('mousemove', function (e) {
-			var rect = gameArea.canvas.getBoundingClientRect();
-			mouse.x = e.clientX - rect.left;
-			mouse.y = e.clientY - rect.top;
-		});
-		this.canvas.addEventListener('mousedown', function (e) {
-			playerShip.shoot();
-			autofire = setInterval(playerShip.shoot, 300);
-		});
-		this.canvas.addEventListener('mouseup', function (e) {
-			clearInterval(autofire);
-		});
 	},
 	
 	showScreen : function(screen) {
