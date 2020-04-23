@@ -43,7 +43,7 @@ var gameArea = {
 		this.canvas.addEventListener('mousemove', function (e) {
 			var rect = gameArea.canvas.getBoundingClientRect();
 			mouse.x = e.clientX - rect.left;
-			mouse.y = e.clientY - rect.top;
+			mouse.y = e.clientY - rect.top;console.log("mousemove event thrown");
 		});
 
 		this.canvas.addEventListener('mousedown', function (e) {
@@ -652,7 +652,6 @@ function updateGameArea() {
 				}
 			}
 		}
-		console.log(mouse.click);
 	}
 	
 	window.requestAnimationFrame(updateGameArea);
