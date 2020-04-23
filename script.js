@@ -46,7 +46,7 @@ var gameArea = {
 			mouse.y = e.clientY - rect.top;
 		});
 
-		this.canvas.addEventListener('mousedown', function (e) {console.log(this.gameState);
+		this.canvas.addEventListener('mousedown', function (e) {console.log(this);
 			if (this.gameState == "game") {
 				playerShip.shoot();
 				autofire = setInterval(playerShip.shoot, 300);
