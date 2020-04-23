@@ -653,7 +653,7 @@ function updateGameArea() {
 					item.onClickFunction();
 				}*/
 			}
-		}
+		}console.log(mouse.click);
 	}
 	
 	window.requestAnimationFrame(updateGameArea);
