@@ -26,7 +26,6 @@ var gameArea = {
 		this.canvas.height = 900;
 		this.context = this.canvas.getContext("2d");
 		document.body.insertBefore(this.canvas, document.body.childNodes[0]);
-		this.showScreen("main");
 		this.gameState = "menu";
 		
 		window.addEventListener('keydown', function (e) {
@@ -62,6 +61,7 @@ var gameArea = {
 			}
 		});
 		
+		this.showScreen("main");
 		this.interval = window.requestAnimationFrame(updateGameArea);
 	},
 	
