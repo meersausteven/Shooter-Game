@@ -570,6 +570,8 @@ class Player extends GameObject {
 
 function updateGameArea() {
 	gameArea.clear();
+	gameArea.canvas.width = 1600;
+	gameArea.canvas.height = 900;
 	
 	if (gameArea.gameState == "game") {
 		playerShip.speedX = 0;
