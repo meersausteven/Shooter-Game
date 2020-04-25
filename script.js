@@ -89,7 +89,7 @@ class MenuObject {
 		this.type = type;
 		this.text = text;
 		this.scale = 1;
-		this.onclick = "";
+		this.onclick = onclick;
 		
 		switch (this.onclick) {
 			case "mainMenu":
