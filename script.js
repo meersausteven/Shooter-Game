@@ -33,7 +33,7 @@ var gameArea = {
 			e.preventDefault();
 			gameArea.keys = (gameArea.keys || []);
 			gameArea.keys[e.keyCode] = (e.type == "keydown");
-			console.log(gameArea.keys[e.keyCode]);
+			console.log(gameArea.keys);
 		});
 
 		window.addEventListener('keyup', function (e) {
