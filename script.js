@@ -33,7 +33,6 @@ var gameArea = {
 			e.preventDefault();
 			gameArea.keys = (gameArea.keys || []);
 			gameArea.keys[e.keyCode] = (e.type == "keydown");
-			console.log(gameArea.keys);
 		});
 
 		window.addEventListener('keyup', function (e) {
@@ -604,6 +603,7 @@ function updateGameArea() {
 		}
 
 		if (gameArea.keys && gameArea.keys[87]) {
+			// W Key
 			if (distance > 10) {
 				playerShip.speedX += 1 * Math.sin(angle + (0.5 * Math.PI));
 				playerShip.speedY += 1 * Math.cos(angle + (0.5 * Math.PI));
@@ -614,6 +614,7 @@ function updateGameArea() {
 		}
 
 		if (gameArea.keys && gameArea.keys[83]) {
+			// S Key
 			playerShip.speedX += -1 * Math.sin(angle + (0.5 * Math.PI));
 			playerShip.speedY += -1 * Math.cos(angle + (0.5 * Math.PI));
 
@@ -622,6 +623,7 @@ function updateGameArea() {
 		}
 
 		if (gameArea.keys && gameArea.keys[65]) {
+			// A Key
 			if (distance > 10) {
 				angle += Math.acos(1 - Math.pow(1 / distance,2) / 2);
 				playerShip.speedX += 1 * Math.sin(angle + (2 * Math.PI));
@@ -633,6 +635,7 @@ function updateGameArea() {
 		}
 
 		if (gameArea.keys && gameArea.keys[68]) {
+			// D Key
 			if (distance > 10) {
 				angle -= Math.acos(1 - Math.pow(1 / distance,2) / 2);
 				playerShip.speedX += -1 * Math.sin(angle + (2 * Math.PI));
@@ -641,6 +644,12 @@ function updateGameArea() {
 				playerShip.accelerationX += -0.05 * Math.sin(angle + (2 * Math.PI)) + 0.025 * Math.sin(angle + (0.5 * Math.PI));
 				playerShip.accelerationY += -0.05 * Math.cos(angle + (2 * Math.PI)) + 0.025 * Math.cos(angle + (0.5 * Math.PI));
 			}
+		}
+
+		if (gameArea.keys && gameArea.keys[27]) {
+			// ESCAPE Key
+			gameArea.showScreen("main");
+			gameArea.gameState = "menu";
 		}
 
 		playerShip.newPos();
