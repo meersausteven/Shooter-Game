@@ -89,8 +89,23 @@ class MenuObject {
 		this.type = type;
 		this.text = text;
 		this.scale = 1;
-		this.onClickFunction = function() {onclick};
+		this.onclick = "";
 		
+		switch (this.onclick) {
+			case "mainMenu":
+				this.onclick = showScreen("main");
+				break;
+			case "shopMenu":
+				this.onclick = showScreen("shop");
+				break;
+			case "pauseMenu":
+				this.onclick = showScreen("pause");
+				break;
+			case "startGame":
+				this.onclick = startGame();
+				break;
+		}
+
 		var ctx = gameArea.context;
 		
 		switch (height) {
@@ -219,8 +234,8 @@ function displayScreen(screen) {
 		case "main":
 			// Main Menu
 			createMenuItem("heading", "100%", "10%", "center", "top", "Space Shooter Thingy!", "");
-			createMenuItem("button", "25%", "10%", "center", "50%", "Start Game", startGame());
-			createMenuItem("button", "25%", "10%", "center", "70%", "Shop", displayScreen("shop"));
+			createMenuItem("button", "25%", "10%", "center", "50%", "Start Game", "startGame");
+			createMenuItem("button", "25%", "10%", "center", "70%", "Shop", "shopMenu");
 			break;
 		case "shop":
 			// Upgrade Shop Menu
