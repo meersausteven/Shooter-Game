@@ -93,16 +93,16 @@ class MenuObject {
 		
 		switch (this.onclick) {
 			case "mainMenu":
-				this.onclick = showScreen("main");
+				this.onclick = function() { showScreen("main"); }
 				break;
 			case "shopMenu":
-				this.onclick = showScreen("shop");
+				this.onclick = function() { showScreen("shop"); }
 				break;
 			case "pauseMenu":
-				this.onclick = showScreen("pause");
+				this.onclick = function() { showScreen("pause"); }
 				break;
 			case "startGame":
-				this.onclick = startGame();
+				this.onclick = function() { startGame(); }
 				break;
 		}
 
@@ -668,7 +668,7 @@ function updateGameArea() {
 				item.draw();
 				
 				if ( (mouse.click == true) && thingHitThat(mouse, item) ) {console.log("clicked it");
-					item.onClickFunction();
+					item.onclick();
 				}
 			}
 		}
