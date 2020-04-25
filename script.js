@@ -85,7 +85,8 @@ var gameArea = {
 }
 
 class MenuObject {
-	constructor(type, width, height, x, y, text, onclick) {
+	constructor(id, type, width, height, x, y, text, onclick) {
+		this.id = id;
 		this.type = type;
 		this.text = text;
 		this.scale = 1;
@@ -230,6 +231,14 @@ class MenuObject {
 var menuItemId = 1;
 
 function displayScreen(screen) {
+
+	for (var item in menuItems) {
+		item = menuItems[item];
+		if (item != null) {
+			delete menuItems[item.id];
+		}
+	}	
+
 	switch (screen) {
 		case "main":
 			// Main Menu
@@ -253,7 +262,7 @@ function displayScreen(screen) {
 
 function createMenuItem(type, width, height, x, y, text, onclick) {
 	var index = "menuItem" + menuItemId;
-	menuItems[index] = new MenuObject(type, width, height, x, y, text, onclick);
+	menuItems[index] = new MenuObject(index, type, width, height, x, y, text, onclick);
 	menuItemId++;
 }
 
